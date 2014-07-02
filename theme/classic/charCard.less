@@ -1,0 +1,133 @@
+@charset "utf-8";
+/**********************************************************
+NAME:	charCard.less
+NOTES:	Contains all the CSS for printable character cards.
+***********************************************************/
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 65.5%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #333;
+}
+
+#content {
+	width: 790px;
+	background-color: #fff;
+	padding: 15px;
+}
+
+h2 {
+	margin-top: 0;
+	font-family: "Trebuchet MS", Trebuchet, Tahoma, sans-serif;
+	font-size: 2em;
+
+	.playerName {
+		font-size: .7em;		
+	}
+}
+
+h3 {
+	font-family: "Trebuchet MS", Trebuchet, Tahoma, sans-serif;
+	font-size: 1.4em;
+	margin-bottom: 0;
+}
+
+h4 {
+	font-size: 1.2em;
+}
+
+#main {
+	width: 600px;
+	float: left;
+}
+
+fieldset {
+	border: 1px solid #eee;
+	margin: 0;
+	padding: 1em 0 5px 10px;
+}
+
+p, li {
+	font-size: 1.1em;
+	margin: 0;
+}
+
+ul {
+	margin: 0;
+	padding: 0 0 0 25px;	
+}
+
+li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+td, th {
+	font-size: 1.1em;
+	padding: .2em;
+	color: #333;
+}
+
+th {
+	text-align: left;
+	text-align: right;
+	padding-right: 1em;
+}
+
+.even {
+	background-color: #eee;
+
+	th, td {
+		background-color: #eee;
+	}
+
+}
+
+.col1 {
+	width: 100px;
+}
+
+.col2 {
+	width: 75px;
+}
+
+.col3 {
+	width: 200px;
+}
+
+#basics {
+	margin-bottom: 20px;
+}
+
+.header {
+	padding-right: 10px;
+
+	.empty {
+		margin-left: 25px;
+	}
+
+	.skills .empty {
+		margin-left: 0;
+	}
+}
+
+.skills {
+	margin-left: 25px;
+}
+
+.spells {
+	margin-left: 50px;
+}

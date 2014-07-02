@@ -1,0 +1,47 @@
+@charset "utf-8";
+/*********************************************
+NAME: 	theme.less
+NOTES: 	This files holds all the basic colors, variables, etc for the theme. 
+***********************************************/
+
+// Define variables
+@bg-body: #eee;
+@bg-color-mast: #629A6E;
+@bg-color-footer: #629A6E;
+@bg-color-btn-primary: #629A6E;
+// @bg-color-content: #e2e5db;
+@bg-color-content: #fff;
+@bg-color-header: #629A6E;
+@text-color: #333;
+@text-color-mast: #fff;
+@text-color-footer: #fff;
+@text-color-error: #cc0000;
+@font-main: 'Lato', Verdana, Arial, Helvetica, sans-serif;
+@font-header: 'Lato', Arial, Verdana, Helvetica, sans-serif;
+
+/*************************************************
+MIXINS
+**************************************************/
+
+.transparency(@ie: 90; @modern: 0.9) {
+	opacity: @modern;
+	filter: alpha(opacity=@ie); /* For IE8 and earlier */
+}
+
+.rounded-corners (@radius-top-left: 15px; @radius-top-right: 15px; @radius-bottom-right: 0; @radius-bottom-left: 0) {
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  -ms-border-radius: @arguments;
+  -o-border-radius: @arguments;
+  border-radius: @arguments;
+}
+
+.body {
+	margin: 0;
+	padding: 0;
+	font-size: 65.5%;
+	font-family: @font-main;
+	color: @text-color;
+	background: @bg-body;
+	font-weight: 300;
+}

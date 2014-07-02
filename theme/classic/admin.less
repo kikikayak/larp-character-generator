@@ -1,0 +1,3266 @@
+@charset "utf-8";
+/**********************************************************
+NAME:	admin.css
+NOTES:	Contains all the CSS for the admin section.
+***********************************************************/
+
+// Set variables
+@bg-body: #eee;
+// @bg-content: #7F7FAA;
+@bg-content: #34495e;
+@bg-header: #425568;
+@bg-header-highlight: #85909c;
+// @bg-content: #8DBA43;
+// @bg-body: #33383C;
+// @bg-content: #739D37;
+@text-color: #333;
+@text-color-mast: #fff;
+@bg-color-header: #34495E;
+@text-color-footer: #fff;
+@text-color-error: #cc0000;
+@nav-border: #7F7FAA;
+@nav-background: #7F7FAA;
+@bg-btn: #34495e;
+@bg-btn-highlight: #85909c;
+@btn-text-color: #fff;
+@font-main: 'Lato', Verdana, Arial, Helvetica, sans-serif;
+@font-header: 'Lato', Tahoma, sans-serif;
+
+/*************************************************
+MIXINS
+**************************************************/
+
+.transparency(@ie: 9; @modern: 0.9) {
+	opacity: @modern;
+	filter: alpha(opacity=@ie); /* For IE8 and earlier */
+}
+
+.rounded-corners (@radius-top-left: 15px; @radius-top-right: 15px; @radius-bottom-right: 0; @radius-bottom-left: 0) {
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  -ms-border-radius: @arguments;
+  -o-border-radius: @arguments;
+  border-radius: @arguments;
+}
+
+.body {
+	margin: 0;
+	padding: 0;
+	font-size: 65.5%;
+	font-family: @font-main;
+	font-weight: 300;
+	color: @text-color;
+	background: @bg-body; 
+}
+
+body {
+	.body;
+}
+
+p {
+	line-height: 1.6em;
+}
+
+p, li {
+	font-size: 1.3em;
+}
+
+li li {
+	font-size: 1em;	
+}
+
+h1, h2, h3 {
+	font-family: @font-header;
+}
+
+h1 {
+	margin: 0;
+	padding-left: 10px;
+	padding-top: 10px;
+	color: #fff;
+	font-size: 2.2em;
+	font-weight: 300;
+}
+
+h2 {
+	margin-top: 0;
+	padding-top: 15px;
+	font-weight: 300;
+	font-size: 2.2em;
+	color: #333366;
+}
+
+h3 {
+	font-size: 1.6em;
+	font-weight: 300;
+}
+
+h4 {
+	font-size: 1.2em;
+}
+
+a {
+	color: #336699;
+}
+
+#mast {
+	width: 820px;
+	/* 
+	background-color: #666699; */
+	background-color: @bg-content;
+	margin: 10px auto 0 auto;
+	padding: 0;
+	position: relative;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+
+	#homeLink,
+	#trashLink,
+	#logoutLink {
+		position: absolute;
+		color: #fff;
+		font-size: 1.1em;
+		line-height: 16px;
+		text-decoration: none;
+	}
+
+	#homeLink {
+		top: 10px;
+		right: 185px;
+		background: transparent url(../../images/home_entypo_16px.png) no-repeat top left;
+		padding-left: 22px;
+	}
+
+	#trashLink {
+		top: 10px;
+		right: 105px;
+		background: transparent url(../../images/trash_entypo_16px.png) no-repeat top left;
+		padding-left: 22px;
+	}
+
+	#logoutLink {
+		top: 10px;
+		right: 15px;
+		background: transparent url(../../images/power_brankic.png) no-repeat top left;
+		padding-left: 22px;
+	}
+
+}
+
+#nav {
+	width: 800px;
+	height: 25px;
+	margin: 0 auto 0 auto;
+	padding: 0;
+	/* background-color: #666699; */
+	background-color: @bg-content;
+	border-top: 10px solid @bg-content;
+	border-right: 10px solid @bg-content;
+	border-left: 10px solid @bg-content;
+
+	a {
+		width: 100px;
+		height: 25px;
+		display: block;
+		float: left;
+		font-size: 1.2em;
+		font-weight: 300;
+		margin-right: 5px;
+		text-align: center;
+		line-height: 25px;
+		color: #333;
+		text-decoration: none;
+		background-color: #ccc;
+		-moz-border-radius: 3px 3px 0 0;
+		border-radius: 3px 3px 0 0;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	&.home #home,
+	&.admin #admin,
+	&.players #players,
+	&.characters #characters,
+	&.cp #cp,
+	&.gameWorld #gameWorld,
+	&.settings #settings {
+		background-color: #fff;
+		-moz-border-radius: 3px 3px 0 0;
+		border-radius: 3px 3px 0 0;
+	}
+}
+
+#secondaryNav {
+	width: 800px;
+	height: 25px;
+	margin: 0 auto 0 auto;
+	border-left: 10px solid @bg-content;
+	border-right: 10px solid @bg-content;
+	background: #fff url(../../images/secNavBG.png) repeat-x top left;
+	
+	a {
+		float: left;
+		display: block;
+		min-width: 80px;
+		height: 25px;
+		line-height: 23px;
+		text-align: center;
+		margin-right: 3px;
+		color: #333;
+		font-size: 1.2em;
+	}
+
+	&.headers #headersLink,
+	&.skills #skillsLink,
+	&.spells #spellsLink,
+	&.countries #countriesLink,
+	&.communities #communitiesLink,
+	&.traits #traitsLink,
+	&.feats #featsLink {
+		text-decoration: none;
+		color: #666699;
+		cursor: default;
+		background: transparent url(../../images/navArrow.png) no-repeat center bottom;
+	}
+
+	#countriesLink {
+		min-width: 100px;
+	}
+
+	#communitiesLink {
+		min-width: 110px;
+	}
+}
+
+#content {
+	clear: both;
+	width: 790px;
+	/* height: 1000px; */
+	background-color: #fff;
+	border-right: 10px solid @bg-content;
+	border-left: 10px solid @bg-content;
+	padding-right: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+#main {
+	width: 600px;
+	float: left;
+	padding-bottom: 20px;
+
+	&.wide {
+		padding: 15px;
+	    width: 770px;	
+	}
+}
+
+#admin #main {
+	padding: 0 10px;
+}
+
+#sidebar {
+	width: 165px;
+	float: left;
+	padding-top: 20px;
+	/* 
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 1000px; */
+	min-height: 300px;
+	/* background-color: #eee; */
+	padding-bottom: 15px;
+	margin: 0 15px 0 10px;
+
+	h3 {
+		font-size: 1.4em;
+		margin: 0 0 .5em 0;
+		padding: 0 .5em;
+		background-color: #eee;
+	}
+
+	h3 {
+		color: #fff;
+		font-size: 1.3em;
+		height: 25px;
+		line-height: 25px;
+		margin: 0;
+		padding: 0 0 0 10px;
+		background-color: @bg-header-highlight;
+		-moz-border-radius: 3px 3px 0 0;
+		border-radius: 3px 3px 0 0;
+	}
+}
+
+#actionPanel {
+	border-top: 0px none;
+	padding-bottom: 10px;
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		margin-left: 5px;
+		margin-bottom: .5em;
+		min-height: 2em;
+		font-size: 1.3em;
+
+	}
+
+	li a {
+		padding-left: 30px;
+		line-height: 22px;
+		display: block;
+	}
+
+	#updateDeathsLink {
+		margin-bottom: 1em;
+	}
+}
+
+#actionPanelContents {
+	// border: 1px solid #eee;
+	padding: 0 0 1em 0;
+}
+
+.addLink, 
+.editLink {
+	background: transparent url(../../images/addPlusSkinny.png) no-repeat top left;
+	float: left;
+	margin-right: 20px;
+	min-width: 150px;
+	min-height: 25px;
+	line-height: 25px;
+	font-size: 1.4em;
+	padding-left: 30px;
+}
+
+.editLink {
+	background: transparent url(../../images/pencil.png) no-repeat 0 5px;
+	padding-left: 25px;
+	min-width: 125px;
+}
+
+#communityAddLink {
+	width: 200px;
+}
+
+#sidebar .addLink {
+	font-size: 1em;
+}
+
+#footer {
+	width: 800px;
+	height: 60px;
+	background-color: @bg-content;
+	border-right: 10px solid @bg-content;
+	border-left: 10px solid @bg-content;
+	border-bottom: 10px solid @bg-content;
+	margin: 0 auto 10px auto;
+	padding: 0;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+
+	p {
+		text-align: center;
+		font-size: 1.1em;
+		line-height: 1.3em;
+		margin: 0;
+		width: 700px;
+		padding-top: 8px;
+		padding-bottom: 1em;
+		margin-left: auto;
+		margin-right: auto;
+		color: #fff;
+	}
+
+	a {
+		color: #fff;
+	}
+}
+
+.section {
+	margin-bottom: 15px;
+
+	h3 {
+		color: #FFFFFF;
+		font-size: 1.5em;
+		font-weight: 300;
+		margin-bottom: 0;
+		margin-top: 0;
+		padding-left: 10px;
+		height: 25px;
+		line-height: 25px;
+		background-color: @bg-header;
+		-moz-border-radius: 3px 3px 0 0;
+		border-radius: 3px 3px 0 0;
+	}
+
+}
+
+.section-tabbed {
+	border: 1px solid #34495E;
+	margin: 0 0 15px 0;
+	padding: 15px 10px;
+	padding-top: 0;
+	clear: both;
+	border-top: 5px solid #34495E;
+
+	.intro {
+		margin-left: 15px;
+		margin-bottom: 20px;
+	}
+
+}
+
+.row {
+	margin-bottom: 20px;
+}
+
+label {
+	font-size: 1.3em;
+	// line-height: 35px;
+	text-align: left;
+	display: block;
+	float: left;
+	width: 135px;
+}
+
+p.lbl {
+	float: left;
+	width: 100px;
+	margin: 0;
+}
+
+p.data {
+	float: left;
+	margin: 0;
+}
+
+p.chkboxLbl {
+	float: left;
+	margin: 0 1.5em 0 .5em;
+	position: relative;
+	top: 3px;
+}
+
+a img {
+	border: 0px none;
+}
+
+.xpl {
+	font-weight: normal;
+	font-style: italic;
+}
+
+.noResults {
+	font-style: italic;	
+	font-weight: 300;
+}
+
+td .noResults {
+	font-size: 1em;
+	margin: 0;
+}
+
+.optional {
+	font-style: italic;
+	color: #999;
+}
+
+p.unit {
+	float: left;
+	font-weight: bold;
+	margin: 0 0 0 7px;
+	line-height: 27px;
+	float: left;
+	font-size: 1.3em;
+}
+
+.hint {
+	font-style: italic;
+	margin-left: 145px;
+	margin-top: .3em;
+	font-size: .9em;
+	display: block;
+	clear: both;
+	padding-top: 5px;
+	color: #999; 
+}
+
+.backLink {
+	margin-top: 15px;	
+	display: block;
+}
+
+#traitAdminPage .hint {
+	margin-left: 110px;
+	margin-top: .5em;
+	display: block;
+	clear: both;
+}
+
+.required,
+.reqFld {
+	/* color: #FF0000; */
+	margin-right: 5px;
+	line-height: 20px;
+	font-size: 1.2em;
+}
+
+.reqFldIndicator {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 1.2em;
+	color: #777;
+}
+
+.code {
+	font-family: "Courier New", Courier, monospace;	
+}
+
+.fldModifier {
+	display: block;
+	float: left;
+	margin-left: 5px;	
+}
+
+.hidden {
+	display: none;	
+}
+
+/***************************************************************
+FORMS
+****************************************************************/
+
+form {
+	padding-bottom:20px;
+}
+
+fieldset {
+	border: 1px solid #eee;
+	margin: 0;
+	padding: 1em 0 5px 10px;
+}
+
+input,
+select,
+textarea {
+	float: left;
+	font-weight: 300;
+	font-size: 1.4em;
+	font-family: @font-main;
+}
+
+input.disabled,
+select.disabled {
+	background-color: #eee;
+	border: 1px solid #ccc;	
+}
+
+input {
+	height: 30px;
+	padding: 2px 5px;
+	border: 1px solid #999;
+}
+
+input[type=checkbox] {
+	height: 15px;
+}
+
+.chzn-container .chzn-results li,
+.chosen-container .chosen-results li {
+	font-size: 1.1em;
+}
+
+.chzn-container,
+.chosen-container {
+	float: left;
+	min-width: 150px;
+}
+
+.chzn-container-single,
+.chzn-single span,
+.chosen-container-single,
+.chosen-single span {
+	font-size: 1.1em;
+}
+
+.ui-datepicker-trigger {
+	margin-left: 3px;
+	margin-top: 3px;	
+}
+
+.autocomplete {
+	background: #fff url(../../images/search_entypo.png) no-repeat right 5px;
+	background-position: right 5px top 5px;
+	padding-right: 5px;	
+}
+
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;	/* prevent horizontal scrollbar */
+
+	a {
+		font-size: .9em;	
+	}
+}
+
+.ui-autocomplete-loading {
+	background: transparent url(../../images/spinner_sm.gif) no-repeat top right;	
+}
+
+.charCount {
+	display: block;
+	clear: both;
+	color: #999;
+	font-size: 1.2em;
+	margin-left: 130px;
+	padding: 5px;
+
+	.over {
+		color: red;
+	}
+}
+
+/***************************************************************
+BUTTONS
+***************************************************************/
+
+.btn-primary {
+	background-color: @bg-btn;
+	border: 0px none;
+	-moz-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	min-width: 200px;
+	height: 30px;
+	color: @btn-text-color;
+	font-weight: 300;
+	font-size: 1.7em;
+}
+
+.btn-secondary {
+	min-width: 200px;
+	height: 30px;
+	background-color: #999;
+	color: #fff;
+	font-weight: 300;
+	font-size: 1.7em;
+	border: 0px none;
+	.rounded-corners(5px; 5px; 5px; 5px)
+}
+
+.btn-toolbar {
+	margin: 3px;
+	background-color: @bg-btn;
+	height: 30px;
+	border: 0px none;
+	-moz-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	font-weight: 300;
+	font-size: 1.1em;
+	color: #fff;
+
+	&:hover {
+		background-color: @bg-btn-highlight;
+		color: #000;
+		cursor: pointer;	
+	}	
+
+}
+
+.w1 {
+	min-width: 150px;
+}
+
+.w2 {
+	min-width: 200px;
+}
+
+.short,
+.filters .short {
+	height: 30px;
+	font-size: 1.2em;	
+}
+
+#charPage a.btn-primary {
+	text-decoration: none;
+	line-height: 25px;
+	text-align: center;
+}
+
+/************************************************************
+INPUT FIELDS
+*************************************************************/
+
+.xxs {
+
+}
+
+.s {
+	width: 25px;
+}
+
+.s2 {
+	width: 35px;
+}
+
+.s3 {
+	width: 40px;
+}
+
+.ms {
+	width: 100px;	
+}
+
+.m {
+	width: 125px;
+}
+
+.m2 {
+	width: 165px;
+}
+
+.m3 {
+	width: 200px;
+}
+
+.m4 {
+	width: 160px;
+}
+
+.l {
+	width: 250px;
+}
+
+.l2 {
+	width: 300px;
+}
+
+.xl {
+	width: 328px;
+}
+
+.xl-textarea {
+	width: 338px;
+}
+
+.xl2 {
+	width: 435px;
+}
+
+/***************************************************************
+TAB STYLES
+***************************************************************/
+
+.tabPanel {
+
+	a {
+		display: block;
+	    float: left;
+		background-color: #999;
+		color: #FFFFFF;
+	    font-size: 1.2em;
+	    font-weight: 300;
+	    height: 20px;
+	    line-height: 20px;
+	    margin-right: 3px;
+	    text-align: center;
+	    text-decoration: none;
+	    width: 100px;
+		outline: none;
+		-moz-border-radius: 5px 5px 0 0;
+		border-radius: 5px 5px 0 0;
+	}
+
+	.tabPanel a.first {
+		margin-left: 0;
+	}
+
+	a.selected {
+		background-color: @bg-content;
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
+	a.selected:hover {
+		text-decoration: none;
+	}
+
+	a#skillsTab {
+		width: 115px;	
+	}
+}
+
+/***************************************************************
+TOOLBAR STYLES
+***************************************************************/
+
+form #toolbar input {
+	margin-right: 10px;	
+}
+
+.toolbar {
+	margin-bottom: 20px;
+}
+
+/***************************************************************
+TABLE STYLES
+***************************************************************/
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+td, th {
+	font-size: 1.3em;
+}
+
+th {
+	text-align: left;
+	background-color: @bg-header-highlight;
+	/* background-color: #7676a4; 
+	background-color: #9999FF; */
+	color: #fff;
+	font-weight: 300;
+
+	a {
+		color: #fff;
+	}
+
+	&.header {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	&.headerSortUp {
+		text-align: left;
+		background: @bg-header-highlight url(../../images/admin_sort_arrow_desc.gif) no-repeat 5px 8px;
+		/* background-color: #9999FF; */
+		color: #fff;
+		padding-left: 20px;
+		text-decoration: none;
+	}
+
+	&.headerSortDown {
+		text-align: left;
+		background: @bg-header-highlight url(../../images/admin_sort_arrow_asc.gif) no-repeat 5px 8px;
+		/* background-color: #9999FF; */
+		color: #fff;
+		padding-left: 20px;
+		text-decoration: none;
+	}
+
+	&.chkboxCol input {
+		height: 15px;	
+	}
+}
+
+#headerList,
+#skillList,
+#spellList {
+	
+	th,
+	.headerSortUp,
+	.headerSortDown {
+		background-color: #34495E;
+	}
+
+}
+
+td.loading img {
+	float: left;
+	margin-right: 10px;	
+}
+
+td.loading p {
+	color: #666;
+	float: left;
+	width: 200px;
+	font-size: 1em;
+	margin-top: 10px;
+	font-style: italic;	
+}
+
+.tabbedTable a {
+	display: block;
+	width: 100px;
+	height: 25px;
+	float: left;
+	text-align: center;
+	color: #fff;
+	font-size: 1.1em;
+	text-decoration: none;
+	line-height: 25px;
+	margin-right: 5px;
+	background-color: #999;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+
+	a:hover {
+		text-decoration: underline;
+	}
+}
+
+/****************************************************
+FILTER STYLES
+*****************************************************/
+
+#filterContainer {
+	padding: 10px 0;
+	background-color: #eee;	
+}
+
+#charListFilters,
+.filters {
+	
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-top: 3px solid @bg-content;
+	background-color: @bg-content;	
+	padding: 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+
+	h3 {
+		padding: 0 0 0 5px;
+		margin: 0;
+		width: 594px;
+		height: 30px;
+	}
+
+	h3 a {
+		display: block;	
+		color: #fff;
+		font-size: .75em;
+		padding: 0 0 0 23px;
+		margin-top: 3px;
+		line-height: 25px;
+		height: 20px;
+		text-decoration: none;
+	}
+
+	h3 a:hover {
+		text-decoration: underline;	
+	}
+
+	&.contracted h3 a {
+		background: transparent url(../../images/arrow_white_admin.gif) no-repeat 2px 5px;	
+	}
+
+	&.expanded h3 a {
+		background: transparent url(../../images/arrow_white_admin.gif) no-repeat 2px -13px;	
+	}
+
+	.cell1 {
+		float: left;
+		width: 350px;
+	}
+	
+	.cell1 .lbl {
+		width: 60px;	
+		padding-left: 10px;
+		height: 25px;
+		line-height: 30px;
+	}
+
+	.cell2 {
+		float: left;
+		width: 330px;
+	}
+
+	.cell2 .lbl {
+		width: 85px;
+		line-height: 25px;
+		text-align: right;
+		padding-right: 10px;
+	}
+
+	.cell3 {
+		float: left;
+		width: 220px;
+	}
+
+	.cell3 .lbl {
+		width: 75px;
+	}
+
+	input,
+	select {
+		font-size: 1.1em;
+		height: 25px;
+	}
+
+	.btnArea {
+		margin-left: 70px;
+	}
+}
+
+.clearFilters {
+	display: block;
+	float: left;
+	margin-left: 15px;
+	line-height: 28px;
+	font-size: 1.3em;	
+}
+
+/********************************************************
+PAGE-SPECIFIC STYLES
+*********************************************************/
+
+#playerList th,
+#playerList td,
+#charList th,
+#charList td {
+	/* border: 1px solid #ccc; */
+}
+
+.odd {
+	background-color: #eee;
+}
+
+#playerList.sortName th.col1 a,
+#charList.sortName th.col2 a,
+#countryList.sortName th.col1 a,
+#traitList.sortName th.col1 a,
+#communityList.sortName th.col1 a,
+#headerList.sortName th.col1 a,
+#skillList.sortName th.col1 a,
+#spellList.sortName th.col1 a,
+#featList.sortName th.nameCol a {
+	background: transparent url(../../images/admin_sort_arrow.gif) no-repeat 0 3px;
+	padding-left: 15px;
+}
+
+#charList {
+	clear: both;
+
+	input {
+		border: 0px none;
+	}
+}
+
+#showAll {
+	margin-left: 10px;
+}
+
+.showAll #showAll,
+.showPublic #showPublic,
+.showHidden #showHidden,
+.showNPCOnly #showNPCOnly,
+.showPCs #showPCs,
+.showNPCs #showNPCs,
+.showCharacter #showCharacter,
+.showPlayer #showPlayer {
+	background-color: @bg-content;
+}
+
+#charList,
+#cpList,
+#headerList,
+#skillList,
+#sphereList,
+#spellList,
+#featList {
+	margin-bottom: 20px;
+	border-top: 0px none;
+}
+
+#charList .noResults,
+#headerList .noResults,
+#skillList .noResults,
+#spellList .noResults,
+#featList .noResults {
+	margin: 0;
+	font-size: 1em;
+}
+
+#charList {
+	margin-bottom: 15px;
+
+	.chkboxCol {
+		width: 30px;	
+	}
+
+	th.chkboxCol {
+		border-left: 1px solid #666;	
+	}
+	
+	.charNameCol {
+		// width: 210px;	
+	}
+
+	.playerNameCol {
+		width: 180px;	
+	}
+
+	.typeCol {
+		width: 75px;	
+	}
+
+	.totalCPCol {
+		width: 75px;	
+	}
+
+	.freeCPCol {
+		width: 75px;	
+	}
+
+	th.actionsCol {
+		border-right: #666;	
+	}
+
+}
+
+#charFilterRow1 .cell1,
+#charFilterRow6 .cell1,
+#charFilterRow7 .cell1 {
+	width: 585px;	
+}
+
+/* CP PAGE */
+
+#cpListFilters {
+	.cell1,
+	.cell2 {
+		width: 295px;
+	}
+
+	.cell1 .lbl {
+		width: 120px;	
+	}
+
+	.cell2 .lbl {
+		width: 95px;	
+	}
+	
+	.btnArea {
+		margin-left: 130px;	
+	}
+}
+
+#cpFilterRow2 .cell1,
+#cpFilterRow3 .cell1,
+#cpFilterRow5 .cell1 {
+	width: 595px;	
+}
+
+#cpFilterRow1 .cell2 .lbl {
+	width: 35px;
+}
+
+#cpFilterRow4 .cell1 {
+	width: 315px;
+}
+
+#cpFilterRow4 .cell2 {
+	width: 280px;
+}
+
+#cpList {
+
+	.dateCol {
+		width: 75px;	
+	}
+
+	.charCol {
+		// width: 140px;	
+	}
+
+	.playerCol {
+		width: 125px;	
+	}
+
+	.numCol {
+		width: 50px;	
+	}
+
+	.staffCol {
+		width: 55px;	
+	}
+
+	.catCol {
+		width: 75px;	
+	}
+		
+}
+
+#cpConfirmList,
+#cpPurgeList {
+	th {
+		background-color: #eee;
+		color: #333;
+	}	
+	th, td {
+		vertical-align: top;
+	}
+}
+
+#cpAddTable {
+	th, td {
+		vertical-align: top;
+	}
+	th {
+		background-color: #ccc;
+		color: #333;	
+	}
+	
+	td {
+		border-bottom: 1px solid #eee;	
+	}
+
+	.numCol {
+		width: 85px;	
+	}	
+
+	.catCol {
+		width: 185px;	
+	}
+
+	.numberCP {
+		float: left;	
+	}
+
+	.totals td {
+		background-color: #eee;	
+	}
+
+	#addCPTotal {
+		font-weight: bold;	
+	}
+
+	td select,
+	td input {
+		font-family: @font-main;	
+	}
+	
+	.errorMsg {
+		margin-left: 0;
+		font-size: .9em;	
+	}
+}
+
+.charCPList {
+	margin-bottom: 20px;
+}
+
+/* COMMUNITY PAGE */
+
+#communityList .col2 {
+	width: 100px;	
+}
+
+/* SKILL PAGE */
+#skillList {
+	
+	.nameCol {
+		// width: 190px;
+	}	
+	
+	.costCol {
+		width: 60px;	
+	}
+
+	.stackCol {
+		width: 60px;	
+	}
+	
+	.headerCol {
+		width: 150px;	
+	}
+
+	.accessCol {
+		width: 60px;	
+	}
+
+	.typeCol {
+		width: 100px;	
+	}
+
+	.actionsCol {
+		width: 100px;	
+	}
+}
+
+/*****************************************************************
+SPELL LIST
+*****************************************************************/
+
+#spellList {
+	
+	.col1 {
+		// width: 210px;
+	}
+
+	.col2 {
+		width: 165px;	
+	}
+	
+	.col3 {
+		width: 75px;	
+	}
+	
+	.col4 {
+		width: 75px;	
+	}	
+
+	.col5 {
+		width: 100px;
+	}
+}
+
+/*****************************************************************
+FEAT LIST
+*****************************************************************/
+
+#featList {
+	
+	.costCol {
+		width: 175px;
+		text-align: center;	
+	}
+
+	.actionCol {
+		width: 100px;	
+	}
+
+}
+ 
+.goBtn {
+	margin-left: 5px;
+}
+
+/***************************************************************
+GAME WORLD SECTION
+***************************************************************/
+
+#countriesPage #UIMessage,
+#headersPage #UIMessage {
+	margin-bottom: 0;
+}
+
+#raceList .col1 {
+	width: 475px;
+}
+
+#countryList .defaultCol {
+	width: 150px;
+	text-align: center;
+}
+
+#countryList .actionsCol {
+	width: 100px;
+}
+
+#headerList .col2 {
+	width: 75px;
+}
+
+#headerList .col3 {
+	width: 75px;
+}
+
+#headerList .col4 {
+	width: 100px;
+}
+
+// Staff
+#traitList .col2 {
+	width: 150px;
+}
+
+// Access
+#traitList .col3 {
+	width: 75px;
+}
+
+// Actions
+#traitList .col4 {
+	width: 100px;
+}
+
+.btnArea .btn-secondary,
+#btnArea .btn-secondary {
+	margin-left: 10px;
+}
+
+#countryAdminPage label,
+#headerAdminPage label,
+#skillAdminPage label,
+#spellAdminPage label,
+#communityAdminPage label,
+#featAdminPage label,
+#traitAdminPage label {
+	width: 135px;
+	text-align: left;
+}
+
+#countryAdminPage label,
+#communityAdminPage label,
+#traitAdminPage label {
+	text-align: left;
+}
+
+#raceAdminPage .btnArea,
+#cpAdminPage .btnArea {
+	margin-left: 135px;
+}
+
+#headerAdminPage #PCAccessRow select {
+	width: 330px;
+}
+
+#countryAdminPage .btnArea,
+#headerAdminPage .btnArea,
+#skillAdminPage .btnArea,
+#spellAdminPage .btnArea,
+#featAdminPage .btnArea,
+#countryAdminPage .btnArea,
+#communityAdminPage .btnArea,
+#traitAdminPage .btnArea {
+	margin-left: 135px;
+	margin-bottom: 20px;
+}
+
+.oneCol #main,
+#charCPPage #main,
+#cpAdminPage #main,
+#charDeathsPage #main,
+#headerAdminPage #main,
+#skillAdminPage #main,
+#spellAdminPage #main,
+#countryAdminPage #main,
+#communityAdminPage #main,
+#traitAdminPage #main {
+	margin-left: 15px;
+	width: 770px;
+}
+
+.attributeCost {
+	margin-right: 5px;
+}
+
+#attributeCost2Row .attributeCost,
+#attributeCost3Row .attributeCost {
+	margin-left: 135px;
+}
+
+#attributeCost2Row,
+#attributeCost3Row {
+	padding-bottom: 10px;
+}
+
+#attributeCost1Row .hint,
+#attributeCost2Row .hint,
+#attributeCost3Row .hint {
+	position: relative;
+	margin-top: 0;
+	margin-left: 135px;
+}
+
+.plusMinus {
+	float: left;
+	margin-left: 5px;
+}
+
+#charSelectionBox {
+	padding: 0;
+	max-height: 225px;
+	width: 338px;
+	overflow: hidden;
+	/* background-color: #eee; */
+	border: 1px solid #999;
+}
+
+#charSelectionBox .container {
+	overflow: auto;
+	max-height: 190px;
+	width: 320px;
+	padding: 5px;
+	margin: 0;
+}
+
+#charSelectionBox .toolbar {
+	background-color: #eee;
+	margin: 0;
+	height: 25px;
+	border-bottom: 1px solid #ccc;
+}
+
+#charSelectionBox a {
+	width: 65px; 
+	float: left;
+	height: 25px;
+	line-height: 25px;
+	margin-left: 10px;
+	font-size: 1.3em;
+}
+
+#charSelectionBox .chkRow {
+	/* clear: both; */
+	margin: 5px 0;
+}
+
+#charSelectionBox input {
+	margin-right: 10px;
+	float: left;
+}
+
+#charSelectionBox label {
+	float: left;
+	line-height: 20px;
+	width: 265px;
+	font-size: 1.4em;
+}
+
+#headerIDRow, #skillTypeRow, #stackableRow {
+
+	label {
+		line-height: 25px;
+	}
+
+	.cell {
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+}
+
+/***************************************************************
+HOME SECTION
+***************************************************************/
+
+#homePage {
+	
+	li {
+		margin-bottom: 8px;	
+	}
+
+	li ul {
+		margin-top: 3px;		
+	}
+
+	.leftCol,
+	.rightCol {
+		float: left;
+		margin-right: 20px;
+	}
+
+	.leftCol {
+		width: 200px;
+	}
+
+	.rightCol {
+		width: 225px;
+	}
+
+}
+
+#pendingUsersForm {
+	margin-top: 20px;	
+}
+
+#pendingUserSection {
+	fieldset {
+		padding-bottom: 20px;	
+	}
+
+	#toolbar {
+		width: 98.1%;
+		height: 40px;
+		background-color: #ccc;	
+		-moz-border-radius: 5px 5px 0 0;
+		border-radius: 5px 5px 0 0;
+		border: 1px solid #bbb;
+		border-bottom: 0px none;
+	}
+	
+	#toolbar input {
+		margin-top: 4px;
+	}
+	
+	#approveUsersBtn,
+	#rejectUsersBtn {
+		font-size: 1.2em;	
+	}	
+
+	#approveUsersBtn {
+		margin-left: 10px;
+		margin-right: 5px;	
+	}
+
+	p {
+		margin-top: 0;	
+	}
+
+
+}
+
+#pendingUserList {
+	width: 98.5%;
+	border-top: 0px none;	
+
+	.chkboxCol {
+		width: 25px;	
+	}
+	.nameCol {
+		width: 290px;	
+	}
+
+	.emailCol {
+		width: 325px;	
+	}
+
+}
+
+/***************************************************************
+PLAYERS SECTION STYLES
+***************************************************************/
+
+#playerAdmin #userRoleStaff,
+#playerAdmin #userRoleAdmin {
+	margin-left: 150px;
+	margin-top: 5px;
+	clear: both;	
+}
+
+#playerAdmin #userRoleAdmin {
+	margin-top: 9px;
+	margin-bottom: 10px;	
+}
+
+#playerAdmin #staffLbl {
+	margin-top: 3px;	
+}
+
+#playerAdmin #adminLbl {
+	margin-top: 7px;	
+}
+
+#playerDetailsPage h3 {
+	margin-top: 0;
+}
+
+#playerDetailsPage {
+
+	#charactersCell {
+		margin-bottom: 1em;
+	}
+
+	.charCPList {
+		
+		.col1 {
+			width: 65px;
+		}
+		
+		.col2 {
+			width: 40px;
+			text-align: center;
+		}
+		
+		.col3 {
+			width: 100px;
+		}
+		
+		.col5 {
+				width: 105px;
+			}
+		.col6 {
+			width: 50px;
+		}
+	}
+
+}
+
+#playerDetailsPage, 
+#playerAdminPage #btnArea .btn-primary {
+	float: none;
+}
+
+#playerAdminPage {
+	label {
+		width: 145px;
+	}
+
+	#sendEmailRow {
+		margin-bottom: 1em;
+	}
+	
+	#sendEmailRow label {
+		width: 500px;
+		font-weight: normal;
+		margin-left: .5em;
+		margin-top: 2px;
+		line-height: 17px;
+	}
+}
+
+#playerDeletePage {
+	
+	p {
+		width: 600px;
+	}
+
+	#main {
+		padding-bottom: 20px;
+	}
+	
+	#btnArea {
+		margin-top: 1.5em;
+	}
+
+	.btn-secondary {
+		margin-left: 15px;
+	}
+
+}
+
+
+/***************************************************************
+CHARACTER SECTION STYLES
+***************************************************************/
+
+#charRow {
+	margin: 2em 0 1.3em 0;
+}
+
+#charRow label,
+#charDeathsRow label {
+	width: 140px;
+}
+
+.cpRow {
+	
+	input, select {
+		margin-right: 1em;
+	}
+
+	.cell label {
+		width: 20px;
+	}
+	.cell2 label {
+		width: 25px;
+	}
+
+	.cell3 label {
+		width: 30px;
+	}
+
+}
+
+#sendEmailSection label {
+	width: 235px;
+}
+
+.sampleEmail {
+	
+	p, th, td {
+		font-family: "Courier New", Courier, monospace;
+	}
+
+	table {
+		width: 400px;
+	}
+	
+	th {
+		background-color: #eee;
+		color: #333;
+	}
+	
+	.col1 {
+		width: 25px;
+	}
+
+	.col2 {
+		width: 175px;
+	}
+
+	.col3 {
+		width: 200px;
+	}
+
+}
+
+.sampleLink {
+	float: left;
+	display: block;
+	width: 250px;
+	line-height: 1.5em;
+	font-size: 1.2em;
+	margin-left: 15px;
+	outline: none;
+}
+
+.infoPopup {
+	position: absolute;
+	width: 500px;
+
+	.contents {
+		border: 1px solid #ccc;
+		padding: 10px;
+		background-color: #fff;
+	}
+
+	.titlebar {
+		background: transparent url(../../images/popupTitlebar.png) no-repeat top left;
+		height: 20px;
+	}
+
+	.titlebar .closeLink {
+		position: absolute;
+		top: 3px;
+		right: 10px;
+		color: #fff;
+	}
+
+	.contents h4 {
+		margin-top: 0;
+	}
+
+}
+ 
+#deathsRow label {
+	width: 140px;
+}
+
+#charDeathsPage #btnArea {
+	margin-top: 1.5em;
+}
+
+#charDeathsRow {
+	margin-top: 1.5em;
+}
+
+#exportCardBtn {
+	font-size: 1.4em;
+	background-color: #fff;
+	border: 0 none;
+	color: #336699;
+	height: 25px;
+	text-decoration: underline;
+	background: url('../../images/icon_char_cards.png') left center no-repeat;
+	padding-left: 30px;
+}
+
+/*************************************************************************************
+ACTIONS MENU
+*************************************************************************************/
+
+.actionsContainer {
+	position: relative;
+	top: 2px;
+}
+
+.actionsLink {
+	display: block;
+	width: 62px;
+	height: 22px;
+	line-height: 18px;
+	padding: 2px 2px 2px 5px;
+	text-decoration: none;	
+	background: transparent url(../../images/dropdown_arrow.png) no-repeat 50px 9px;
+}
+
+.actionsLink:hover {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	height: 20px;
+	width: 60px;
+}
+
+.menu {
+	border: 1px solid #ccc;
+	padding: 5px 0;
+	position: absolute;
+	top: 24px;
+	background-color: #fff;	
+	z-index: 100;
+	width: 100px;
+
+	ul {
+		margin: 0;
+		padding: 0;	
+	}
+
+	li {
+		margin: 0 0 5px 0;
+		padding: 0;	
+		list-style-type: none;
+		font-size: 1em;
+	}
+
+	li a {
+		display: block;
+		height: 25px;
+		line-height: 25px;
+		padding-left: 5px;
+	}
+
+	li a:hover {
+		background-color: #eaf1fc;	
+	}
+
+} 
+
+#charList th,
+#charList td {
+	position: relative;	
+}
+
+/*************************************************************************************
+CHARACTER DETAILS PAGE
+*************************************************************************************/
+
+h2 .playerName {
+	font-size: .7em;		
+}
+
+#charDetailsPage {
+	
+	.even th {
+		background-color: #fff;
+	}
+
+	.odd th {
+		background-color: #eee;
+	}
+
+	th, td {
+		padding: .5em;
+		color: #333;
+	}
+
+	h2 {
+		font-size: 2.2em;
+	}
+
+	h3 {
+		font-family: @font-header;
+		background: none;
+		color: #333;
+		margin-bottom: 0;
+
+	}
+
+	h4 {
+		font-weight: 300;
+		font-size: 1.4em;
+		margin: 10px 0 0 10px;
+
+	}
+
+	h5 {
+		font-weight: 300;
+		font-size: 1.4em;
+		margin: 10px 0 0 0;
+	}
+
+	.statBox p {
+		color: #fff;
+	}
+
+	.header {
+		padding-right: 10px;		
+
+		.empty {
+			margin-left: 25px;
+		}
+
+		.skills .empty {
+			margin: 7px 0 0 0;
+		}	
+
+	}	
+	
+	.headerDescription {
+		padding-left: 10px;	
+
+		p {
+			margin-top: 0;
+		}
+	}
+
+	.feat {
+
+		p {
+			margin-left: 10px;
+		}
+
+	}
+
+	.skills {
+		margin-left: 30px;
+
+		p {
+			margin-left: 0;
+		}
+
+	}
+
+	.moreInfo {
+		position: relative;
+		top: 5px;
+		left: 5px;
+	}
+
+	.cpCost {
+		font-size: .9em;
+		font-style: italic;
+	}
+
+} // #charDetailsPage
+
+.statBox {
+	background-color: @bg-header-highlight;
+	color: #fff;
+	width: 32.8%;
+	margin: 0 .5% 20px 0;
+	padding: 5px 0;
+	float: left;
+	.transparency(@ie: 6; @modern: 0.6);
+	.rounded-corners(2px; 2px; 2px; 2px);
+
+	p {
+		font-size: 3em;
+		margin: 0;
+		text-align: center;
+		font-weight: 300;
+		color: #fff;
+	}
+
+	.lbl {
+		font-size: 1.2em;
+		width: 100%;
+		line-height: 15px;
+	}
+}
+
+.summary #summaryLink,
+.detailed #detailedLink {
+	text-decoration: none;
+	cursor: default;
+	color: #333;
+}
+
+#summaryView {
+	p {
+		margin: 0;
+	}
+
+	h3 {
+		margin-bottom: 0;
+	}
+
+}
+
+#detailedView {
+	
+	p {
+		margin-top: 0;
+		color: #666;
+	}
+
+}
+
+#basics {
+	margin-bottom: 20px;
+
+	.col1 {
+		width: 17%;
+	}
+
+	.col2 {
+		width: 35%;
+		font-size: 1.4em;
+	}
+
+	.col3 {
+		width: 20%;
+	}
+}
+
+#charCPList {
+	
+	th {
+		background-color: #ccc;
+	}
+
+	th, td {
+		padding: 5px 3px;	
+	}
+
+	.total td {
+		font-weight: bold;
+		background-color: #ccc;	
+	}
+
+	.cpTable {
+		margin: 15px 10px 0 0;	
+		width: 97%;
+	}
+
+	.cpTable .col1 {
+		width: 15%;	
+	}
+
+	.cpTable .col3 {
+		width: 20%;	
+	}
+
+	.cpTable .col4 {
+		width: 35%;	
+	}
+
+	.cpTable .col5 {
+		width: 20%;	
+	}
+
+}
+
+#cpList .cpTable .col2 {
+	width: 10%;	
+}
+
+/*************************************************************************************
+CP SECTION
+*************************************************************************************/
+
+#cpAdminPage label,
+#cpAdminPage .lbl {
+	width: 135px;	
+}
+
+#CPTypeRow {
+	
+	.cell {
+		float: none;
+		margin-bottom: 10px;	
+	}
+
+	#charCPCell input {
+		margin-left: 0;	
+		margin-right: 10px;
+		height: 15px;
+	}
+
+	#playerCPCell input {
+		margin-left: 135px;	
+		margin-right: 10px;
+		height: 15px;
+	}
+
+	.chzn-container,
+	.chosen-container {
+		margin: 5px 0 0 160px;
+	}
+	
+	.errorMsg {
+		margin-left: 130px;	
+	}
+
+}
+
+.ui-dialog #charCPCell,
+.ui-dialog #playerCPCell {
+	
+	select {
+		margin-left: 160px;
+	}
+
+	.chzn-container,
+	.chosen-container {
+		margin-left: 125px;
+	}
+}
+
+.ui-dialog #charCPCell label {
+	width: 100px;
+}
+
+.ui-dialog #CPTypeRow #playerCPCell input {
+	margin-left: 100px;
+}
+
+/***************************************************************
+SETTINGS SECTION
+***************************************************************/
+
+#settingsAdminPage {
+	
+	label {
+		width: 215px;
+	}
+
+	fieldset {
+		margin-bottom: 15px;	
+	}
+
+	.btnArea {
+		margin-left: 0;	
+	}
+
+	.hint {
+		margin-left: 260px;	
+	}
+
+	#UIMessage {
+		margin-bottom: 0;	
+	}
+
+}
+
+/***************************************************************
+TRASH PAGE
+***************************************************************/
+
+#trashPage {
+	
+	table {
+		margin-bottom: 25px;	
+	}
+
+	th, td {
+		position: relative;	
+	}
+}
+
+#deletedCountryList .col1,
+#deletedCommunityList .col1,
+#deletedRaceList .col1 {
+	width: 630px;	
+}
+
+/* DELETED CHARACTERS */
+#deletedCharList {
+	
+	.col1 {
+		width: 310px;
+	}
+	
+	.col2 {
+		width: 225px;
+	}
+
+	.col3 {
+		width: 75px;
+	}
+
+}
+
+/* DELETED HEADERS */
+
+#deletedHeaderList {
+	
+	.col1 {
+		width: 310px;	
+	}
+
+	.col2, .col3 {
+		width: 150px;	
+	}
+
+}
+
+/* DELETED PLAYERS */
+
+#deletedPlayerList {
+	
+	.col1 {
+		width: 260px;	
+	}
+
+	.col2 {
+		width: 150px;	
+	}
+
+	.col3 {
+		width: 200px;	
+	}
+
+}
+
+/* DELETED SKILLS */
+
+#deletedSkillList {
+	
+	.col1 {
+		width: 300px;
+	}
+
+	.col2 {
+		width: 75px;	
+	}
+
+	.col3 {
+		width: 100px;	
+	}
+
+	.col4 {
+		width: 125px;	
+	}
+
+}
+
+/* DELETED FEATS */
+
+#deletedFeatList {
+	
+	.col2 {
+		width: 225px;	
+	}
+
+	.col3 {
+		width: 105px;	
+	}
+
+}
+
+/* DELETED TRAITS */
+
+#deletedTraitList {
+	
+	.col1 {
+		width: 310px;	
+	}
+
+	.col2 {
+		width: 175px;	
+	}
+
+	.col3 {
+		width: 125px;	
+	}
+
+}
+
+/***************************************************************
+HELP STYLES
+***************************************************************/
+
+.help {
+	padding: 0 10px;
+	position: absolute;
+	left: 520px;
+	font-size: .9em;
+	width: 255px;
+	background-color: #CECEDF;
+	-moz-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	z-index: 100;
+}
+
+.helpTop {
+	
+	.closeLink {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		color: #666;
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 1.3em;	
+	}
+
+}
+
+.helpContent {
+	padding: 22px 0 0 0;
+	min-height: 30px;
+}
+
+.helpBottom {
+	height: 9px;
+}
+
+#helpArrow {
+	position: absolute;
+	left: 500px;
+}
+
+.help {
+	
+	p {
+		margin-top: 0;
+		/* width: 255px; */
+	}
+
+	ul {
+		margin-left: 0;
+		padding-left: 25px;
+	}
+
+	li {
+		padding-bottom: .5em;
+	}
+
+}
+
+/***************************************************************
+DIALOG STYLES
+****************************************************************/
+
+.deleteDialog {
+	
+	.deleteList {
+		max-height: 300px;	
+		overflow: auto;
+	}
+
+	.deleteList ul {
+		margin-top: 0;	
+	}
+
+	.numDeleteItems {
+		font-weight: bold;	
+	}
+
+}
+
+.ui-dialog {
+	
+	.charName, 
+	.playerName,
+	.deleteItemName {
+		margin-left: 25px;
+		font-weight: bold;
+	}
+
+	.playerData {
+		margin-left: 25px;	
+	}
+
+}
+
+#transferCharDialog {
+	
+	.lbl, label {
+		width: 115px;
+		margin-right: 10px;
+	}
+
+	.errorMsg {
+		margin-left: 125px;
+		margin-top: 5px;	
+	}
+
+}
+
+/***************************************************************
+MISCELLANEOUS
+***************************************************************/
+
+.clear {
+	clear: both;
+}
+
+body .ui-widget {
+	font-family: @font-main;
+}
+
+body .ui-dialog .ui-dialog-title {
+	font-weight: 300;
+	font-size: 1.3em;
+}
+
+/***********************************************************************
+SUCCESS/ERROR BOXES
+At top of page. 
+************************************************************************/
+
+#UIMessage {
+	margin: 15px 15px 15px 0;
+	padding: 10px 0 10px 0;
+	width: 550px;
+	.rounded-corners(5px; 5px; 5px; 5px);
+
+	.content {
+		padding: 10px;
+		padding: 2px 10px 2px 10px;
+		min-height: 30px;
+	}
+
+	.content h2 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: 1.6em;
+	}
+
+	/* SUCCESS STYLES */
+	&.success {
+		background-color: #C3F5BF;
+	}
+
+	&.success .content h2 {
+		color: #336633;
+		background: transparent url(../../images/confirm_check.png) no-repeat top left;
+		padding-left: 40px;
+		min-height: 35px;
+		line-height: 30px;
+		margin-bottom: 0;
+	}
+
+	&.success .content p {
+		padding-left: 40px;
+		margin-top: 0px;
+	}
+
+	/* ERROR STYLES */
+
+	&.error {
+		background-color: #e4cccc;	
+	}
+
+	&.error .content h2 {
+		color: @text-color-error;
+		background: transparent url(../../images/warning_gray.png) no-repeat 0 5px;
+		padding-left: 35px;
+		min-height: 30px;
+		line-height: 30px;
+		margin-bottom: 0;
+	}
+
+	&.error .content p {
+		padding-left: 35px;
+		margin-top: 10px;
+	}
+
+	&.error .content ul {
+		padding-left: 50px;
+	}
+
+	&.error #errorList li a {
+		color: @text-color-error;
+	}
+
+}
+
+/***********************************************************************
+FIELD-LEVEL ERRORS
+************************************************************************/
+
+.error label {
+	color: @text-color-error;
+}
+
+.error input,
+.error select,
+.error textarea {
+	border: 1px solid #FF3300;
+}
+
+.errorMsg {
+	color: @text-color-error;
+	display: block;
+	background: transparent url(../../images/warning.png) no-repeat top left;
+	padding-left: 24px;
+	margin: 7px 0 0 15px;
+	min-height: 25px;
+	font-size: 1.2em;
+	float: left;
+}
+
+/* IE6 only */
+* html span.errorMsg {
+	height: 25px;
+}
+
+/*************************************************************************************
+WIZARD PAGE
+*************************************************************************************/
+
+#wizardPage,
+#adminWizardPage {
+	
+	form {
+		padding-top: 5px;
+
+		h3 {
+			padding-left: 0;
+		}
+	}
+
+	#content {
+
+		h2 {
+			padding-top: 0;
+		}
+
+		h3 a {
+			padding-left: 40px;
+			outline: none;
+			text-decoration: none;
+			display: block;
+			width: 100%;
+			height: 25px;
+			color: #333;
+			line-height: 26px;
+		}
+
+	}
+
+	#main {
+		width: 800px;
+		padding: 10px;
+		min-height: 425px;
+	}
+
+	.row {
+		
+		clear: both;
+
+		.cell1 {
+			input {
+				border: 0px none;
+			}
+		}
+
+		.updateCheckedBox {
+			float: left;
+			margin-left: 3px;
+		}
+
+	}
+
+	#container {
+		position: relative;
+	}
+
+	.intro {
+		margin: 0 0 15px 0;
+	}
+
+	.description p {
+		margin-top: 0;
+	}
+
+	#submitWarning {
+		font-size: 1.3em;
+		color: #FF0000;
+		background: transparent url(../../images/warning.png) no-repeat top left;
+		padding-left: 25px;
+		margin-top: 10px;
+	}
+
+	.section-tabbed {
+		padding: 10px;
+	}
+
+	label {
+		float: none;
+		margin-bottom: 5px;
+	}
+
+	input {
+		height: 30px;
+		font-weight: 300;
+		font-size: 1.4em;
+	}
+
+	#charNameRow {
+		width: 450px;
+		float: left;
+	}
+
+	#charTypeRow {
+		float: left;
+		clear: none;
+	}
+
+	.chosen-container {
+		min-width: 50px;
+	}
+
+	#sidebar {
+		width: 185px;
+		min-height: 200px;
+		position: fixed;
+		background-color: #fff;
+		padding-bottom: 15px;
+		margin: -8px 15px 0 800px;
+		border-right: 3px solid @bg-color-header;
+		border-top: 3px solid @bg-color-header;
+		border-bottom: 3px solid @bg-color-header;
+		.rounded-corners(0; 15px; 15px; 0);
+
+		h2 {
+			font-size: 1.4em;
+			padding: 0;
+			margin: 0;
+			background-color: @bg-color-header;
+			color: #fff;
+			height: 25px;
+			line-height: 25px;
+			text-align: center;
+		}
+
+		.inner {
+			margin: 0;
+			padding: 0;
+			border: 1px solid #ccc;
+			background-color: #fff;
+		}
+
+		#cpCount,
+		#charSummary {
+			width: 165px;
+			margin-top: 15px;
+			padding-bottom: 0 0 10px 0;
+			margin-left: 10px;
+		}
+
+		#cpCount {
+			font-size: 1.2em;
+
+			#cpNum {
+				font-size: 3em;
+				font-weight: 300;
+				margin: .2em 0 .2em 0;
+				text-align: center;
+			}
+
+			#cpNum.negWarning {
+				color: #FF0000;
+				background: transparent url(../../images/warning_25px_gray.png) no-repeat 125px 17px;
+			}
+
+		}
+
+		#charSummary {
+			min-height: 265px;
+		}
+
+		* html #charSummary {
+			height: 265px;
+			overflow: auto;
+		}
+
+		#charDetails {
+			padding-top: .5em;
+			padding-left: .7em;
+			padding-bottom: .5em;
+			background-color: #fff;
+		}
+
+		span {
+			font-size: 1.2em;
+		}
+
+		.summaryAttribute {
+			font-size: 1.6em;
+			padding-left: 5px;
+		}
+
+		span.label {
+			font-weight: bold;
+		}
+
+		#summaryHeaderList, #summaryFeatList {
+			font-size: 1.2em;
+		}
+
+	} // #sidebar
+}
+
+/*************************************************
+WIZARD FORM CONTROLS
+*************************************************/
+
+.skillGrp .row select {
+	width: 40px;
+	height: 25px;
+}
+
+#submitBtn {
+	float: left;
+	margin-right: 10px;
+}
+
+#btnArea {
+	margin: 20px 0 0 0;
+}
+
+#btnArea p {
+	margin-top: 0;
+
+	p.instruct {
+		margin: 15px 0 0 0;	
+	}
+
+	.btn-primary {
+		margin: 0 10px 0 5px;
+	}
+
+}
+
+.attributeFld {
+	width: 2em;
+}
+
+.skillQtyFld {
+	/* width: 1.5em; */
+}
+
+.hoverHelp {
+	background: transparent url(../../images/help_icon.png) no-repeat top left;
+	display: block;
+	height:20px;
+	width: 20px;
+	float: left;
+}
+
+#curVitality {
+	font-size: 1.1em;
+}
+
+#totalAttributeCost {
+	/* color: #FF0000; */
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.units {
+	font-size: 1.4em;
+}
+
+/***************************************************************
+WIZARD SECTION-SPECIFIC STYLES
+****************************************************************/
+
+#basicsHdr,
+#attributesHdr,
+#skillsHdr,
+#spellsHdr {
+	margin: 20px 0 0 0;
+}
+
+.header,
+.sphere {
+	
+	.row {
+		margin-bottom: 0;
+	}
+
+}
+
+.header,
+.spellGrp,
+.sphere,
+.feat { 
+	
+	.cell0 {
+		height: 20px;
+	}
+
+	.cell0,
+	.cell1,
+	.cell2,
+	.cell3 {
+		float: left;
+	}
+
+	.cell0 img {
+		float: left;
+		position: relative;
+		top: 2px;
+		cursor: pointer;
+	}
+	
+	.cpCost {
+		margin-left: 1em;
+		font-size: 1.3em;
+	}
+
+	label {
+		font-weight: bold;
+		margin-left: .8em;
+		text-align: left;
+		display: inline;
+		float: none;
+		color: #016633;
+		font-size: 1.3em;
+	}
+
+}
+
+#basics {
+	
+	.row {
+		input,
+		select,
+		textarea {
+			margin-left: 0;
+		}
+
+		.instruct {
+			margin-left: 137px;
+		}
+	}
+}
+
+.skillGrp,
+.spellGrp {
+	
+	.row {
+		padding-left: 30px;
+		margin-bottom: 20px;
+	}
+}
+
+#feats .row {
+	padding-left: 0;	
+}
+
+#skills,
+#spells,
+#feats {
+	input {
+		height: 15px;
+		margin: 2px 2px 2px 6px;
+	}
+
+	.skillGrp {
+		input {
+			margin-right: 10px;
+		}
+	}
+}
+
+#wizardPage .skillGrp, 
+#wizardPage .spellGrp,
+#adminWizardPage .skillGrp, 
+#adminWizardPage .spellGrp
+#feats {
+	
+	h4 {
+		padding-left: 27px;
+		font-size: 1.2em;
+	}
+
+	.row {
+		
+		input {
+			float: left;
+			/* border: 1px dashed #FF00FF; */
+		}
+	
+		label {
+			float: left;
+			text-align: left;
+			margin: 0;
+			line-height: 20px;
+			font-weight: bold;
+			width: 100%;
+		}
+		
+		.hoverHelp {
+			margin-left: 10px;
+		}
+
+		.cpCost {
+			font-weight: normal;
+			float: left;
+			font-size: 1.3em;
+			line-height: 20px;
+			margin-right: 1em;
+			width: 125px;
+		}
+
+		.cell1 input {
+			float: right;
+			margin-right: 10px;
+		}
+
+		.cell1 .updateCheckedBox {
+			float: right;
+			margin-right: 10px;	
+		}
+	
+	}
+
+}
+
+.description,
+.longDescription {
+	clear: both;
+	padding-left: 25px;
+	margin: 0;
+}
+
+.shortDescLink,
+.longDescLink {
+	font-size: .9em;
+}
+
+.header,
+.sphere {
+	
+	.description,
+	.longDescription {
+		padding-left: 48px;
+	}
+
+	.row {
+		.cell2 {
+			float: left;
+			width: 372px;
+		}
+	}
+
+}
+
+.skillGrp {
+	
+	.row {
+		
+		.cell1 {
+			float: left;
+			width: 60px;
+			margin-left: 20px;
+		}
+
+		.cell2 {
+			float: left;
+			width: 300px;
+		}
+
+		.description,
+		.longDescription {
+			margin-left: 80px;
+			padding-left: 0;
+		}
+	}
+}
+
+#spells .spellGrp .row .cell1,
+#feats .row .cell1 {
+	float: left;
+	margin-left: 0px;
+	width: 50px;
+}
+
+#feats {
+	
+	.row {
+		
+		.cell1 {
+			width: 25px;
+		}
+
+		.cell2 {
+			float: left;
+			width: 380px;	
+		}
+
+	}
+
+}
+
+#spells {
+	
+	.noData {
+		margin: 0 0 15px 10px;
+	}
+
+}
+
+.spellGrp {
+	
+	.row .cell2 {
+		float: left;
+		width: 265px;
+	}
+
+}
+
+.costHdr,
+.maxLvlHdr {
+	font-weight: bold;
+}
+
+.maxLevels {
+	float: right;
+	margin-right: 10px;
+	width: 100px;
+	font-size: 1.3em;
+	line-height: 20px;
+}
+
+/***************************************************************
+ATTRIBUTE VISUALIZATION
+****************************************************************/
+
+#attributes {
+	clear: both;
+	// border-top: 1px solid #fff;
+	padding-top: 15px;
+
+	label {
+		float: left;
+		width: 50px;
+	}
+}
+
+.attributeVis {
+	float: left;
+}
+
+.attributeTick {
+	width: 20px;
+	height: 20px;
+	background-color: #FF9900;
+	float: left;
+	margin-right: 2px;
+	-moz-border-radius: 3px;
+	border-radius: 2px;
+}
+
+.attributeNumDisplay {
+	font-size: 2em;
+	float: left;
+	width: 30px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.attributeIncrease,
+.attributeDecrease {
+	display: block;
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin-top: 3px;
+}
+
+.attributeIncrease {
+	background: transparent url(../../images/circle_plus.png) no-repeat top left;
+	margin-right: 3px;
+	// margin-left: 15px;
+}
+
+.attributeDecrease {
+	background: transparent url(../../images/circle_minus.png) no-repeat top left;
+}
+
+#vitalityRow {
+	.errorMsg {
+		float: left;
+		margin-left: 15px;
+		margin-top: 0;
+	}
+}
+
+#attributeInfo {
+	position: absolute;
+	top: 138px;
+	left: 300px;
+	z-index: 2;
+	width: 350px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 5px 5px 5px 10px;
+	-moz-box-shadow: 5px 5px 5px #999;
+	-webkit-box-shadow: 5px 5px 5px #999;
+	box-shadow: 5px 5px 5px #999;
+	min-height: 100px;
+	max-height: 400px;
+	overflow: auto;
+
+	h2 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: 1.2em;
+	}
+
+	h3 {
+		background: none;
+		font-size: 1.2em;
+		color: #016633;
+		font-weight: bold;
+		margin-bottom: .7em;
+	}
+
+	p {
+		font-size: 1em;
+	}
+
+	.attributePt {
+		display: block;
+		width: 10px;
+		height: 10px;
+		background-color: #FF9900;
+		float: left;
+		border: 1px solid #ccc;
+		margin: 2px 6px;
+	}
+
+	.availablePts,
+	.skillName {
+		width: 140px;
+		float: left;
+		font-weight: bold;
+	}
+
+	.attributePts,
+	.skillAttributeUsage {
+		float: left;
+		width: 150px;
+	}
+
+	#attributeInfo .numPts {
+		font-weight: normal;
+	}
+
+}
+
+#attributeInfoArrow {
+	height: 20px;
+	width: 20px;
+	position: absolute;
+	left: 281px;
+	background: transparent url(../../images/popup_arrow_left.png) no-repeat top left;
+	z-index: 1000;
+}
+
+.skillTick {
+	width: 10px;
+	height: 10px; 
+	background-color: #6699CC;
+	border: 1px solid #999999;
+	display: block;
+	float: left;
+	margin: 0 2px;
+}
+
+.unavailable .skillTick {
+	background-color: #ccc;
+	border: 1px solid #ccc;
+}
+
+.skillUse {
+	border: 1px dashed #ccc;
+	float: left;
+	padding: 3px;
+}
+
+/***************************************************************
+SKILLS SECTION
+****************************************************************/
+
+#atavistSkills,
+#openSkills {
+	margin-left: 30px;
+}

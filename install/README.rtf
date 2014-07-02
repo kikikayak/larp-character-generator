@@ -1,0 +1,27 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww12740\viewh9680\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 README\
+\
+Thanks for using the Accelerant Character Generator!\
+\
+Please note that installation and configuration requires knowledge of PHP, MySQL, and hosting site administration. If the steps and terminology in the steps below aren\'92t familiar to you, you may wish to wait until the Generator is more mature (I\'92m working on a more wizard-like install experience). \
+\
+INSTALLATION: \
+1. Download and unzip the source code into a local directory. \
+2. On your hosting site, create a new blank MySQL database and a user with appropriate permissions to administer it. \
+3. Open the install/config.php script and fill in the appropriate settings for your hosting provider and the database you created (see the inline comments for more information). \
+4. Upload the Character Generator files to an appropriate location on your server (e.g. http://mylarp.server.com/cg). \
+5. Use a database administration utility (e.g. phpMySQLadmin) to log into the new database using the same admin user you specified in the config file. \
+6. From your new DB, execute the .sql script in the install directory (either execute the script file directly, or copy and paste the contents into a SQL window and run it) . The script will create the database structure and populate basic settings. \
+7. In a browser, go to the location of your new generator (e.g. http://larp.server.com/cg) and log in using the following default user name and password: \
+	user: admin@larpcharactergenerator.com\
+	password: chocolate\
+8. IMPORTANT SECURITY STEPS: Go to the admin area and create a new admin user using your own email address and password. Log out, log back in using your new admin user, and delete the default system administrator user. Leaving the admin user in place creates a security back door. If for some reason you don\'92t want to delete the system administrator user, please at least change the password to something secure. \
+9. Delete the \'93install\'94 directory from your cg site. \
+10. In the admin area, go to the Settings page and customize the settings for your game. \
+\
+That\'92s it! }

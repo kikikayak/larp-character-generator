@@ -1,0 +1,1868 @@
+@charset "utf-8";
+/*********************************************
+NAME: 	main.less
+NOTES: 	This file holds all the styles for the login and other unauthenticated pages. 
+		This file is written in the LESS stylesheet language: http://www.lesscss.org
+		It is compiled into standard CSS at runtime by js/less.js. 
+		Standard CSS syntax works fine, but there are lots of other cool options. 
+***********************************************/
+
+@import url('theme.less');
+
+// MAIN RULES
+body {
+	.body;
+}
+
+p, li {
+	font-size: 1.4em;
+	line-height: 1.6em;
+}
+
+a {
+	color: #003366;
+
+	img {
+		border: 0px none;
+	}
+
+	&:hover {
+		color: #990000;
+	}
+
+	&.definition {
+		text-decoration: none;
+		border-bottom: 1px dotted #003399;
+	}
+}
+
+th {
+	background-color: #d9ebd9;
+	font-weight: 300;
+	text-align: left;
+}
+
+th, td {
+	font-size: 1.3em;
+}
+
+.even {
+	background-color: #f4f4f4;
+}
+
+pre {
+	font-size: 1.5em;
+}
+
+h1 {
+	margin: 0;
+	padding: 10px 0 5px 10px;
+	color: #fff;
+	font-size: 2em;
+	font-weight: 300;
+}
+
+h2 {
+	margin-top: 0;
+	padding-top: 15px;
+	font-size: 1.8em;
+	font-weight: 300;
+}
+
+h3 {
+	font-size: 1.6em;
+	font-weight: 300;
+}
+
+.fldOutput {
+	margin-bottom: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+.reqFld {
+	font-weight: bold;
+	color: #FF0000;
+}
+
+.reqFldKey {
+	float: right;
+	font-size: 1em;
+	margin: 0;	
+}
+
+.empty {
+	font-style: italic;
+}
+
+.noData {
+	font-style: italic;
+}
+
+.noResults {
+	font-style: italic;
+}
+
+.instruct {
+	font-style: italic;
+	font-size: 1.2em;
+	clear: both;
+	display: block;
+}
+
+.opt {
+	font-style: italic;
+	width: 100px;
+	font-size: .9em;
+}
+
+.explanation {
+	display: block;
+	float: left;
+	margin-left: 1em;
+	background-color: #edfae0;
+	padding: 5px;
+	width: 350px;
+	border: 1px solid #eee;
+
+	p {
+		margin: 0 0 10px 0;
+		font-size: 1.1em;
+	}
+
+}
+
+.legal {
+	clear: both;
+	font-size: .9em;
+	color: #999999;
+	padding-top: 1.5em;
+}
+
+.note {
+	margin-left: 20px;
+}
+
+.hint {
+	color: #999;
+	display: block;
+	clear: both;
+	margin-left: 195px;	
+	padding-top: 5px;
+}
+
+.nofloat {
+	float: none;
+}
+
+.debug {
+	color: #fff;
+}
+
+/***************************************************************
+LAYOUT
+***************************************************************/
+
+#mast {
+	width: 800px;
+	background-color: @bg-color-mast;
+	margin: 10px auto 0 auto;
+	padding: 0 10px;
+	position: relative;
+	// .transparency;	
+	.rounded-corners;
+
+	a {
+		position: absolute;
+		color: @text-color-mast;
+		font-size: 1.1em;
+		line-height: 16px;
+		text-decoration: none;
+		top: 10px;
+		padding-left: 22px;
+	}
+
+	#adminLink {
+		right: 190px;
+		background: transparent url(../../images/gear_entypo_16px.png) no-repeat top left;
+	}
+
+	#logoutLink {
+		right: 15px;
+		background: transparent url(../../images/power_brankic.png) no-repeat top left;
+	}
+
+	#profileLink {
+		right: 105px;
+		background: transparent url(../../images/user_glyphish_16px.png) no-repeat top left;
+	}
+
+	h1 {
+		margin: 0;
+		padding: 10px 0;
+		color: @text-color-mast;
+		font-size: 2.2em;
+	}
+
+} 
+
+#nav {
+	width: 800px;
+	height: 25px;
+	margin: 0 auto 0 auto;
+	padding: 0 10px;
+	background-color: @bg-color-mast;
+	// .transparency;
+
+	a {
+		width: 100px;
+		height: 25px;
+		display: block;
+		float: left;
+		font-size: 1.2em;
+		font-family: @font-main;
+		margin-right: 3px;
+		text-align: center;
+		line-height: 27px;
+		color: #333;
+		text-decoration: none;
+		background-color: #bbb;
+		.rounded-corners (3px; 3px; 0; 0);
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
+
+}
+
+#homePage #home,
+#wizardPage #home,
+#charDetailsPage #home,
+#profilePage #profile,
+#cpPage #cp,
+.events #events {
+	background-color: @bg-color-content;
+}
+
+#content {
+	clear: both;
+	width: 780px;
+	background-color: @bg-color-content;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	border-left: 10px solid @bg-color-header;
+	border-right: 10px solid @bg-color-header;
+}
+
+#footer {
+	width: 800px;
+	height: 60px;
+	background-color: @bg-color-footer;
+	// .transparency(85; 0.85);
+	margin: 0 auto 0 auto;
+	padding: 0 10px;
+	.rounded-corners (0; 0; 15px; 15px);
+
+	p {
+		text-align: center;
+		font-size: 1.1em;
+		line-height: 1.2em;
+		font-family: @font-main;
+		margin: 0;
+		width: 700px;
+		padding-top: 10px;
+		padding-bottom: 1em;
+		margin-left: auto;
+		margin-right: auto;
+		color: @text-color-footer;
+	}
+
+	a {
+		color: @text-color-footer;
+		font-size: 1em;
+	}
+	
+}
+
+.section {
+	margin-bottom: 15px;
+
+	p {
+		margin-top: 0;
+	}
+
+	h3 {
+		margin-bottom: 0;
+		background-color: @bg-color-header;
+		color: #fff;
+		padding: 2px 0 2px 10px;
+		font-size: 1.4em;
+		height: 20px;
+		line-height: 20px;
+	}
+
+}
+
+.section-tabbed {
+	border: 1px solid #669966;
+	margin: 0 0 15px 0;
+	width: 765px;
+	padding: 15px 10px;
+	clear: both;
+	border-top: 5px solid #669966;
+
+	.intro {
+		margin-left: 15px;
+		margin-bottom: 20px;
+	}
+
+}
+
+/**************************************************************
+ABOUT DIALOG
+***************************************************************/
+
+#aboutDialog {
+	h1 {
+		font-size: 1.4em;
+		margin-top: 10px;
+		padding: 0;
+		color: #333;
+	}
+
+	a {
+		outline: none;
+	}
+}
+
+/***************************************************************
+TAB STYLES
+***************************************************************/
+
+.tabPanel a {
+	display: block;
+    float: left;
+	background-color: #999;
+	color: #FFFFFF;
+    font-size: 1.3em;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 3px;
+    text-align: center;
+    text-decoration: none;
+    width: 100px;
+	outline: none;
+	.rounded-corners (5px; 5px; 0; 0);
+
+	&.first {
+		margin-left: 0;
+	}
+
+	&.selected {
+		background-color: #669966;
+	}
+
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&.selected:hover {
+		text-decoration: none;
+	}
+
+	&#skillsTab {
+		width: 115px;	
+	}
+
+}
+
+/***************************************************************
+HELP STYLES
+***************************************************************/
+
+.help {
+	padding: 5px 10px;
+	position: absolute;
+	left: 490px;
+	font-size: .9em;
+	width: 290px;
+	background-color: #c1d8b2;
+	.rounded-corners(5px; 5px; 5px; 5px);
+
+	ul {
+		margin-left: 0;
+		padding-left: 40px;
+		width: 240px;
+	}
+
+	li {
+		padding-bottom: .5em;
+	}
+
+	a.helpClose {
+		display: block;
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		width: 14px;
+		height: 12px;
+		background: transparent url(../../images/close_x_help.png) no-repeat top left;
+	}
+}
+
+.helpContent {
+	padding: 10px 2px 2px 2px;
+	min-height: 30px;
+}
+
+#helpArrow {
+	position: absolute;
+	left: 470px;
+}
+
+/***********************************************************************
+SUCCESS/ERROR BOXES
+At top of page. 
+************************************************************************/
+
+#UIMessage {
+	margin: 15px 15px 15px 0;
+	padding: 10px 0 10px 0;
+	width: 550px;
+	.rounded-corners(5px; 5px; 5px; 5px);
+
+	.content {
+		padding: 10px;
+		padding: 2px 10px 2px 10px;
+		min-height: 30px;
+	}
+
+	.content h2 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: 1.8em;
+	}
+
+	/* SUCCESS STYLES */
+	&.success {
+		background-color: #C3F5BF;
+	}
+
+	&.success .content h2 {
+		color: #336633;
+		background: transparent url(../../images/confirm_check.png) no-repeat top left;
+		padding-left: 40px;
+		min-height: 35px;
+		line-height: 30px;
+		margin-bottom: 0;
+	}
+
+	&.success .content p {
+		padding-left: 40px;
+		margin-top: 0px;
+	}
+
+	/* ERROR STYLES */
+
+	&.error {
+		background-color: #dbbaba;	
+	}
+
+	&.error .content h2 {
+		color: @text-color-error;
+		background: transparent url(../../images/warning_gray.png) no-repeat 0 5px;
+		padding-left: 40px;
+		min-height: 30px;
+		line-height: 30px;
+		margin-bottom: 0;
+	}
+
+	&.error .content p {
+		padding-left: 40px;
+		margin-top: 10px;
+	}
+
+	&.error .content ul {
+		padding-left: 60px;
+	}
+
+	&.error #errorList li a {
+		color: @text-color-error;
+	}
+
+}
+
+/***********************************************************************
+FIELD-LEVEL ERRORS
+************************************************************************/
+
+.error label {
+	color: @text-color-error;
+}
+
+.error input,
+.error select,
+.error textarea {
+	border: 1px solid #FF3300;
+}
+
+.errorMsg {
+	color: @text-color-error;
+	display: block;
+	background: transparent url(../../images/warning.png) no-repeat top left;
+	padding-left: 24px;
+	margin: 7px 0 0 0;
+	min-height: 25px;
+	font-size: 1.2em;
+}
+
+/* IE6 only */
+* html span.errorMsg {
+	height: 25px;
+}
+
+/******************************************************************************
+FORM STYLING
+******************************************************************************/
+
+form {
+	padding-bottom: 20px;
+	margin: 0;
+}
+
+fieldset {
+	border: 0 none;
+	padding: 0;
+}
+
+label {
+	display: block;
+	margin: 0 10px 5px 0;
+	font-size: 1.3em;
+	color: #666;
+}
+
+.row {
+	clear: both;
+	margin: 0 0 1.4em 0;
+}
+
+input,
+select,
+textarea {
+	border: 1px solid #999999;
+	padding: 3px;
+	height: 35px;
+	font-family: @font-main;
+	font-size: 1.4em;
+	font-weight: 300;
+}
+
+.btnArea {
+	padding-top: 5px;
+	clear: both;
+}
+
+form h3 {
+	padding-left: 15px;
+	margin-top: 0;
+}
+
+/************************************************************
+INPUT FIELDS
+*************************************************************/
+
+.xxs {
+
+}
+
+.s {
+	width: 25px;
+}
+
+.s2 {
+	width: 35px;
+}
+
+.s3 {
+	width: 40px;
+}
+
+.ms {
+	width: 100px;	
+}
+
+.m {
+	width: 125px;
+}
+
+.m2 {
+	width: 165px;
+}
+
+.m3 {
+	width: 200px;
+}
+
+.l {
+	width: 250px;
+}
+
+.xl {
+	width: 328px;
+}
+
+.xl2 {
+	width: 435px;
+}
+
+/************************************************************
+BUTTONS
+************************************************************/
+
+.btn-primary,
+.btn-secondary,
+.btn-disabled {
+	font-family: @font-main;
+	display: block;
+	font-size: 1.4em;
+	cursor: pointer;
+	height: 35px;
+	width: 200px;
+	.rounded-corners(5px; 5px; 5px; 5px);
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: @bg-color-btn-primary;
+	// border: 1px solid #ccc;
+}
+
+.btn-primary * {
+	padding: 10px;
+}
+
+.btn-secondary {
+	color: #fff;
+	background-color: #666; /* for non-css3 browsers */
+	border: 1px solid #656565;
+}
+
+.btn-disabled {
+	background-color: #ccc;
+	border: 1px solid #bcbcbc;
+	color: #999999;
+}
+
+.w1 {
+	width: 130px;
+}
+
+.w2 {
+	width: 150px;
+}
+
+/***********************************************************************************
+LOGIN PAGE
+************************************************************************************/
+
+#loginPage {
+	
+	background-color: @bg-color-header;
+	
+	#content {
+		background-color: transparent;
+		border-radius: 0;
+		border: 0px none;
+	}
+
+	#main {
+		padding: 0;
+		margin: 0;
+	}
+}
+
+#loginForm {
+	background-color: #fff;
+	padding: 20px 0 15px 20px;
+	.rounded-corners(15px; 15px; 15px; 15px);
+
+	label {
+		color: #333;
+	}
+	
+	input {
+		height: 35px;
+		font-size: 1.4em;
+	}
+
+	#forgotPwdLink,
+	#requestLoginLink {
+		color: #333;
+	}
+
+	#forgotPwdLink {
+		display: block;
+		float: none;
+		clear: both;
+		padding-top: 5px;
+	}
+
+	#requestLoginLink {
+		float: left;
+		display: block;
+		margin-left: 0;
+		font-size: 1.1em;
+		line-height: 25px;
+	}
+
+	.btnArea {
+		margin: 0 0 15px 0;
+
+		a {
+			margin-left: 1.5em;
+		}
+	}
+	
+	#loginBtn {
+		margin-left: 0;
+		height: 35px;
+		width: 335px;
+		.transparency(10; 1)
+	}
+
+	#UIMessage {
+		width: 335px;
+	}
+
+}
+
+#loginArea {
+	width: 375px;
+	margin-top: 75px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 0;
+
+	p {
+		padding: 0;
+	}
+
+	a:visited {
+		color: #003366;
+	}
+
+	a:hover {
+		color: #990000;
+	}	
+}
+
+/******************************************************************
+REQUEST LOGIN, FORGOT PASSWORD
+*******************************************************************/
+
+#requestLoginPage {
+	
+	#UIMessage {
+		margin-top: 0;
+	}
+
+}
+
+/******************************************************************
+PAGE-SPECIFIC STYLES
+******************************************************************/
+
+#lostPwdPage,
+#resetPwdPage,
+#requestLoginPage {
+	
+	h2 {
+		padding-top: 0;
+	}
+
+	#helpLink,
+	#logoutLink,
+	#loginLink {
+		position: absolute;
+		color: #fff;
+		font-weight: bold;
+	}
+
+	#helpLink {
+		top: 10px;
+		right: 80px;
+	}
+
+	#logoutLink,
+	#loginLink {
+		top: 10px;
+		right: 15px;
+	}
+
+	fieldset {
+		border-top: 1px solid #eee;
+		padding: 15px 0;
+	}
+
+	#content {
+		padding: 15px 10px 0 10px;
+	}
+
+}
+
+#lostPwdPage,
+#resetPwdPage {
+	
+	form {
+		margin-top: 15px;
+		clear: both;
+	}
+
+	p {
+		margin-bottom: 0;	
+	}
+
+}
+
+/*****************************************************************************
+FAQ PAGE
+*****************************************************************************/
+
+#faqLinkArea {
+	margin: 0 auto;
+	width: 350px;
+	margin-top: 10px;
+}
+
+#faqLink {
+	color: #fff;
+	outline: none;
+}
+
+#faq {
+	width: 600px;
+	padding: 10px;
+	margin: 25px auto 0 auto;
+	background-color: #fff;
+
+	.close {
+		float: right;
+		color: #003366;
+	}
+
+	h2 {
+		font-size: 1.4em;
+	}
+
+	h3 {
+		font-size: 1.1em;
+		margin-bottom: 0;
+	}
+
+	p {
+		margin-top: 0;
+	}
+
+}
+
+/******************************************************************
+HOME PAGE
+******************************************************************/
+
+.intro {
+	margin-top: 0;
+}
+
+#charList {
+	width: 100%;
+	border: 0 none;
+	padding: 0;
+
+	.inner {
+		border: 1px solid #ccc;
+
+		p {
+			margin: 10px;
+		}
+	}
+
+	table {
+		width: 100%;
+	}
+
+	th, td {
+		margin: 0;
+	}
+
+	th {
+		padding: 5px;
+	}
+
+	td {
+		padding: 8px;
+	}
+
+	.charNameCol {
+		// width: 280px;
+		padding-left: 5px;
+	}
+
+	.typeCol {
+		width: 60px;
+		text-align: center;
+	}
+
+	.totalCol {
+		width: 60px;
+		text-align: center;
+	}
+
+	.freeCol {
+		width: 60px;
+		text-align: center;
+	}
+
+	.cheatSheetCol {
+		width: 85px;
+		text-align: center;
+	}
+
+	.editCol {
+		width: 40px;
+		text-align: center;
+	}	
+}
+
+/*************************************************************************************
+PROFILE PAGE
+*************************************************************************************/
+
+#profilePage {
+
+	fieldset {
+		border: 1px solid #ccc;
+		padding: .5em 0 0 10px;
+		margin: 0;
+	}
+
+	#contactInfoSection fieldset,
+	#userInfoSection fieldset {
+		padding-top: 1.2em;
+	}
+
+	label .moreInfo {
+		font-size: .9em;
+		font-style: italic;
+	}
+
+	#loginRow {
+		padding-bottom: 0;
+	}
+
+	#userInfoSection p {
+		margin-top: 15px;
+	}
+
+	#userInfoSection p.fldOutput {
+		margin-top: 0;
+	}
+
+	#btnArea {
+		margin-top: 20px;
+	}
+
+	form {
+		padding-bottom: 0;
+	}
+
+}
+
+/*************************************************************************************
+CP PAGE
+*************************************************************************************/
+
+.cpTable {
+	border: 1px solid #ccc;
+	width: 100%;
+
+	th,
+	td {
+		text-align: left;
+		padding: .3em;
+	}
+
+	.dateCol {
+		width: 75px;
+	}
+
+	.cpCol {
+		width: 40px;
+	}
+
+	.catCol {
+		width: 120px;
+	}
+
+	.noteCol {
+		width: 315px;
+	}
+
+	.staffCol {
+		width: 150px;
+	}
+
+	.total td {
+		font-weight: bold;
+		border-top: 1px solid #eee;
+	}
+
+}
+
+/*************************************************************************************
+CHARACTER DETAILS PAGE
+*************************************************************************************/
+
+#charDetailsPage {
+	
+	.section-tabbed {
+		padding-top: 0;
+	}
+
+	th,
+	td {
+		padding: .2em;
+	}
+
+	h2 {
+		margin-bottom: 0;
+		font-size: 2.2em;
+	}
+
+	h3 {
+		font-family: @font-header;
+		background: none;
+		color: #333;
+		margin-bottom: 0;
+
+	}
+
+	h4 {
+		font-size: 1.4em;
+		margin: 10px 0 10px 10px;
+
+	}
+
+	h5 {
+		font-size: 1.3em;
+		margin: 10px 0;
+	}
+
+	.editLink {
+		font-size: 1.3em;
+	}
+
+	.header {
+		padding-right: 10px;		
+
+		.empty {
+			margin-left: 25px;
+		}
+
+		.skills .empty {
+			margin: 7px 0 0 0;
+		}	
+
+	}	
+	
+	.headerDescription {
+		padding-left: 10px;	
+
+		p {
+			margin-top: 0;
+		}
+	}
+
+	.feat {
+
+		p {
+			margin-left: 10px;
+		}
+
+	}
+
+	.skills {
+		margin-left: 30px;
+
+		p {
+			margin-left: 0;
+		}
+
+	}
+
+	#traits {
+
+		p {
+			margin: 0 0 0 10px;
+			font-size: 1.4em;
+		}
+	}
+
+	.moreInfo {
+		position: relative;
+		top: 5px;
+		left: 5px;
+	}
+
+	.cpCost {
+		font-size: .9em;
+		font-style: italic;
+	}
+
+}
+
+.statBox {
+	background-color: @bg-color-mast;
+	color: #fff;
+	width: 32.8%;
+	margin: 20px .5% 20px 0;
+	padding: 5px 0;
+	float: left;
+	.transparency(@ie: 70; @modern: 0.7);
+	.rounded-corners(2px; 2px; 2px; 2px);
+
+	p {
+		font-size: 2.8em;
+		line-height: 1.4em;
+		margin: 0;
+		text-align: center;
+	}
+
+	.lbl {
+		font-size: 1.2em;
+	}
+}
+
+#summaryLink,
+#detailedLink {
+	text-decoration: none;
+	cursor: default;
+	color: #333;
+}
+
+#summaryView,
+#detailedView {
+
+	p {
+		margin: 0;
+	}
+
+}
+
+/*************************************************************************************
+WIZARD PAGE
+*************************************************************************************/
+
+#wizardPage {
+	
+	form {
+		padding-top: 5px;
+
+		h3 {
+			padding-left: 0;
+		}
+	}
+
+	.chzn-container {
+		min-width: 50px;
+	}
+
+	.chzn-container a,
+	.chzn-container li {
+		font-size: 1.2em;
+	}
+
+	#content {
+		
+		h2 {
+			padding-top: 0;
+		}
+
+		h3 a {
+			padding-left: 40px;
+			outline: none;
+			text-decoration: none;
+			display: block;
+			width: 100%;
+			height: 25px;
+			color: #333;
+			line-height: 26px;
+		}
+
+	}
+
+	.row {
+		
+		.cell1 {
+			input {
+				border: 0px none;
+			}
+		}
+
+		.updateCheckedBox {
+			float: left;
+			margin-left: 3px;
+		}
+
+	}
+
+	#container {
+		position: relative;
+	}
+
+	.intro {
+		margin: 0 0 15px 0;
+	}
+
+	.description p {
+		margin-top: 0;
+	}
+
+	#submitWarning {
+		font-size: 1.3em;
+		color: #FF0000;
+		background: transparent url(../../images/warning.png) no-repeat top left;
+		padding-left: 25px;
+		margin-top: 10px;
+	}
+}
+
+/*************************************************
+WIZARD SIDEBAR
+*************************************************/
+
+#sidebar {
+	width: 185px;
+	min-height: 200px;
+	position: fixed;
+	background-color: #fff;
+	padding-bottom: 15px;
+	margin: -18px 15px 0 790px;
+	border-right: 3px solid @bg-color-header;
+	border-top: 3px solid @bg-color-header;
+	border-bottom: 3px solid @bg-color-header;
+	.rounded-corners(0; 15px; 15px; 0);
+
+	h2 {
+		font-size: 1.4em;
+		padding: 0;
+		margin: 0;
+		background-color: @bg-color-header;
+		color: #fff;
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+	}
+
+	.inner {
+		margin: 0;
+		padding: 0;
+		border: 1px solid #ccc;
+		background-color: #fff;
+	}
+
+	#cpCount,
+	#charSummary {
+		width: 165px;
+		margin-top: 15px;
+		padding-bottom: 0 0 10px 0;
+		margin-left: 10px;
+	}
+
+	#cpCount {
+		font-size: 1.2em;
+
+		#cpNum {
+			font-size: 3em;
+			margin: .2em 0 .2em 0;
+			text-align: center;
+		}
+
+		#cpNum.negWarning {
+			color: #FF0000;
+			background: transparent url(../../images/warning_25px_gray.png) no-repeat 125px 17px;
+		}
+
+	}
+
+	#charSummary {
+		min-height: 265px;
+	}
+
+	* html #charSummary {
+		height: 265px;
+		overflow: auto;
+	}
+
+	#charDetails {
+		padding-top: .5em;
+		padding-left: .7em;
+		padding-bottom: .5em;
+		background-color: #fff;
+	}
+
+	span {
+		font-size: 1.2em;
+	}
+
+	span.label {
+		font-weight: bold;
+	}
+
+	#summaryHeaderList, #summaryFeatList {
+		font-size: 1.2em;
+	}
+
+} // #sidebar
+
+#adminWizardPage {
+	
+	#sidebar {
+		border-right: 5px solid #666699;
+		border-top: 5px solid #666699;
+		border-bottom: 5px solid #666699;	
+	}
+
+	#cpCount,
+	#charSummary {
+		h2 {
+			background-image: none;
+			background-color: none;
+			background: #666699; /* for non-css3 browsers */
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AEAEC8', endColorstr='#7878A5'); /* for IE */
+			background: -webkit-gradient(linear, left top, left bottom, from(#AEAEC8), to(#7878A5)); /* for webkit browsers */
+			background: -moz-linear-gradient(top,  #AEAEC8,  #7878A5); /* for firefox 3.6+ */
+			-moz-border-radius: 5px 5px 0 0;
+			border-radius: 5px 5px 0 0; 
+		}	
+	}
+}
+
+/*************************************************
+WIZARD FORM CONTROLS
+*************************************************/
+
+.skillGrp .row select {
+	width: 40px;
+	height: 25px;
+}
+
+#submitBtn {
+	float: left;
+	margin-right: 10px;
+}
+
+#btnArea {
+	margin: 20px 0 0 0;
+}
+
+#btnArea p {
+	margin-top: 0;
+
+	p.instruct {
+		margin: 15px 0 0 0;	
+	}
+
+	.btn-primary {
+		margin: 0 10px 0 5px;
+	}
+
+}
+
+.attributeFld {
+	width: 2em;
+}
+
+.skillQtyFld {
+	/* width: 1.5em; */
+}
+
+.hoverHelp {
+	background: transparent url(../../images/help_icon.png) no-repeat top left;
+	display: block;
+	height:20px;
+	width: 20px;
+	float: left;
+}
+
+#curVitality {
+	font-size: 1.1em;
+}
+
+#totalAttributeCost {
+	/* color: #FF0000; */
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.units {
+	font-size: 1.4em;
+}
+
+/***************************************************************
+WIZARD SECTION-SPECIFIC STYLES
+****************************************************************/
+
+#adminWizardPage {
+	
+	.section-tabbed {
+		border: 1px solid #666699;
+		border-top: 5px solid #666699;	
+	}
+	
+	.header,
+	.sphere {
+		
+		label {
+			color: #333366;
+		}
+	}
+
+}
+
+#basicsHdr,
+#attributesHdr,
+#skillsHdr,
+#spellsHdr {
+	margin: 20px 0 0 0;
+}
+
+.header {
+	
+	.row {
+		margin-bottom: 0;
+	}
+
+}
+
+.header,
+.sphere { 
+	
+	.cell0 {
+		height: 20px;
+	}
+
+	.cell0,
+	.cell1,
+	.cell2,
+	.cell3 {
+		float: left;
+	}
+
+	.cell0 img {
+		float: left;
+		position: relative;
+		top: 2px;
+		cursor: pointer;
+	}
+	
+	.cpCost,
+	.sphere .cpCost {
+		margin-left: 1em;
+		font-size: 1.3em;
+	}
+
+	label {
+		font-weight: bold;
+		margin-left: .8em;
+		text-align: left;
+		display: inline;
+		float: none;
+		color: #016633;
+		font-size: 1.3em;
+	}
+
+}
+
+#basics {
+	
+	.row {
+		input,
+		select,
+		textarea {
+			margin-left: 0;
+		}
+
+		.instruct {
+			margin-left: 137px;
+		}
+	}
+
+	.chzn-container {
+		min-width: 200px;
+	}
+}
+
+#charNameRow {
+	width: 450px;
+	float: left;
+}
+
+#charTypeRow {
+	float: left;
+	clear: none;
+}
+
+.skillGrp,
+.spellGrp {
+	
+	.row {
+		padding-left: 30px;
+		margin-bottom: 20px;
+	}
+}
+
+#feats .row {
+	padding-left: 0;	
+}
+
+#skills,
+#feats {
+	input {
+		height: 15px;
+		margin: 2px 2px 2px 6px;
+	}
+
+	.skillGrp {
+		input {
+			margin-right: 10px;
+		}
+	}
+}
+
+#wizardPage .skillGrp, 
+#wizardPage .spellGrp,
+#feats {
+	
+	h4 {
+		padding-left: 27px;
+		font-size: 1.2em;
+	}
+
+	.row {
+		
+		input {
+			float: left;
+			/* border: 1px dashed #FF00FF; */
+		}
+	
+		label {
+			float: left;
+			text-align: left;
+			margin: 0;
+			line-height: 20px;
+			font-weight: bold;
+			width: 100%;
+		}
+		
+		.hoverHelp {
+			margin-left: 10px;
+		}
+
+		.cpCost {
+			float: left;
+			font-size: 1.3em;
+			line-height: 20px;
+			margin-right: 1em;
+			width: 125px;
+		}
+
+		.cell1 input {
+			float: right;
+			margin-right: 10px;
+			height: 15px;
+		}
+
+		.cell1 .updateCheckedBox {
+			float: right;
+			margin-right: 10px;	
+		}
+	
+	}
+
+}
+
+.description,
+.longDescription {
+	clear: both;
+	padding-left: 25px;
+	margin: 0;
+}
+
+.shortDescLink,
+.longDescLink {
+	font-size: .9em;
+}
+
+.header,
+.sphere {
+	
+	.description,
+	.longDescription {
+		padding-left: 48px;
+	}
+
+	.row {
+		.cell2 {
+			float: left;
+			width: 372px;
+		}
+	}
+
+}
+
+.skillGrp {
+	
+	.row {
+		
+		.cell1 {
+			float: left;
+			width: 60px;
+			margin-left: 20px;
+		}
+
+		.cell2 {
+			float: left;
+			width: 300px;
+		}
+
+		.description,
+		.longDescription {
+			margin-left: 80px;
+			padding-left: 0;
+		}
+	}
+}
+
+#spells .spellGrp .row .cell1,
+#feats .row .cell1 {
+	float: left;
+	margin-left: 0px;
+	width: 50px;
+}
+
+#feats {
+	
+	.row {
+		
+		.cell1 {
+			width: 25px;
+		}
+
+		.cell2 {
+			float: left;
+			width: 380px;	
+		}
+
+	}
+
+}
+
+#spells {
+	
+	.noData {
+		margin: 0 0 15px 10px;
+	}
+
+}
+
+.spellGrp {
+	
+	.row .cell2 {
+		float: left;
+		width: 265px;
+	}
+
+}
+
+.costHdr,
+.maxLvlHdr {
+	font-weight: bold;
+}
+
+.maxLevels {
+	float: right;
+	margin-right: 10px;
+	width: 100px;
+	font-size: 1.3em;
+	line-height: 20px;
+}
+
+/***************************************************************
+ATTRIBUTE VISUALIZATION
+****************************************************************/
+
+#attributes {
+	clear: both;
+	// border-top: 1px solid #fff;
+	padding-top: 15px;
+
+	label {
+		float: left;
+		width: 50px;
+	}
+}
+
+.attributeVis {
+	float: left;
+}
+
+.attributeTick {
+	width: 20px;
+	height: 20px;
+	background-color: #FF9900;
+	float: left;
+	margin-right: 2px;
+	-moz-border-radius: 3px;
+	border-radius: 2px;
+}
+
+.attributeNumDisplay {
+	font-size: 1.4em;
+	float: left;
+	width: 30px;
+	height: 15px;
+	line-height: 15px;
+}
+
+.attributeIncrease,
+.attributeDecrease {
+	display: block;
+	width: 14px;
+	height: 14px;
+	float: left;
+	margin-top: 3px;
+}
+
+.attributeIncrease {
+	background: transparent url(../../images/circle_plus.png) no-repeat top left;
+	margin-right: 3px;
+	// margin-left: 15px;
+}
+
+.attributeDecrease {
+	background: transparent url(../../images/circle_minus.png) no-repeat top left;
+}
+
+#vitalityRow {
+	.errorMsg {
+		float: left;
+		margin-left: 15px;
+		margin-top: 0;
+	}
+}
+
+#attributeInfo {
+	position: absolute;
+	top: 138px;
+	left: 300px;
+	z-index: 2;
+	width: 350px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 5px 5px 5px 10px;
+	-moz-box-shadow: 5px 5px 5px #999;
+	-webkit-box-shadow: 5px 5px 5px #999;
+	box-shadow: 5px 5px 5px #999;
+	min-height: 100px;
+	max-height: 400px;
+	overflow: auto;
+
+	h2 {
+		margin-top: 0;
+		padding-top: 0;
+		font-size: 1.2em;
+	}
+
+	h3 {
+		background: none;
+		font-size: 1.2em;
+		color: #016633;
+		font-weight: bold;
+		margin-bottom: .7em;
+	}
+
+	p {
+		font-size: 1em;
+	}
+
+	.attributePt {
+		display: block;
+		width: 10px;
+		height: 10px;
+		background-color: #FF9900;
+		float: left;
+		border: 1px solid #ccc;
+		margin: 2px 6px;
+	}
+
+	.availablePts,
+	.skillName {
+		width: 140px;
+		float: left;
+		font-weight: bold;
+	}
+
+	.attributePts,
+	.skillAttributeUsage {
+		float: left;
+		width: 150px;
+	}
+
+}
+
+#attributeInfoArrow {
+	height: 20px;
+	width: 20px;
+	position: absolute;
+	left: 281px;
+	background: transparent url(../../images/popup_arrow_left.png) no-repeat top left;
+	z-index: 1000;
+}
+
+.skillTick {
+	width: 10px;
+	height: 10px; 
+	background-color: #6699CC;
+	border: 1px solid #999999;
+	display: block;
+	float: left;
+	margin: 0 2px;
+}
+
+.unavailable .skillTick {
+	background-color: #ccc;
+	border: 1px solid #ccc;
+}
+
+.skillUse {
+	border: 1px dashed #ccc;
+	float: left;
+	padding: 3px;
+}
+
+/***************************************************************
+SKILLS SECTION
+****************************************************************/
+
+#atavistSkills,
+#openSkills {
+	margin-left: 30px;
+}
