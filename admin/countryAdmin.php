@@ -88,7 +88,7 @@
       <!-- This div holds all the help text, which is hidden by default. -->
 	  <div id="help">
 	  	
-		<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+		<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 		
 		<?php cg_createHelp('countryNameHelp',
 				'<p>Enter the country name as listed in the game rulebook.</p>'); ?>

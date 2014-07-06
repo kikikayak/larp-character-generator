@@ -413,7 +413,7 @@ function init() {
 				var CPTrackID = $('#purgeCPTrackID').val();
 				var data = {CPTrackID: CPTrackID}; // Create object/map of data to pass in AJAX call
 
-				$('#msg').load('../ajax/admin.handler.php?ajaxAction=purgeCP', data, function() {
+				$('#msg').load('../ajax/cp.handler.php?ajaxAction=purgeCP', data, function() {
 					$('#cpPurgeDialog').dialog('close');
 					fadeAndRemoveRow('#CPTrackID_' + CPTrackID, 'deletedCPList');
 				});
@@ -435,7 +435,7 @@ function init() {
 		var data = {CPTrackID: CPTrackID}; // Create object/map of data to pass in AJAX call
 
 		// Load character info into dialog
-		$('#cpPurgeDialog').load('../ajax/admin.handler.php?ajaxAction=loadCPPurgeDialog', data, function() {
+		$('#cpPurgeDialog').load('../ajax/cp.handler.php?ajaxAction=loadCPPurgeDialog', data, function() {
 			$('#cpPurgeDialog').dialog('open'); // On success, open dialog
 		});
 		hideAllMenus();
@@ -458,7 +458,7 @@ function init() {
 		var data = {CPTrackID: CPTrackID}; // Create object/map of data to pass in AJAX call
 
 		// Load character info into dialog
-		$('#msg').load('../ajax/admin.handler.php?ajaxAction=undeleteCP', data, function() {
+		$('#msg').load('../ajax/cp.handler.php?ajaxAction=undeleteCP', data, function() {
 			fadeAndRemoveRow('#CPTrackID_' + CPTrackID, 'deletedCPList');
 		});
 		hideAllMenus();
@@ -590,7 +590,7 @@ function init() {
 
 		$('#msg').html(''); // Clear previous messages from msg area
 
-		$('#msg').load('../ajax/admin.handler.php?ajaxAction=purgeCountry', data, function() {
+		$('#msg').load('../ajax/gameWorld.handler.php?ajaxAction=purgeCountry', data, function() {
 			$('#purgeDialog').dialog('close');
 			fadeAndRemoveRow('#countryID_' + countryID, 'deletedCountryList');
 		});
@@ -612,7 +612,7 @@ function init() {
 		var data = {countryID: countryID}; // Create object/map of data to pass in AJAX call
 
 		// Load confirmation
-		$('#msg').load('../ajax/admin.handler.php?ajaxAction=undeleteCountry', data, function() {
+		$('#msg').load('../ajax/gameWorld.handler.php?ajaxAction=undeleteCountry', data, function() {
 			fadeAndRemoveRow('#countryID_' + countryID, 'countryList');
 		});
 		return false;
@@ -1349,7 +1349,7 @@ function init() {
 			} else if ($(this).attr('id') == 'cpFiltersExpand') {
 				data = {cpFilterExpanded: 'No'};
 				// Set expanded/contracted in session
-				$.post('../ajax/admin.handler.php?ajaxAction=setCPFilterExpanded', data);
+				$.post('../ajax/cp.handler.php?ajaxAction=setCPFilterExpanded', data);
 			}
 		} else if (parent.hasClass('contracted')) {
 			// alert('contracted');
@@ -1364,7 +1364,7 @@ function init() {
 			} else if ($(this).attr('id') == 'cpFiltersExpand') {
 				data = {cpFilterExpanded: 'Yes'};
 				// Set expanded/contracted in session
-				$.post('../ajax/admin.handler.php?ajaxAction=setCPFilterExpanded', data);
+				$.post('../ajax/cp.handler.php?ajaxAction=setCPFilterExpanded', data);
 			}
 
 		}
@@ -1690,7 +1690,7 @@ Sorting, striping, etc
 		};
 
 		// Load results into table
-		$('#cpList tbody').load('../ajax/admin.handler.php?ajaxAction=getFilteredCP', data, function() {
+		$('#cpList tbody').load('../ajax/cp.handler.php?ajaxAction=getFilteredCP', data, function() {
 
 			$('#cpList').tablesorter({
 				sortList: [[0,1]],
@@ -2023,7 +2023,7 @@ function filterCP(tabName) {
 				CPNote: CPNote,
 				selectedCPTab: selectedCPTab};
 
-	$('#cpList tbody').load('../ajax/admin.handler.php?ajaxAction=getFilteredCP', data, function() {
+	$('#cpList tbody').load('../ajax/cp.handler.php?ajaxAction=getFilteredCP', data, function() {
 		// alert('Beginning of AJAX callback');
 
 		$('#cpList').trigger('update'); // Notify tablesorter that table has changed
@@ -2737,7 +2737,7 @@ function setupCPEvents() {
 				var CPTrackID = $('#deleteCPTrackID').val();
 				var data = {CPTrackID: CPTrackID}; // Create object/map of data to pass in AJAX call
 
-				$('#msg').load('../ajax/admin.handler.php?ajaxAction=deleteCP', data, function() {
+				$('#msg').load('../ajax/cp.handler.php?ajaxAction=deleteCP', data, function() {
 					$('#cpDeleteDialog').dialog('close');
 					fadeAndRemoveRow('#CPTrackID_' + CPTrackID, 'cpList');
 				});
@@ -2760,7 +2760,7 @@ function setupCPEvents() {
 		var data = {CPTrackID: CPTrackID}; // Create object/map of data to pass in AJAX call
 
 		// Load character info into dialog
-		$('#cpDeleteDialog').load('../ajax/admin.handler.php?ajaxAction=loadCPDeleteDialog', data, function() {
+		$('#cpDeleteDialog').load('../ajax/cp.handler.php?ajaxAction=loadCPDeleteDialog', data, function() {
 			$('#cpDeleteDialog').dialog('open'); // On success, open dialog
 
 			// If user should not be allowed to delete, replace default buttons
@@ -2853,7 +2853,7 @@ function setupCPAdd() {
 					CPNote5: CPNote5
 				};
 
-				$('#msg').load('../ajax/admin.handler.php?ajaxAction=cpAdd', data, function(response, status, xhr) {
+				$('#msg').load('../ajax/cp.handler.php?ajaxAction=cpAdd', data, function(response, status, xhr) {
 					// alert('Type of response is: ' + typeof(response));
 					if (status == "error") {
 						alert('Load method failed!');
@@ -2886,7 +2886,7 @@ function setupCPAdd() {
 		*/
 
 		// Load character info into dialog
-		$('#cpAddDialog').load('../ajax/admin.handler.php?ajaxAction=loadCPAddDialog', function() {
+		$('#cpAddDialog').load('../ajax/cp.handler.php?ajaxAction=loadCPAddDialog', function() {
 			// On success, open dialog
 			$('#cpAddDialog').dialog('open');
 			hideAllMenus();

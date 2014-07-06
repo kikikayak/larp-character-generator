@@ -627,7 +627,7 @@
 					<div id="<?php echo 'headerID_' . $row['headerID'] . 'Hdr'; ?>" class="header">
 						<div class="row">
 							<div class="cell0">
-								<img src="../images/arrowRight.png" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" onClick="doOnclickHeaderArrow(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>);" />							</div>
+								<img src="styles/images/arrowRight.png" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" onClick="doOnclickHeaderArrow(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>);" />							</div>
 							<div class="cell1">
 								
                                 <input 	type="checkbox" 

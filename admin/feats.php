@@ -57,7 +57,7 @@
             <tbody>
               <tr class="odd">
                 <td colspan="5" class="loading">
-                  <img src="../images/spinner.gif" height="32" width="32" alt="Loading..." />
+                  <img src="styles/images/spinner.gif" height="32" width="32" alt="Loading..." />
                   <p>Loading table contents...</p>
                   <!--Content is populated by getFeats method in gameWorld.handler.php-->
                   </td>

@@ -27,12 +27,12 @@ function init() {
 
 	var dialogOpts = {
 		modal: true,
-		title: "Accelerant Character Generator 2.0 (Beta)",
+		title: "Character Generator 2.0 (Beta)",
 		buttons: {
 			"Close": doClose
 		},
 		autoOpen: false,
-		width: 500
+		width: 750
 	};
 
 	//create the dialog

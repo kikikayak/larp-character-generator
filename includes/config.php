@@ -17,6 +17,7 @@ define('WEBMASTER_NAME', 'Allison Corbett');
 define('COPYRIGHT_DATE', '2014');
 define('GENERATOR_LOCATION', 'http://www.larpcharactergenerator.com/lione');
 define('DEBUG', 'off'); // Values: 'off' or 'on'
+define('THEME', 'classic'); // Values: 'off' or 'on'
 
 // LOCAL
 define('DB_HOST', 'localhost');

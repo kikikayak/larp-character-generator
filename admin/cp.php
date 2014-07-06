@@ -190,7 +190,7 @@
         <tbody>
             <tr class="odd">
               <td colspan="7" class="loading">
-                <img src="../images/spinner.gif" height="32" width="32" alt="Loading..." />
+                <img src="styles/images/spinner.gif" height="32" width="32" alt="Loading..." />
                 <p>Loading table contents...</p>
               </td>
             </tr>

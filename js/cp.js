@@ -24,13 +24,13 @@ $(document).ready(function () {
 	
 	$('#fromDate').datepicker({
 		showOn: "button",
-		buttonImage: "../images/calendar_brankic.png",
+		buttonImage: "../admin/styles/images/calendar_brankic.png",
 		buttonImageOnly: true
 	});
 	
 	$('#toDate').datepicker({
 		showOn: "button",
-		buttonImage: "../images/calendar_brankic.png",
+		buttonImage: "../admin/styles/images/calendar_brankic.png",
 		buttonImageOnly: true
 	});
 	

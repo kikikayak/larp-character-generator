@@ -95,7 +95,7 @@
 	  <!-- This div holds all the help text, which is hidden by default. -->
 	  <div id="help">
 	  	
-		<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+		<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 
 		<?php cg_createHelp('featNameHelp',
 				'<p>Enter the feat\'s name as listed in the game rulebook.</p>'); ?>

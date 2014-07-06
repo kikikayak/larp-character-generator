@@ -22,7 +22,7 @@ if (isset($_GET['mode'])) {
 	$mode = 'wizard';	
 }
 
-$imgPath = '../images/';
+$imgPath = '../theme/' . THEME . '/images/';
 
 /***********************************************************
 GET FEATS
@@ -89,7 +89,7 @@ if ($ajaxAction == 'getFeats') {
           <?php
             if ($mode != 'adminWizard' && $_SESSION['pageAction'] == 'update' && isset($_SESSION['savedCharacter']['charFeats']) && in_array($featRow['featID'], $_SESSION['savedCharacter']['charFeats'])) {
           ?>
-              <img src="../images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
+              <img src="<?php echo $imgPath; ?>checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
               <input
                   type="radio" 
                   class="featFld" 
@@ -195,7 +195,7 @@ if ($ajaxAction == 'getSpheres' && isset($_POST['selectedSkills'])) {
 				<?php
 				  if ($_SESSION['pageAction'] == 'update' && isset($_SESSION['savedCharacter']['charSpells']) && in_array($spellRow['spellID'], $_SESSION['savedCharacter']['charSpells']) && $mode == 'wizard') {
 				?>
-					<img src="../images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
+					<img src="<?php echo $imgPath; ?>checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
 					<input
                  		type="checkbox" 
 						class="spellFld" 
@@ -435,7 +435,7 @@ else if ($ajaxAction == 'getAttributeUsage' && isset($_POST['attributeName'])) {
 	} // end of getAttributeUsage condition
 
 	/***********************************************************
-	GET ATTRIBUTE USAGE
+	GET FREE CP
 	************************************************************/
 
 	else if ($ajaxAction == 'getFreeCP' && isset($_POST['playerID'])) {

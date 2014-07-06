@@ -65,7 +65,7 @@
 	  
 		<div id="help">
 	  	
-			<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+			<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 			
 			<?php cg_createHelp('nameHelp','<p>Enter the header\'s name as listed in the game rulebook.</p>'); ?>
 

@@ -622,12 +622,12 @@
 					<div id="<?php echo 'headerID_' . $row['headerID'] . 'Hdr'; ?>" class="header">
 						<div class="row">
 							<div class="cell0">
-								<img src="../images/arrowRight.png" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" onClick="doOnclickHeaderArrow(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>);" />							</div>
+								<img src="../theme/<?php echo THEME; ?>/images/arrowRight.png" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" onClick="doOnclickHeaderArrow(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>);" />							</div>
 							<div class="cell1">
 								<?php
 									if ($action == 'update' && isset($_SESSION['savedCharacter']) && in_array($row['headerID'], $_SESSION['savedCharacter']['charHeaders'])) {
 								?>
-                                	<img src="../images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
+                                	<img src="../theme/<?php echo THEME; ?>/images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased" />
                                 	<input 	type="checkbox" 
                                 		class="headerFld" 
                                         name="headerID[]" 
@@ -679,7 +679,7 @@
 									  // Skill is not stackable. Display a checkbox. 
 									  if ($action == 'update' && isset($_SESSION['savedCharacter']) && array_key_exists($skillRow['skillID'], $_SESSION['savedCharacter']['charSkills'])) {
 								?>
-                                	<img src="../images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased"  />
+                                	<img src="../theme/<?php echo THEME; ?>/images/checked_circle.png" height="20" width="20" alt="checked box" class="updateCheckedBox" title="Already purchased"  />
                                 	<input 
                                 		type="checkbox" 
                                         class="skillFld" 

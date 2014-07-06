@@ -118,7 +118,7 @@
       <!-- This div holds all the help text, which is hidden by default. -->
 	  <div id="help">
 	  	
-		<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+		<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 
 		<?php cg_createHelp('traitNameHelp','<p>Enter the trait name as you want it to appear on the character card and cheat sheet.</p>
                 <p>Only players whose characters have the trait will be able to see it. </p>'); ?>

@@ -86,7 +86,7 @@
     <div id="content" class="oneCol">
 	
 		<div id="help">
-			<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+			<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 
 			<?php cg_createHelp('emailHelp',
 				'<p>This email address will be used as the player\'s login. The email address will also be used if the player forgets their password. </p>

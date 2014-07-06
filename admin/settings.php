@@ -70,7 +70,7 @@
       
       <div id="help">
 	  	
-        <img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+        <img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
         
         <div id="campaignNameHelp" class="help" style="display: none">
             <div class="helpTop">

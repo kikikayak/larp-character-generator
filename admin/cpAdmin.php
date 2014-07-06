@@ -109,7 +109,7 @@
       <!-- This div holds all the help text, which is hidden by default. -->
 	  <div id="help">
 	  	
-		<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+		<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 
 		<?php cg_createHelp('numberCPHelp',
 				'<p>Enter the number of CP to assign to a player or character.</p>'); ?>

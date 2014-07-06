@@ -18,6 +18,179 @@ header('Pragma: no-cache');
 $ajaxAction = $_GET['ajaxAction'];
 
 /***************************************************************
+LOAD COUNTRY DELETE DIALOG
+***************************************************************/
+if ($ajaxAction == 'loadCountryDeleteDialog' && isset($_POST['countryID'])) {
+	$allowCountryDelete = 'no';
+	$country = new Country();
+	$countryChars = $country->getCountryChars($_POST['countryID']);
+	
+	// If any characters are from this country, disallow delete
+	if ($countryChars->num_rows > 0) {
+?>
+<p>This country cannot be deleted because it has the following <span class="numDeleteItems"><?php echo $countryChars->num_rows; ?></span> characters associated with it: </p>
+
+<div class="deleteList">
+  <ul>
+  
+  <?php
+      while ($charRow = $countryChars->fetch_assoc()) {
+  ?>
+  <li><?php echo $charRow['charName']; ?></li>
+  
+  <?php
+      } // end characters loop
+  ?>
+  </ul>
+</div><!--.deleteList-->
+
+<p>Please change these characters to a different country and then try again. </p>
+
+<?php
+	} else {
+	  // If no characters are from this country, proceed with delete
+	  $allowCountryDelete = 'yes';
+	  $countryDetails = $country->getCountry($_POST['countryID']);
+	  while ($row = $countryDetails->fetch_assoc()) {
+	
+?>
+      <p>Are you sure you want to delete the following country?</p>
+      <p class="deleteItemName"><?php echo $row['countryName']; ?></p>
+      <p>You will be able to restore the country from the trash if necessary.</p>
+      <input type="hidden" name="deleteCountryID" id="deleteCountryID" value="<?php echo $_POST['countryID']; ?>" />
+	
+<?php
+	  } // end of countryDetails loop
+	} // end of num_rows condition
+?>
+	   <input type="hidden" name="allowCountryDelete" id="allowCountryDelete" value="<?php echo $allowCountryDelete; ?>" />
+       
+<?php
+} // end loadCountryDelete
+
+/***************************************************************
+DELETE COUNTRY
+***************************************************************/
+if ($ajaxAction == 'deleteCountry' && isset($_POST['countryID'])) {
+	$country = new Country();
+	
+	if ($country->deleteCountry($_POST['countryID'])) {
+		$countryDetails = $country->getCountry($_POST['countryID']);
+		
+		while ($row = $countryDetails->fetch_assoc()) {
+		  $html = array();
+		  $html['countryName'] = htmlentities($row['countryName']);
+		  
+		  // If successful, set success message
+		  $_SESSION['UIMessage'] = new UIMessage(	'success', 
+													'Country Deleted Successfully',
+													'<p>The country "' . $html['countryName'] . '" has been deleted. You can recover it from the <a href="trash.php">Trash</a> if necessary.</p>');
+												
+		} // end of countryDetails loop
+	} else {
+		// Set failure message
+		$_SESSION['UIMessage'] = new UIMessage(	'error', 
+												'Failed to Delete Country',
+												'<p>The country could not be deleted. Please try again. </p>');	
+	}
+	cg_showUIMessage();
+	cg_clearUIMessage();
+} // end of deleteCountry
+
+/***************************************************************
+UNDELETE COUNTRY
+***************************************************************/
+if ($ajaxAction == 'undeleteCountry' && isset($_POST['countryID'])) {
+	$country = new Country();
+	
+	if ($country->undeleteCountry($_POST['countryID'])) {
+		$countryDetails = $country->getCountry($_POST['countryID']);
+		
+		while ($row = $countryDetails->fetch_assoc()) {
+		  $html = array();
+		  $html['countryName'] = htmlentities($row['countryName']);
+		  
+		  // If successful, set success message
+		  $_SESSION['UIMessage'] = new UIMessage(	'success', 
+													'Country Undeleted Successfully',
+													'<p>The country "' . $html['countryName'] . '" has been restored from the trash. You can view it from the <a href="countries.php" title="Go to countries page">Countries</a> page.</p>');
+												
+		} // end of countryDetails loop
+	} else {
+		// Set failure message
+		$_SESSION['UIMessage'] = new UIMessage(	'error', 
+												'Failed to Undelete Country',
+												'<p>The country could not be restored from the trash. Please try again. </p>');	
+	}
+	cg_showUIMessage();
+	cg_clearUIMessage();
+} // end of undeleteCountry
+
+/***************************************************************
+LOAD COUNTRY PURGE DIALOG
+***************************************************************/
+if ($ajaxAction == 'loadCountryPurgeDialog' && isset($_POST['countryID'])) {
+	$country = new Country();
+	$countryDetails = $country->getCountry($_POST['countryID']);
+	while ($row = $countryDetails->fetch_assoc()) {
+	
+?>
+      <p>Are you sure you want to permanently delete the following country?</p>
+      <p class="deleteItemName"><?php echo $row['countryName']; ?></p>
+      <p>You will not be able to undo this action.</p>
+      <input type="hidden" name="purgeCountryID" id="purgeCountryID" value="<?php echo $_POST['countryID']; ?>" />
+	       
+<?php
+	} // end of countryDetails loop
+} // end loadCountryPurgeDialog
+
+/***************************************************************
+PURGE COUNTRY
+***************************************************************/
+if ($ajaxAction == 'purgeCountry' && isset($_POST['countryID'])) {
+	$country = new Country();
+	
+	if ($country->purgeCountry($_POST['countryID'])) {
+		$countryDetails = $country->getCountry($_POST['countryID']);
+		
+		while ($row = $countryDetails->fetch_assoc()) {
+		  $html = array();
+		  $html['countryName'] = htmlentities($row['countryName']);
+		  
+		  // If successful, set success message
+		  $_SESSION['UIMessage'] = new UIMessage(	'success', 
+													'Country Purged Successfully',
+													'<p>The country "' . $html['countryName'] . '" has been permanently deleted. </p>');
+												
+		} // end of countryDetails loop
+	} else {
+		// Set failure message
+		$_SESSION['UIMessage'] = new UIMessage(	'error', 
+												'Failed to Purge Country',
+												'<p>The country could not be permanently deleted. Please try again. </p>');	
+	}
+	cg_showUIMessage();
+	cg_clearUIMessage();
+} // end of purgeCountry
+
+/***************************************************************
+GET FEAT SUGGESTIONS
+This method can be used to populate feat autosuggest fields. 
+***************************************************************/
+if ($ajaxAction == 'getFeatSuggestions' && isset($_GET['term'])) {
+  $feats = array();
+  
+  $featObj = new Feat();
+  $featResult = $featObj->getFeatSuggestions($_GET['term']);
+  
+  while ($featRow = $featResult->fetch_assoc()) {
+    $feats[] = $featRow['featName']; 
+  }
+
+  echo json_encode($feats);
+} // end of getFeatSuggestions
+
+/***************************************************************
 GET FEATS
 ***************************************************************/
 if ($ajaxAction == 'getFeats') {

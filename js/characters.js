@@ -27,7 +27,7 @@ $(document).ready(function () {
 	});
 
 	$("#featName").autocomplete({
-		source: '../ajax/admin.handler.php?ajaxAction=getFeatSuggestions'
+		source: '../ajax/gameWorld.handler.php?ajaxAction=getFeatSuggestions'
 	});
 
 });

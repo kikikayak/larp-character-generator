@@ -22,7 +22,7 @@
 </title>
 
 <link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet/less" type="text/css" href="../theme/classic/admin.less" />
+<link rel="stylesheet/less" type="text/css" href="../admin/styles/admin.less" />
 <link rel="stylesheet" type="text/css" href="../js/ui/css/theme/ui.min.css" />
 <link rel="stylesheet" type="text/css" href="../js/chosen/chosen.css" />
 

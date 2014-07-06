@@ -59,7 +59,7 @@
     <div id="content">
 	
 		<div id="help">
-			<img id="helpArrow" src="../images/helpArrow.png" alt="" style="display:none" />
+			<img id="helpArrow" src="../theme/<?php echo THEME; ?>/images/helpArrow.png" alt="" style="display:none" />
 			
 			<div id="emailHelp" class="help" style="display: none">
 				<a href="#" class="helpClose" onClick="hideAllHelp(); return false"></a>

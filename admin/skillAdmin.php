@@ -173,7 +173,7 @@
 	  <!-- This div holds all the help text, which is hidden by default. -->
 	  <div id="help">
 	  	
-		<img id="helpArrow" src="../images/helpArrowAdmin.png" alt="" style="display:none" />
+		<img id="helpArrow" src="styles/images/helpArrowAdmin.png" alt="" style="display:none" />
 		
 		<?php cg_createHelp('nameHelp','<p>Enter the skill\'s name as listed in the game rulebook.</p>'); ?>
 
@@ -412,7 +412,7 @@
 						<option value="4" <?php if ($html['attribute1'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute1'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" id="attribute1PlusLink" onClick="doOnClickAddAttrRow(1); return false"><img src="../images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
+					<a href="#" id="attribute1PlusLink" onClick="doOnClickAddAttrRow(1); return false"><img src="styles/images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
 					<?php cg_showError('attributeCost1'); ?>
 					<span class="hint">e.g. "2 fire"</span>
 				</div>
@@ -435,8 +435,8 @@
 						<option value="4" <?php if ($html['attribute2'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute2'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" id="attribute2PlusLink" onClick="doOnClickAddAttrRow(2); return false"><img src="../images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
-					<a href="#" onClick="doOnClickRemoveAttrRow(2); return false"><img src="../images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
+					<a href="#" id="attribute2PlusLink" onClick="doOnClickAddAttrRow(2); return false"><img src="styles/images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
+					<a href="#" onClick="doOnClickRemoveAttrRow(2); return false"><img src="styles/images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
 					<?php cg_showError('attributeCost2'); ?>
 					<br class="clear" />
 				</div>
@@ -459,7 +459,7 @@
 						<option value="4" <?php if ($html['attribute3'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute3'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" onClick="doOnClickRemoveAttrRow(3); return false"><img src="../images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
+					<a href="#" onClick="doOnClickRemoveAttrRow(3); return false"><img src="styles/images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
 					<?php cg_showError('attributeCost3'); ?>
 					<br class="clear" />
 				</div>
