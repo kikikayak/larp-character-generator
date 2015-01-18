@@ -6,7 +6,6 @@ NOTES:	Contains all the scripts for the CP section
 
 $(document).ready(function () {
 	
-	// Help
 	$("#numberCP").focus(function () {
 		showHelp(this, 'numberCPHelp');
 	});
@@ -15,8 +14,18 @@ $(document).ready(function () {
 		showHelp(this, 'CPTypeHelp');
 	});
 	
+	$("#CPType0").click(function () {
+		// showHelp(this, 'CPTypeHelp');
+		enableDisableCPType();
+	});
+	
 	$("#CPType1").focus(function () {
 		// showHelp(this, 'CPTypeHelp');
+	});
+	
+	$("#CPType1").click(function () {
+		// showHelp(this, 'CPTypeHelp');
+		enableDisableCPType();
 	});
 	
 	$("#characterID").focus(function () {
@@ -42,8 +51,6 @@ $(document).ready(function () {
 			return false;
 		});
 	});
-
-	setupCPTypeEvents();
 	
 	// Make "Assign to" row red if there's an error
 	// (Doesn't happen automatically because the validations run on two separate fields)
@@ -53,13 +60,13 @@ $(document).ready(function () {
 	
 	$('#fromDate').datepicker({
 		showOn: "button",
-		buttonImage: "../admin/styles/images/calendar_brankic.png",
+		buttonImage: "../images/calendar_brankic.png",
 		buttonImageOnly: true
 	});
 	
 	$('#toDate').datepicker({
 		showOn: "button",
-		buttonImage: "../admin/styles/images/calendar_brankic.png",
+		buttonImage: "../images/calendar_brankic.png",
 		buttonImageOnly: true
 	});
 	
@@ -68,7 +75,7 @@ $(document).ready(function () {
 	});
 	
 	$("#charName").autocomplete({
-		source: '../ajax/character.handler.php?ajaxAction=getCharacterSuggestions'
+		source: '../ajax/admin.handler.php?ajaxAction=getCharacterSuggestions'
 	});
 	
 	$("#playerName").autocomplete({
@@ -78,46 +85,8 @@ $(document).ready(function () {
 	enableDisableCPType();
 	runValidations();
 	
-
-}); // end $(document).ready
-
-function setupCPTypeEvents() {
-	// alert('setupCPTypeEvents');
-	$('#CPType0').click(function () {
-		enableDisableCPType();
-	});
-
-	$('#CPType1').click(function () {
-		enableDisableCPType();
-	});
-
-	$('.ui-dialog select').chosen({disable_search_threshold: 10});
-
-	$('#numberCP1').blur(function() {
-		var totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP2').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP3').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP4').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP5').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-}
+	
+});
 
 function enableDisableCPType() {
 
@@ -125,19 +94,28 @@ function enableDisableCPType() {
 
 	if ($('#CPType0').is(':checked')) {
 		// alert('Character is selected');
-		$('#characterID').attr('disabled', false).removeClass('disabled').trigger("chosen:updated");
-		$('#playerID').val(0).attr('disabled', true).addClass('disabled').trigger("chosen:updated");
+		$('#characterID').attr('disabled', false);
+		$('#characterID').removeClass('disabled');
+
+		$('#playerID').val(0);
+		$('#playerID').attr('disabled', true);
+		$('#playerID').addClass('disabled');
 			
 	} else if ($('#CPType1').is(':checked')) {
 		// alert('Player is selected');
-		$('#playerID').attr('disabled', false).removeClass('disabled').trigger("chosen:updated");
-		$('#characterID').val(0).attr('disabled', true).addClass('disabled').trigger("chosen:updated");
+
+		$('#playerID').attr('disabled', false);
+		$('#playerID').removeClass('disabled');
+
+		$('#characterID').val(0);
+		$('#characterID').attr('disabled', true);
+		$('#characterID').addClass('disabled');
 	}
 }
 
 function calcTotalAddedCP() {
 	var totalCP = 0;
-	var numberCP1 = 0;
+	var numberCP1 = 0; 
 	var numberCP2 = 0;
 	var numberCP3 = 0;
 	var numberCP4 = 0;
@@ -145,11 +123,11 @@ function calcTotalAddedCP() {
 	
 	if ($('#numberCP1').val() != '') {
 		numberCP1 = parseFloat($('#numberCP1').val());
-	}
+	} 
 	
 	if ($('#numberCP2').val() != '') {
 		numberCP2 = parseFloat($('#numberCP2').val());
-	}
+	} 
 	
 	if ($('#numberCP3').val() != '') {
 		numberCP3 = parseFloat($('#numberCP3').val());
@@ -169,8 +147,8 @@ function calcTotalAddedCP() {
 
 function displayTotalAddedCP(totalCP) {
 	if (isNumeric(totalCP)) {
-		$('#addCPTotal').html(totalCP);
-	}
+	  $('#addCPTotal').html(totalCP);
+	}	
 }
 
 /*******************************************
@@ -182,12 +160,12 @@ function runValidations() {
 	// alert('runValidations');
 	
 	$("#numberCP").blur(function () {
-		validateNumberCP($(this));
+		validateNumberCP($(this)); 
 	});
 	
 	$("#CPNote").blur(function () {
-		validateCPNote($(this));
-	});
+		 validateCPNote($(this));
+	});	
 	
 	$("#characterID").change(function () {
 		removeAssignToErrors();
@@ -202,59 +180,59 @@ function runValidations() {
 // fld: jQuery object
 function validateNumberCP(fldObj) {
 	if (!isNumeric(fldObj.val()) ) {
-		showError(fldObj, 'Must be a number');
+		showError(fldObj, 'Must be a number'); 
 		return false;
-	} else {
-		removeErrors(fldObj);
+	 } else {
+		removeErrors(fldObj); 
 		return true;
-	}
+	 }
 }
 
 function validateNumberCPTable(fldObj) {
 	if (!isNumeric(fldObj.val()) ) {
-		showTableError(fldObj, 'Must be a number');
+		showTableError(fldObj, 'Must be a number'); 
 		return false;
-	} else {
-		removeTableErrors(fldObj);
+	 } else {
+		removeTableErrors(fldObj); 
 		return true;
-	}
+	 }
 }
 
 function validateCPNote(fldObj) {
 	if (!isValidTextArea(fldObj.val())) {
-		showError(fldObj, 'Contains invalid characters');
+		showError(fldObj, 'Contains invalid characters'); 
 		return false;
-	} else {
-		removeErrors(fldObj);
+	 } else {
+		removeErrors(fldObj); 
 		return true;
-	}
+	 }	
 }
 
 function validateCPNoteTable(fldObj) {
 	if (!isValidTextArea(fldObj.val())) {
-		showTableError(fldObj, 'Contains invalid characters');
+		showTableError(fldObj, 'Contains invalid characters'); 
 		return false;
-	} else {
-		removeTableErrors(fldObj);
+	 } else {
+		removeTableErrors(fldObj); 
 		return true;
-	}
+	 }	
 }
 
 function validateCPCatIDTable(fldObj) {
 	if (!isInteger(fldObj.val())) {
-		showTableError(fldObj, 'Invalid category');
+		showTableError(fldObj, 'Invalid category'); 
 		return false;
-	} else {
-		removeTableErrors(fldObj);
+	 } else {
+		removeTableErrors(fldObj); 
 		return true;
-	}
+	 }	
 }
 
 function removeAssignToErrors() {
 	if ($('#characterID').val() != 0 || $('#playerID').val() != 0) {
 		removeErrors($('#characterID'));
 		$('#CPTypeRow').removeClass('error');
-	}
+	}	
 }
 
 function setupAddCPValidations() {
@@ -266,36 +244,36 @@ function setupAddCPValidations() {
 	});
 	
 	$(".cpNoteFld").blur(function () {
-		validateCPNoteTable($(this));
-	});
+		 validateCPNoteTable($(this));
+	});	
 }
 
 function runAddCPValidations() {
 	
 	// Validate character ID field
 	if ($('#cpAddDialog input:radio[name=CPType]:checked').val() == 'Character' && $('#characterID').val() == 0) {
-		showError($('#characterID'), 'Please select a character');
+		showError($('#characterID'), 'Please select a character');	
 	} else if ($('#cpAddDialog input:radio[name=CPType]:checked').val() == 'Player' && $('#playerID').val() == 0) {
-		showError($('#playerID'), 'Please select a player');
+		showError($('#playerID'), 'Please select a player');	
 	} else if ($('#cpAddDialog input:radio[name=CPType]:checked').length == 0) {
-		showError($('#characterID'), 'Please select either "Character" or "Player"');
+		showError($('#characterID'), 'Please select either "Character" or "Player"');	
 	} else {
-		removeErrors($('#characterID'));
+		removeErrors($('#characterID'));	
 	}
 	
 	if (!isEmpty($('#numberCP1').val()) && isEmpty($('#CPCatID1').val())) {
-		showError($('#CPCatID1'), 'Please select a category');
+		showError($('#CPCatID1'), 'Please select a category');	
 	}
-
+	
 	for (var i=1; i<=5; i++) {
-		var curNumFld = '#numberCP' + i;
-		var curCatFld = '#CPCatID' + i;
-		var curNoteFld = '#CPNote' + i;
-
-		validateNumberCPTable($(curNumFld));
-		validateCPCatIDTable($(curCatFld));
-		validateCPNoteTable($(curNoteFld));
-
+	  var curNumFld = '#numberCP' + i;
+	  var curCatFld = '#CPCatID' + i;
+	  var curNoteFld = '#CPNote' + i;
+	  
+	  validateNumberCPTable($(curNumFld));
+	  validateCPCatIDTable($(curCatFld));
+	  validateCPNoteTable($(curNoteFld));
+	
 	}
 	
 	if (!checkCPFldsPopulated()) {
@@ -303,7 +281,7 @@ function runAddCPValidations() {
 		$('#cpAddRow1').addClass('error');
 	} else {
 		removeErrors($('#numberCP1'));
-		$('#cpAddRow1').removeClass('error');
+		$('#cpAddRow1').removeClass('error');	
 	}
 	
 } // end of runAddCPValidations
@@ -313,19 +291,19 @@ function checkCPFldsPopulated() {
 	var fldPopulated = 0;
 	
 	for (var i=1; i<=5; i++) {
-		var curNumFld = '#numberCP' + i;
-		var curCatFld = '#CPCatID' + i;
-		var curNoteFld = '#CPNote' + i;
-
-		if (!isEmpty($(curNumFld).val()) || $(curCatFld).val() != 0 || !isEmpty($(curNoteFld).val())) {
-			fldPopulated = 1;
-		}
+	  var curNumFld = '#numberCP' + i;
+	  var curCatFld = '#CPCatID' + i;
+	  var curNoteFld = '#CPNote' + i;
+	  
+	  if (!isEmpty($(curNumFld).val()) || $(curCatFld).val() != 0 || !isEmpty($(curNoteFld).val())) {
+		fldPopulated = 1;  
+	  }
 	}
 	
 	if (fldPopulated == 1) {
 		return true;
 	} else {
-		return false;
+		return false;	
 	}
 }
 

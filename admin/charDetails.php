@@ -58,7 +58,7 @@
 			
 			<h2>
 			  <?php echo $row['charName']; ?><br />
-              <span class="playerName">Player: <?php echo $row['firstName'] . ' ' . $row['lastName']; ?></span>
+              <span class="playerName">Player: <?php echo '<a href="playerDetails.php?playerID=' . $row['playerID'] . '">' . $row['firstName'] . ' ' . $row['lastName'] . '</a>'; ?></span>
             </h2>
 
             <div class="toolbar">
@@ -309,6 +309,7 @@
             	CP LIST
                 **************************************************-->
             <div id="charCPList" class="section-tabbed" style="display:none">
+			  <h3>Character CP</h3>
             
 			  <table class="cpTable" cellpadding="0" cellspacing="0">
 					<thead>

@@ -168,7 +168,7 @@ class Feat {
 		} else {
 			echo $mysql['logMsg'] . '<br />';
 			$log = new Log();
-			$log->addLogEntry($mysql['logMsg'], $mysql['playerID'], $mysql['characterID']);	
+			$log->addLogEntry($mysql['logMsg'], $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'Feat', 'purgeFeat');	
 		}
 		
 		return false;

@@ -147,6 +147,96 @@ if ($ajaxAction == 'undeleteCharacter' && isset($_POST['characterID'])) {
 	cg_clearUIMessage();
 } // end of undeleteCharacter
 
+
+/***************************************************************
+LOAD TRANSFER CHARACTER DIALOG
+***************************************************************/
+if ($ajaxAction == 'loadCharTransferDialog' && isset($_POST['characterID'])) {
+	// Get basic character information
+	$character = new Character();
+	$charBasics = $character->getCharBasics($_POST['characterID']);
+	
+	// Get list of all players
+	$player = new Player();
+	$players = $player->getAllPlayers();
+	
+?>
+
+<div id="charTransferMsg">
+	<!--To be populated via AJAX-->
+</div>
+
+<form name="transferCharForm" id="transferCharForm" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
+    <?php
+		while ($charRow = $charBasics->fetch_assoc()) {
+	?>
+	<p>You are transferring the character <strong><?php echo $charRow['charName']; ?></strong> from one player to another. </p>
+    <div class="row">
+    	<p class="lbl">* Transfer From</p>
+        <p class="data">
+			<?php echo $charRow['firstName'] . ' ' . $charRow['lastName']; ?>
+        </p>
+        <br class="clear" />
+    </div>
+    
+    <input type="hidden" id="transferCharID" name="transferCharID" value="<?php echo $charRow['characterID']; ?>">    
+    
+    <?php
+		} // end of character loop
+	?>
+    
+	<?php cg_createRow('playerID'); ?>
+        <div class="cell">
+            <label for="playerID">* Transfer To</label>
+            <select name="playerID" id="playerID">
+			  <?php
+                  while ($playerRow = $players->fetch_assoc()) { // Loop through retrieved players
+              ?>
+                  <option value="<?php echo $playerRow['playerID']; ?>"><?php echo $playerRow['firstName'] . ' ' . $playerRow['lastName'] . ' (' . $playerRow['email'] . ')'; ?></option>
+              <?php
+                  } // End of players loop
+              ?>
+            </select>
+            <?php cg_showError('playerID'); ?>
+            <br class="clear" />
+        </div>
+    </div>    
+    
+</form>
+
+
+<?php		
+
+} // end of loadCharTransferDialog
+
+/***************************************************************
+TRANSFER CHARACTER
+***************************************************************/
+if ($ajaxAction == 'transferCharacter' && isset($_POST['characterID'])) {
+	cg_clearUIMessage(); // Clear any existing messages
+	
+	$character = new Character();
+	
+	$data = array();
+	$data['characterID'] = $_POST['characterID'];
+	$data['playerID'] = $_POST['playerID'];
+	
+	if ($character->transferCharacter($data)) {
+		// If successful, dialog will close and success message display
+		cg_showUIMessage();
+		cg_clearUIMessage();
+	} else {
+		// If unsuccessful, return error
+		// JS will handle outputting the error in the right place
+		// echo 'error';
+		/* Set failure message
+		$_SESSION['UIMessage'] = new UIMessage(	'error', 
+												'Failed to Transfer Character',
+												'<p>The character could not be transferred. Please try again. </p>');
+		*/	
+	}
+} // end of transferCharacter
+
 /***************************************************************
 CHANGE CHARACTERS TAB
 ***************************************************************/
@@ -177,7 +267,7 @@ if ($ajaxAction == 'changeCharactersTab' && isset($_POST['tabName'])) {
 		$charFreeCP = $charObj->getCharFreeCP($character['characterID']);
         
         ?>
-      <tr class="<?php echo $rowClass; ?>"> 
+      <tr class="<?php echo $rowClass; ?> changeCharactersTab"> 
         <td class="chkboxCol"><input type="checkbox" id="<?php echo 'characterID_' . $character['characterID']; ?>" name="characterID[]" value="<?php echo $character['characterID']; ?>" /></td>
         <td class="charNameCol"><a href="charDetails.php?characterID=<?php echo $character['characterID']; ?>"><?php echo $character['charName']; ?></a></td>
         <td class="playerNameCol"><?php echo $character['firstName'] . ' ' . $character['lastName']; ?></td>
@@ -190,6 +280,7 @@ if ($ajaxAction == 'changeCharactersTab' && isset($_POST['tabName'])) {
               <div class="menu" style="display:none">
                   <ul>
                       <li><a href="charAdmin.php?characterID=<?php echo $character['characterID']; ?>" title="">Edit</a></li>
+                      <li><a href="#" title="Transfer this character to a different player" class="transferLink">Transfer</a></li>
                       <li><a href="#" title="Delete this character" class="deleteLink">Delete</a></li>
                   </ul>
               </div>
@@ -277,12 +368,15 @@ if ($ajaxAction == 'getCharacterSuggestions' && isset($_GET['term'])) {
 	$characters = array();
 	
 	$charObj = new Character();
-	$charResult = $charObj->getCharSuggestions($_GET['term']);
-	
-	while ($charRow = $charResult->fetch_assoc()) {
-		$arr = array('label' => $charRow['charName'] . ' (' . $charRow['firstName'] . ' ' . $charRow['lastName'] . ')', 
-					'value' => $charRow['charName']);
-		$characters[] = $arr;	
+	if ($charResult = $charObj->getCharSuggestions($_GET['term'])) {
+		while ($charRow = $charResult->fetch_assoc()) {
+			$arr = array('label' => $charRow['charName'] . ' (' . $charRow['firstName'] . ' ' . $charRow['lastName'] . ')', 
+						'value' => $charRow['charName']);
+			$characters[] = $arr;	
+		}
+	} else {
+		$logMsg = 'Could not get character suggestions';
+		$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character Ajax Handler', 'getCharacterSuggestions');
 	}
 
 	echo json_encode($characters);

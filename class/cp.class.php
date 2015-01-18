@@ -236,7 +236,7 @@ class CP {
 			$filterParams .= " AND cp.CPNote LIKE '%" . $mysql['CPNote'] . "%' ";	
 		}
 		
-		$query = 	'SELECT cp.CPTrackID, cp.CPType, cp.CPDateStamp, cp.playerID, cp.numberCP, cp.CPNote, cp.staffMember, 
+		$query = 	'SELECT cp.CPTrackID, cp.CPType, cp.CPDateStamp, cp.characterID, cp.playerID, cp.numberCP, cp.CPNote, cp.staffMember, 
 					p.firstName, p.lastName, cpc.CPCatName, c.charName
 					FROM cp 
 						LEFT JOIN players p ON cp.playerID = p.playerID
@@ -328,7 +328,7 @@ class CP {
 			$log = new Log();
 			$mysql['logError'] = db_escape($this->dbh->error, $this->dbh);
 			$mysql['logMsg'] = 'Unable to add ' . $mysql['numberCP'] . ' ' . $mysql['CPType'] . ' CP due to the following error: ' . $mysql['logError'];
-			$log->addLogEntry($mysql['logMsg'], $mysql['playerID'], $mysql['characterID']);
+			$log->addLogEntry($mysql['logMsg'], $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'CP', 'addCP');
 			return false;
 		}
 
@@ -480,7 +480,7 @@ class CP {
 						cp.staffMember = '" . $mysql['staffMember'] . "' 
 					WHERE cp.CPTrackID = " . $mysql['CPTrackID'];
 		
-		echo $query . '<br />';
+		// echo $query . '<br />';
 		
 		if ($cpUpdateResult = $this->dbh->query($query)) {
 											
@@ -493,7 +493,7 @@ class CP {
 			$log = new Log();
 			$mysql['logError'] = db_escape($this->dbh->error, $this->dbh);
 			$mysql['logMsg'] = 'Unable to update CP due to the following error: ' . $mysql['logError'];
-			$log->addLogEntry($mysql['logMsg'], $mysql['playerID'], $mysql['characterID']);
+			$log->addLogEntry($mysql['logMsg'], $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'CP', 'updateCP');
 			return false;
 		} // end of insert success condition
 	} // end of updateCP

@@ -31,24 +31,7 @@
 
     <?php include('../includes/adminNav.php'); ?>
     
-    <div id="content">
-        
-		<div id="sidebar">
-        	<div id="actionPanel">
-                <div id="actionPanelContents">
-					<?php
-						while ($row = $playerDetails->fetch_assoc()) {
-					?>
-                    <ul>
-						<li><a href="playerAdmin.php?playerID=<?php echo $row['playerID']; ?>" title="Edit this player" class="editLink">Edit this player</a></li>
-						<li><a href="playerAdmin.php" title="" class="addLink">Add a new player</a></li>
-					</ul>
-                    <?php
-						} // end of first player loop
-					?>
-				</div>
-            </div>
-        </div>
+    <div id="content" class="oneCol">
         
 		<div id="main">
         
@@ -59,6 +42,18 @@
 				while ($row = $playerDetails->fetch_assoc()) {
 			?>
             <h2><?php echo $row['firstName'] . ' ' . $row['lastName']; ?></h2>
+
+            <?php
+              if ($_SESSION['userRole'] == 'Admin') {
+            ?>
+	            <div class="toolbar">
+	              <a href="playerAdmin.php?playerID=<?php echo $row['playerID']; ?>" title="Edit this player" class="editLink">Edit this player</a>
+	              <a href="playerAdmin.php" title="" class="addLink">Add a new player</a>
+	              <br class="clear" />
+	            </div><!--.toolbar-->
+            <?php
+              }
+            ?>
 			
 			<div class="row">
 				<div class="cell" id="emailCell">
@@ -111,7 +106,7 @@
 				$cpDetails = $cp->getCPByCharacter($charRow['characterID']);
 			?>
 
-			<h3>CP for <?php echo $charRow['charName']; ?></h3>
+			<h3>CP for <?php echo '<a href="charDetails.php?characterID=' . $charRow['characterID'] . '">' . $charRow['charName'] . '</a>'; ?></h3>
 			<table cellspacing="0" class="charCPList">
 				<thead>
 					<tr> 
@@ -125,6 +120,8 @@
               	<tbody>
 					<?php
 						$rowIndex = 1;
+						$charCPTotal = 0;
+
 						while ($cpRow = $cpDetails->fetch_assoc()) {
 							
 						  $dateString = strtotime($cpRow['CPDateStamp']);
@@ -135,6 +132,8 @@
 						  } else {
 							  $rowClass = 'odd';
 						  }
+
+						  $charCPTotal = $charCPTotal + $cpRow['numberCP'];
 					?>
                     <tr class="<?php echo $rowClass; ?>"> 
 						<td class="col1"><?php echo $displayDate; ?></td>
@@ -147,11 +146,77 @@
 						$rowIndex++;
 						} // end of CP loop
 					?>
+					<tr class="total">
+						<td class="col1">Total:</td>
+						<td class="col2"><?php echo $charCPTotal; ?></td>
+						<td class="col3"></td>
+						<td class="col4"></td>
+						<td class="col5"></td>
+					</tr>
 				</tbody>
 			</table>
 			
             <?php
 			  } // end of characters loop
+
+			  $playerCPDetails = $cp->getCPByPlayer($row['playerID']);
+
+		  ?>
+
+		  <h3>Unassigned (Player) CP</h3>
+		  <p>This CP will be automatically assigned to the next character the player adds or edits. </p>
+			<table cellspacing="0" class="charCPList">
+				<thead>
+					<tr> 
+						<th class="col1">Date</th>
+						<th class="col2">CP</th>
+						<th class="col3">Category</th>
+						<th class="col4">Note</th>
+						<th class="col5">Staff member</th>
+					</tr>
+				</thead>
+              	<tbody>
+					<?php
+						$rowIndex = 1;
+						$playerCPTotal = 0;
+
+						while ($playerCPRow = $playerCPDetails->fetch_assoc()) {
+							
+						  $dateString = strtotime($playerCPRow['CPDateStamp']);
+						  $displayDate = date('n/j/Y', $dateString);
+						  
+						  if ($rowIndex % 2 == 0) {
+							  $rowClass = 'even';
+						  } else {
+							  $rowClass = 'odd';
+						  }
+
+						  $playerCPTotal = $playerCPTotal + $playerCPRow['numberCP'];
+					?>
+                    <tr class="<?php echo $rowClass; ?>"> 
+						<td class="col1"><?php echo $displayDate; ?></td>
+						<td class="col2"><?php echo $playerCPRow['numberCP']; ?></td>
+						<td class="col3"><?php echo $playerCPRow['CPCatName']; ?></td>
+						<td class="col4"><?php echo $playerCPRow['CPNote']; ?></td>
+						<td class="col5"><?php echo $playerCPRow['staffMember']; ?></td>
+					</tr>
+                    <?php
+						$rowIndex++;
+						} // end of Player CP loop
+					?>
+					<tr class="total">
+						<td class="col1">Total:</td>
+						<td class="col2"><?php echo $playerCPTotal; ?></td>
+						<td class="col3"></td>
+						<td class="col4"></td>
+						<td class="col5"></td>
+					</tr>
+				</tbody>
+			</table>
+
+
+		  <?php
+
 				} // end of player details loop
 			?>
         

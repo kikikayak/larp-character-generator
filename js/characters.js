@@ -11,7 +11,7 @@ $(document).ready(function () {
 	});
 
 	$("#charName").autocomplete({
-		source: '../ajax/admin.handler.php?ajaxAction=getCharacterSuggestions'
+		source: '../ajax/character.handler.php?ajaxAction=getCharacterSuggestions'
 	});
 
 	$("#skillName").autocomplete({

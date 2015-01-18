@@ -29,7 +29,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllCharacters');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllCharacters', 'Error');
 			return false;
 		}
 	} // getAllCharacters
@@ -42,13 +42,14 @@ class Character {
 		
 		$query = 	'SELECT c.characterID, c.charName 
 					FROM characters c 
-					WHERE c.playerID = ' . $mysql['playerID'];
+					WHERE c.charDeleted IS NULL
+					AND c.playerID = ' . $mysql['playerID'];
 		
 		if ($result = $this->dbh->query($query)) {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], '', 'Character', 'getCharactersByPlayer');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], '', 'Character', 'getCharactersByPlayer', 'Error');
 			return false;
 		}
 	} // getCharactersByPlayer
@@ -70,7 +71,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharSuggestions');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharSuggestions', 'Error');
 			return false;
 		}
 	} // getCharSuggestions
@@ -185,7 +186,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getFilteredCharacters');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getFilteredCharacters', 'Error');
 			return false;
 		}
 	} // end getFilteredCharacters
@@ -203,7 +204,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllPCs');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllPCs', 'Error');
 			return false;
 		}
 	}
@@ -221,7 +222,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllNPCs');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getAllNPCs', 'Error');
 			return false;
 		}
 	}
@@ -239,7 +240,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getDeletedCharacters');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getDeletedCharacters', 'Error');
 			return false;
 		}
 	}
@@ -263,12 +264,14 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'checkCharacterAccess');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'checkCharacterAccess', 'Error');
 		}
 
 		$_SESSION['UIMessage'] = new UIMessage(	'error', 
 												'Unauthorized Character Access',
 												'<p>The character you tried to view does not belong to you.</p>');
+		$logMsg = 'Unauthorized character access: Player ID ' . $mysql['playerID'] . ' attempted to view character ID ' . $mysql['characterID'] . ', which does not belong to them.';
+		$log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'Character', 'checkCharacterAccess', 'Warning');
 		return false;
 	}
 	
@@ -296,7 +299,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharDetails');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharDetails', 'Error');
 			return false;
 		}
 	} // getCharDetails
@@ -316,7 +319,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharBasics');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharBasics', 'Error');
 			return false;
 		}
 	} // getCharBasics
@@ -338,7 +341,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharHeaders');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharHeaders', 'Error');
 			return false;
 		}
 	} // getCharHeaders
@@ -360,7 +363,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkills');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkills', 'Error');
 			return false;
 		}
 	} // getCharSkills
@@ -381,7 +384,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharSpells');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getCharSpells', 'Error');
 			return false;
 		}
 	} // getCharSpells
@@ -402,7 +405,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFeats');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFeats', 'Error');
 			return false;
 		}
 	} // getCharFeats
@@ -427,7 +430,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkillsByHeader');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkillsByHeader', 'Error');
 			return false;
 		}
 	}
@@ -451,7 +454,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSpellsBySkill');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSpellsBySkill', 'Error');
 			return false;
 		}
 	}
@@ -470,7 +473,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCheatSheetSkills');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCheatSheetSkills', 'Error');
 			return false;
 		}
 		return false;
@@ -492,7 +495,7 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkillsByType');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharSkillsByType', 'Error');
 			return false;
 		}
 		return false;
@@ -514,9 +517,43 @@ class Character {
 			return $result;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharTraits');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharTraits', 'Error');
 			return false;
 		}
+	}
+
+	public function transferCharacter($data) {
+		$validator = new Validator();
+		if ($validator->validateCharTransfer($data) == false) {
+			return false;
+		}
+		
+		$mysql = array(); // Initialize blank
+		$mysql['playerID'] = db_escape($data['playerID'], $this->dbh);
+		$mysql['characterID'] = db_escape($data['characterID'], $this->dbh);
+		
+		$query =	"UPDATE characters c 
+					SET c.playerID = " . $mysql['playerID'] . " 
+					WHERE c.characterID = " . $mysql['characterID'];
+					
+		if ($result = $this->dbh->query($query)) {
+			// If the update was successful, set the success message
+			$character = new Character();
+			$charBasics = $character->getCharBasics($data['characterID']);
+		
+			while ($row = $charBasics->fetch_assoc()) {
+			  $html = array();
+			  $html['charName'] = htmlentities($row['charName']);
+			  
+			  // Set success message
+			  $_SESSION['UIMessage'] = new UIMessage(	'success', 
+														'Character transferred successfully',
+														'<p>The character "' . $html['charName'] . '" has been transferred.</p>');
+													
+			} // end of charDetails loop
+			return true;
+		}
+		return false;
 	}
 	
 	public function deleteCharacter($characterID) {
@@ -530,10 +567,12 @@ class Character {
 					WHERE c.characterID = " . $mysql['characterID'];
 					
 		if ($result = $this->dbh->query($query)) {
+			$logMsg = 'Moved character ID ' . $mysql['characterID'] . ' to trash.';
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'deleteCharacter', 'Information');
 			return true;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'deleteCharacter');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'deleteCharacter', 'Error');
 			return false;
 		}
 		return false;
@@ -553,7 +592,7 @@ class Character {
 			return true;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'undeleteCharacter');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'undeleteCharacter', 'Error');
 			return false;
 		}
 		return false;
@@ -676,7 +715,7 @@ class Character {
 			return $cpTotal;
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getTotalCharCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getTotalCharCP', 'Error');
 			return false;
 		}
 		return false;
@@ -716,7 +755,7 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query getAttributes: ' . $this->dbh->error . '. Query: ' . $getAttributes;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP', 'Error');
 			return false;
 		}
 		
@@ -732,7 +771,7 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query getHeaderCosts: ' . $this->dbh->error . '. Query: ' . $getHeaderCosts;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP', 'Error');
 			return false;
 		}
 		
@@ -756,7 +795,7 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query getSkillCosts: ' . $this->dbh->error . '. Query: ' . $getSkillCosts;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP', 'Error');
 			return false;
 		}
 		
@@ -772,7 +811,7 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query spellCostQuery: ' . $this->dbh->error . '. Query: ' . $spellCostQuery;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP', 'Error');
 			return false;
 		}
 
@@ -788,7 +827,7 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query featCostQuery: ' . $this->dbh->error . '. Query: ' . $featCostQuery;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'getCharFreeCP', 'Error');
 			return false;
 		}
 	
@@ -877,19 +916,21 @@ class Character {
 		
 		/* HEADER CP */
 		$totalHeaderCost = 0;
-		$headerIDList = implode(',', $character['charHeaders']); // Build list of selected headers
-		$headerCostQuery = 'SELECT SUM(h.headerCost) as totalHeaderCP ' .
-					'FROM headers h ' .
-					'WHERE h.headerID IN (' . $headerIDList . ')';
-					
-		if ($headerCostResult = $this->dbh->query($headerCostQuery)) {
-			while ($row = $headerCostResult->fetch_assoc()) {
-				$totalHeaderCost = $row['totalHeaderCP'];
+		if (!empty($character['charHeaders'])) {
+			$headerIDList = implode(',', $character['charHeaders']); // Build list of selected headers
+			$headerCostQuery = 'SELECT SUM(h.headerCost) as totalHeaderCP ' .
+						'FROM headers h ' .
+						'WHERE h.headerID IN (' . $headerIDList . ')';
+						
+			if ($headerCostResult = $this->dbh->query($headerCostQuery)) {
+				while ($row = $headerCostResult->fetch_assoc()) {
+					$totalHeaderCost = $row['totalHeaderCP'];
+				}
+			} else {
+				$logMsg = 'Error running query headerCostQuery. Error: ' . $this->dbh->error . '. Query: ' . $headerCostQuery;
+				$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
+				return false;
 			}
-		} else {
-			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $headerCostQuery;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP');
-			return false;
 		}
 		
 		/* SKILL CP */
@@ -929,8 +970,8 @@ class Character {
 					}
 				}
 			} else {
-				$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-				$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP');
+				$logMsg = 'Error running query skillCostQuery. Error: ' . $this->dbh->error . '. Query: ' . $skillCostQuery;
+				$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
 				return false;
 			}
 		}
@@ -948,25 +989,27 @@ class Character {
 			}
 		} else {
 			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP');
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
 			return false;
 		}
 
 		/* Feat CP */
 		$totalFeatCost = 0;
-		$featIDList = implode(',', $character['charFeats']); // Build list of selected feats
-		$featCostQuery = 'SELECT SUM(f.featCost) as totalFeatCP ' .
-					'FROM feats f ' .
-					'WHERE f.featID IN (' . $featIDList . ')';
-					
-		if ($featCostResult = $this->dbh->query($featCostQuery)) {
-			while ($row = $featCostResult->fetch_assoc()) {
-				$totalFeatCost = $row['totalFeatCP'];
+		if (!empty($character['charFeats']) && $character['charFeats'][0] != '') {			
+			$featIDList = implode(',', $character['charFeats']); // Build list of selected feats
+			$featCostQuery = 'SELECT SUM(f.featCost) as totalFeatCP ' .
+						'FROM feats f ' .
+						'WHERE f.featID IN (' . $featIDList . ')';
+						
+			if ($featCostResult = $this->dbh->query($featCostQuery)) {
+				while ($row = $featCostResult->fetch_assoc()) {
+					$totalFeatCost = $row['totalFeatCP'];
+				}
+			} else {
+				$logMsg = 'Error running query featCostQuery. Error: ' . $this->dbh->error . '. Query: ' . $featCostQuery;
+				$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
+				return false;
 			}
-		} else {
-			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP');
-			return false;
 		}
 		
 		$totalCPCost = $totalAttributeCost + $totalHeaderCost + $totalSkillCost + $totalSpellCost + $totalFeatCost;

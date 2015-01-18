@@ -24,9 +24,13 @@
   $tomorrow = date('n/j/Y', strtotime("$today + 1 day"));
 	// echo date("Y-m-j", strtotime("1998-08-14 -3 days"));
 	$oneMonthAgo = date('n/j/Y', strtotime("$today - 1 month"));
+  $sixMonthsAgo = date('n/j/Y', strtotime("$today - 6 months"));
+
+  $fromDateDefault = $sixMonthsAgo;
+  $toDateDefault = $tomorrow;
 	
-	$html['fromDate'] = isset($_SESSION['cpFilters']['fromDate']) ? htmlentities($_SESSION['cpFilters']['fromDate']) : $oneMonthAgo;
-	$html['toDate'] = isset($_SESSION['cpFilters']['toDate']) ? htmlentities($_SESSION['cpFilters']['toDate']) : $tomorrow;
+	$html['fromDate'] = isset($_SESSION['cpFilters']['fromDate']) ? htmlentities($_SESSION['cpFilters']['fromDate']) : $fromDateDefault;
+	$html['toDate'] = isset($_SESSION['cpFilters']['toDate']) ? htmlentities($_SESSION['cpFilters']['toDate']) : $toDateDefault;
 	$html['charName'] = isset($_SESSION['cpFilters']['charName']) ? htmlentities($_SESSION['cpFilters']['charName']) : '';
 	$html['playerName'] = isset($_SESSION['cpFilters']['playerName']) ? htmlentities($_SESSION['cpFilters']['playerName']) : '';
 	$html['CPCatID'] = isset($_SESSION['cpFilters']['CPCatID']) ? htmlentities($_SESSION['cpFilters']['CPCatID']) : '';
@@ -34,12 +38,12 @@
 	$html['CPNote'] = isset($_SESSION['cpFilters']['CPNote']) ? htmlentities($_SESSION['cpFilters']['CPNote']) : '';
 
 	// Initialize tab and filter display
-	if (isset($_SESSION['cpFilterExpanded']) && $_SESSION['cpFilterExpanded'] == 'Yes') {
-	  $cpFiltersClass = 'expanded';
-	  $cpFiltersDisplay = 'display: block';
-	} else {
+	if (isset($_SESSION['cpFilterExpanded']) && $_SESSION['cpFilterExpanded'] == 'No') {
 	  $cpFiltersClass = 'contracted';
-	  $cpFiltersDisplay = 'display: none';
+    $cpFiltersDisplay = 'display: none';
+	} else {
+	  $cpFiltersClass = 'expanded';
+    $cpFiltersDisplay = 'display: block';
 	}
 	
 	if (isset($_SESSION['selectedCPTab'])) {
@@ -95,6 +99,7 @@
             <p class="lbl">Added Between</p>
             <p class="data">
                 <input type="text" id="fromDate" name="fromDate" value="<?php echo $html['fromDate']; ?>" class="m" />
+                <input type="hidden" id="fromDateDefault" name="fromDateDefault" value="<?php echo $fromDateDefault; ?>" />
             </p>
             <br class="clear" />
           </div><!--.cell1-->
@@ -102,6 +107,7 @@
             <p class="lbl">and</p>
             <p class="data">
                 <input type="text" id="toDate" name="toDate" value="<?php echo $html['toDate']; ?>" class="m" />
+                <input type="hidden" id="toDateDefault" name="toDateDefault" value="<?php echo $toDateDefault; ?>" />
             </p>
             <br class="clear" />
           </div><!--.cell2-->
@@ -170,7 +176,7 @@
         
         <div class="btnArea">
             <input type="submit" name="cpFiltersBtn" id="cpFiltersBtn" value="Filter" class="btn-primary short" />
-            <a href="#" class="clearFilters">clear filters</a>
+            <a href="#" class="clearFilters">reset filters</a>
             <br class="clear" />
         </div>
       </div><!--#filtersContainer-->
@@ -181,10 +187,10 @@
                 <th class="dateCol">Date</th>
                 <th class="charCol">Character</th>
                 <th class="playerCol">Player</th>
-                <th class="numCol">Num</th>
-                <th class="staffCol">Staff</th>
+                <th class="numCol">CP</th>
+                <th class="staffCol">Assigned By</th>
                 <th class="catCol">Category</th>
-                <th class="actionCol"></th>
+                <th class="actionsCol"></th>
             </tr>
         </thead>
         <tbody>

@@ -19,6 +19,8 @@ class Player {
 	GET CHARACTERS FOR PLAYER
 	********************************************************/
 	public function getCharactersForPlayer($playerID) {
+		$log = new Log();
+
 		// Escape values for insertion into DB
 		$mysql = array(); // Initialize blank
 		$mysql['playerID'] = db_escape($playerID, $this->dbh);
@@ -31,6 +33,9 @@ class Player {
 		
 		if ($result = $this->dbh->query($query)) {
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Player', 'getCharactersForPlayer', 'Error');
 		}
 		return false;
 	} // end of getCharactersForPlayer
@@ -349,11 +354,12 @@ class Player {
 						
 			if ($deleteCharResult = $this->dbh->query($deleteCharQuery)) {
 				$logMsg .= 'Successfully deleted character ID ' . $charRow['characterID'] . '. ';
+				// $logMsg, $_SESSION['playerID'], '', $mysql['characterID'], 'Character', 'deleteCharacter'
 			}
 		  } else {
-			  echo $logMsg . '<br />';
+			  // echo $logMsg . '<br />';
 			  $log = new Log();
-			  $log->addLogEntry($logMsg, $playerID, $charRow['characterID']);	
+			  $log->addLogEntry($logMsg, $_SESSION['playerID'], $playerID, $charRow['characterID'], 'Player', 'purgePlayer');	
 		  }
 		} // end of characters loop
 		
@@ -377,7 +383,7 @@ class Player {
 		
 		if ($logMsg != '') {
 		  $log = new Log();
-		  $log->addLogEntry($logMsg, $mysql['playerID'], '');
+		  $log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], '', 'Player', 'purgePlayer');
 		}
 		
 		return true;

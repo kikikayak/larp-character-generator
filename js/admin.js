@@ -75,32 +75,6 @@ function init() {
 		});
 	});
 
-	/* CP HELP */
-
-	$("#numberCP").focus(function () {
-		showHelp(this, 'numberCPHelp');
-	});
-	
-	$("#CPType0").focus(function () {
-		showHelp(this, 'CPTypeHelp');
-	});
-
-	$("#characterID").focus(function () {
-		showHelp(this, 'CPTypeHelp');
-	});
-	
-	$("#playerID").focus(function () {
-		showHelp(this, 'CPTypeHelp');
-	});
-	
-	$("#CPCatID").focus(function () {
-		showHelp(this, 'CPCatIDHelp');
-	});
-	
-	$("#CPNote").focus(function () {
-		showHelp(this, 'CPNoteHelp');
-	});
-
 	/* SPELLS HELP */
 
 	$("#spellName").focus(function () {
@@ -1392,7 +1366,7 @@ function init() {
 	});
 
 	$('#selectAll').click(function() {
-		if ($(this).attr('checked') == 'checked') {
+		if ($(this).is(':checked')) {
 			$(this).closest('table').find('td input[type=checkbox]').each(function() {
 				$(this).attr('checked', 'checked');
 			});
@@ -1534,8 +1508,17 @@ function init() {
 
 	$('.clearFilters').click(function() {
 		var container = $(this).parents('#filterContainer');
-		container.find('.row input').val('');
+		container.find('.row input[type=text]').val('');
 		container.find('.row select').val('');
+
+		// Set from and to dates to defaults
+		var fromDateDefault = $('#fromDateDefault').val();
+		var toDateDefault = $('#toDateDefault').val();
+
+		$('#fromDate').val(fromDateDefault);
+		$('#toDate').val(toDateDefault);
+
+
 		return false;
 	});
 
@@ -2437,6 +2420,68 @@ function setupCharacterEvents() {
 	/* END DELETE DIALOG */
 
 	/********************************
+	TRANSFER CHARACTER DIALOG
+	*********************************/
+
+	var transferCharDialogOpts = {
+		modal: true,
+		title: "Transfer Character",
+		buttons: {
+			"Close": function() {
+				$(this).dialog('close');
+			},
+			"Transfer": function() {
+				// Figure out current character ID
+				var charID = $('#transferCharID').val();
+				var playerID = $('#transferCharDialog #playerID').val();
+
+				// alert('Character ID: ' + charID + '\n Player ID: ' + playerID);
+				var data = {characterID: charID, playerID: playerID}; // Create object/map of data to pass in AJAX call
+
+				$('#msg').load('../ajax/character.handler.php?ajaxAction=transferCharacter', data, function(response, status, xhr) {
+					if (status == "error") {
+						alert('error!');
+					} else if ($.trim(response) == '') {
+						// alert('Error: ' + response);
+						$('#charTransferMsg').load('../ajax/admin.handler.php?ajaxAction=displayUIMessage');
+						runCharTransferValidations();
+						setupCharTransferValidations();
+					} else {
+						$('#transferCharDialog').dialog('close');
+						$('#charFiltersBtn').click();
+					}
+				});
+			}
+		},
+		autoOpen: false,
+		width: 600
+	};
+
+	//create the dialog
+	$('#transferCharDialog').dialog(transferCharDialogOpts);
+
+	//define click handler for the button
+	$('.transferLink').click(function() {
+		// Find characterID of clicked row
+		var charID = $(this).closest('tr').find('.col1 input[type=checkbox]').val();
+
+		// Load character info into dialog div
+		var data = {characterID: charID}; // Create object/map of data to pass in AJAX call
+
+		// Load character info into dialog
+		$('#transferCharDialog').load('../ajax/character.handler.php?ajaxAction=loadCharTransferDialog', data, function() {
+			// On success, open dialog
+			$('#transferCharDialog').dialog('open');
+			setupCharTransferValidations();
+		});
+		hideAllMenus();
+		return false;
+
+	}); // end transferLink click handler
+
+	/* END TRANSFER DIALOG */
+
+	/********************************
 	CHARACTER DEATHS DIALOG
 	*********************************/
 
@@ -2478,6 +2523,12 @@ function setupCharacterEvents() {
 
 		// Load character info into dialog div
 		var data = {characterID: charID}; // Create object/map of data to pass in AJAX call
+
+		// Load character info into dialog
+		$('#transferCharDialog').load('../ajax/character.handler.php?ajaxAction=loadCharDeathsDialog', data, function() {
+			// On success, open dialog
+			$('#transferCharDialog').dialog('open');
+		});
 
 	}); // end addDeathsLink click handler
 
@@ -2897,44 +2948,6 @@ function setupCPAdd() {
 
 	}); // end cpAddLink click handler
 	/* END QUICK ADD CP DIALOG */
-}
-
-function setupCPTypeEvents() {
-	// alert('setupCPTypeEvents');
-	$('#CPType0').click(function () {
-		enableDisableCPType();
-	});
-
-	$('#CPType1').click(function () {
-		enableDisableCPType();
-	});
-
-	$('.ui-dialog select').chosen({disable_search_threshold: 10});
-
-	$('#numberCP1').blur(function() {
-		var totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP2').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP3').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP4').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
-
-	$('#numberCP5').blur(function() {
-		totalCP = calcTotalAddedCP();
-		displayTotalAddedCP(totalCP);
-	});
 }
 
 function setupFeatEvents() {

@@ -295,7 +295,7 @@
 			<table id="charList" class="sortName" cellpadding="5" cellspacing="0">
 			<thead>
 				<tr>
-				  <th class="chkboxCol"><!--<input type="checkbox" id="selectAll" name="selectAll" />--></th>
+				  <th class="chkboxCol"><input type="checkbox" id="selectAll" name="selectAll" /></th>
 				  <th class="charNameCol">Character</th>
 				  <th class="playerNameCol">Player</th>
 				  <th class="typeCol">Type</th>
@@ -327,6 +327,10 @@
     <div id="charDeleteDialog" class="deleteDialog" style="display:none">
     	<!--Contents to be populated by AJAX call--> 
     </div><!--#charDeleteDialog-->
+    
+    <div id="transferCharDialog">
+    	<!--Contents to be populated by AJAX call-->
+    </div>
     
     <div id="charDeathsDialog">
     	<!--Contents to be populated by AJAX call-->
