@@ -6,3 +6,4 @@ Thumbs.db
 includes/config.local.php
 includes/config.php
 includes/config.remote.php
+install/skills.sql
