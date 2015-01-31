@@ -18,6 +18,8 @@ class Wizard {
 	
 	// Retrieve all headers from the DB
 	public function getHeaders() {
+		$log = new Log();
+
 		$query = 	'SELECT * FROM headers h ' .
 					'WHERE h.headerAccess = \'Public\'' .
 					'AND h.headerDeleted IS NULL ' . 
@@ -25,56 +27,72 @@ class Wizard {
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Headers retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getHeaders query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getHeaders', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all countries from the DB
 	public function getCountries() {
+		$log = new Log();
+
 		$query = 	'SELECT * FROM countries c ' .
 					'WHERE c.countryDeleted IS NULL ' . 
 					'ORDER BY c.countryName';
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Countries retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getCountries query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getCountries', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all communities from the DB
 	public function getCommunities() {
+		$log = new Log();
+
 		$query = 	'SELECT * FROM communities c ' .
 					'WHERE c.communityDeleted IS NULL ' . 
 					'ORDER BY c.communityName';
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Communities retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getCommunities query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getCommunities', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all races from the DB
 	public function getRaces() {
+		$log = new Log();
+
 		$query = 	'SELECT * FROM races r ' .
 					'WHERE r.raceDeleted IS NULL ' . 
 					'ORDER BY r.raceName';
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Communities retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getRaces query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getRaces', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all headers from the DB
 	public function getSkillsForHeader($headerID) {
+		$log = new Log();
+
 		// Escape values for insertion into DB
 		$mysql = array(); // Initialize blank
 		$mysql['headerID'] = db_escape($headerID, $this->dbh);
@@ -88,14 +106,18 @@ class Wizard {
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Skills retrieved for this header: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getSkillsForHeader query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getSkillsForHeader', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all spell spheres from the DB
 	public function getSpheres($skillIDList) {
+		$log = new Log();
+
 		$query = 	'SELECT DISTINCT s.skillID, s.skillName, sk.skillID ' .
 					'FROM skills s, spellskills sk ' .
 					'WHERE s.skillID = sk.skillID ' .
@@ -104,14 +126,18 @@ class Wizard {
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Spheres retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getSpheres query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getSpheres', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all spells available based on the currently selected skills
 	public function getSelectableSpells() {
+		$log = new Log();
+
 		$query = 	'SELECT s.skillID, s.skillName, sp.spellID, sp.spellName, sp.spellCost, sp.spellShortDescription, sp.spellDescription, sp.spellAttributeCost, sp.spellDeleted ' .
 					'FROM spells sp, skills s, spellskills sk ' .
 					'WHERE sp.spellID = sk.spellID ' .
@@ -121,13 +147,17 @@ class Wizard {
 		
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Spells retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getSelectableSpells query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getSelectableSpells', 'Error');
 		}
 		return false;
 	}
 	
 	public function getSpellsForSphere($skillID) {
+		$log = new Log();
+
 		// Escape values for insertion into DB
 		$mysql = array(); // Initialize blank
 		$mysql['skillID'] = db_escape($skillID, $this->dbh);
@@ -141,28 +171,35 @@ class Wizard {
 
 		if ($result = $this->dbh->query($query)) {
 			// echo 'Skills retrieved for this header: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getSpellsForSphere query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getSpellsForSphere', 'Error');
 		}
 		return false;
 	}
 	
 	// Retrieve all feats from the DB
 	public function getFeats() {
+		$log = new Log();
+
 		$query = 	'SELECT f.featID, f.featName, f.featCost, f.featShortDescription, f.featDescription
 					FROM feats f
 					ORDER BY f.featName';
 		
 		if ($result = $this->dbh->query($query)) {
-			// echo 'Spheres retrieved: ' . $this->dbh->affected_rows . '<br />';
-			
 			return $result; // Return result 
+		} else {
+			$logMsg = 'Error running getFeats query: ' . $this->dbh->error . '. Query: ' . $query;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'getFeats', 'Error');
 		}
 		return false;
 	}
 	
 	// $character: Array of character values. 
 	public function checkCharacterCP($character) {
+		$log = new Log();
+
 		$totalCPCost = 0; // Total cost of wizard items character is trying to purchase
 		$totalPlayerCP = 0; // Total CP assigned to player. Will be transferred to character during creation process.
 		$totalAvailableCP = 0; // Total CP available to be spent on wizard items, including player CP. 
@@ -171,6 +208,11 @@ class Wizard {
 		if (!isset($character['playerID']) || is_empty($character['playerID'])) {
 			$character['playerID'] = $_SESSION['playerID'];
 		}
+
+		// Escape values for insertion into DB
+		$mysql = array(); // Initialize blank
+		$mysql['charName'] = db_escape($character['charName'], $this->dbh);
+		$mysql['playerID'] = db_escape($character['playerID'], $this->dbh);
 		
 		$charCheck = new Character();
 		
@@ -185,10 +227,13 @@ class Wizard {
 		if (isset($character['characterID'])) {
 			// Update
 			$totalAvailableCP = $charCheck->getTotalCharCP($character['characterID']) + $totalPlayerCP;
+			$mysql['characterID'] = db_escape($character['characterID'], $this->dbh);
 		} else {
 			// New character
 			$totalAvailableCP = $_SESSION['baseCP'] + $totalPlayerCP;
+			$mysql['characterID'] = '';
 		}
+		$cpDifference = $totalAvailableCP - $totalCPCost;
 		
 		// $_SESSION['character']['freeCP'] = $totalAvailableCP - $totalCPCost;
 		
@@ -205,6 +250,11 @@ class Wizard {
 													'<p>The character you built adds up to ' . $totalCPCost . ' CP. You only have ' . 
 													$totalAvailableCP . ' CP available. </p>
 													<p>Please verify your character below. If there is an error in the Generator\'s calculations, please email the <a href="mailto:' . $_SESSION['webmasterEmail'] . '">Webmaster</a>.</p>');
+			$logMsg = 'Warning: Player ID ' . $mysql['playerID'] . ' attempted to save character with ' . $cpDifference . ' CP. Repeated attempts may indicate an attempt to hack the Generator.';
+			if (isset($mysql['characterID'])) {
+				$logMsg .= ' Character ID ' . $mysql['characterID'] . ' (' . $mysql['charName'] . ').';
+			}
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'Wizard', 'checkCharacterCP', 'Warning');
 			return false;
 		}
 		
@@ -217,6 +267,7 @@ class Wizard {
 	// $character: Associative array of character data
 	// TODO: Add transaction-handling around all inserts; we need to roll back if any part of the inserts fails. 
 	public function createCharacter($character) {
+
 		/* DEBUG */
 		$_SESSION['debug'] = new Debug('debug', '');
 		$log = new Log();
@@ -277,82 +328,106 @@ class Wizard {
 				while ($lastCharacter = $lastCharacterResult->fetch_assoc()) {
 					$lastCharacterID = $lastCharacter['lastCharacterID'];
 				}
-			}
 			
-			// Insert character headers
-			for ($i = 0; $i < count($character['charHeaders']); $i++) {
-				$headerInsertQuery = 	'INSERT INTO charheaders (characterID, headerID) ' .
-										'VALUES(' . $lastCharacterID . ', ' . $character['charHeaders'][$i] . ')';
-				$headerInsertResult = $this->dbh->query($headerInsertQuery);
-			}
-			
-			// Insert character skills
-			foreach ($character['charSkills'] as $curID => $curValue) {
-				$skillInsertQuery = 	'INSERT INTO charskills (characterID, skillID, quantity) ' .
-										'VALUES(' . $lastCharacterID . ', ' . $character['charSkills'][$curID]['id'] . ', ' . $character['charSkills'][$curID]['qty'] . ')';
-				// echo 'skillInsertQuery: ' . $skillInsertQuery . '<br />';
-				$skillInsertResult = $this->dbh->query($skillInsertQuery);
-			}
-			
-			// Insert character spells
-			for ($k = 0; $k < count($character['charSpells']); $k++) {
-				$spellInsertQuery = 	'INSERT INTO charspells (characterID, spellID) ' .
-										'VALUES(' . $lastCharacterID . ', ' . $character['charSpells'][$k] . ')';
-				$spellInsertResult = $this->dbh->query($spellInsertQuery);
-			}
-
-			// Insert character feats
-			for ($m = 0; $m < count($character['charFeats']); $m++) {
-				$featInsertQuery = 	'INSERT INTO charfeats (characterID, featID) ' .
-									'VALUES(' . $lastCharacterID . ', ' . $character['charFeats'][$m] . ')';
-				$featInsertResult = $this->dbh->query($featInsertQuery);
-			}
-			
-			// Add CP record with correct number of starting CP
-			$cp = new CP();
-
-			$cpRecord = $cp->createCPRecord('character', $lastCharacterID, $mysql['playerID'], $_SESSION['baseCP'], 14, 'Starting CP for ' . $mysql['charType'] . ' character "' . $mysql['charName'] . '."');
-
-			// Transfer player CP to this character
-			$cpTransferQuery = 	"UPDATE cp
-								SET 
-									cp.CPType = 'character',
-									cp.characterID = " . $lastCharacterID . 
-								" WHERE cp.CPType = 'player'
-								AND cp.playerID = " . $mysql['playerID'];
-			
-			if ($cpTransferResult = $this->dbh->query($cpTransferQuery)) {
-				$log->addLogEntry('Transferred player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
-			}
-
-			// Find information for player this character belongs to
-			$playerQuery = "SELECT p.firstName, p.lastName 
-							FROM players p 
-							WHERE p.playerID = " . $mysql['playerID'];
-
-			if ($playerResult = $this->dbh->query($playerQuery)) {
-				while ($player = $playerResult->fetch_assoc()) {
-					$playerName = $player['firstName'] . ' ' . $player['lastName'];
+				// Insert character headers
+				for ($i = 0; $i < count($character['charHeaders']); $i++) {
+					$headerInsertQuery = 	'INSERT INTO charheaders (characterID, headerID) ' .
+											'VALUES(' . $lastCharacterID . ', ' . $character['charHeaders'][$i] . ')';
+					$headerInsertResult = $this->dbh->query($headerInsertQuery);
 				}
+				
+				// Insert character skills
+				foreach ($character['charSkills'] as $curID => $curValue) {
+					$skillInsertQuery = 	'INSERT INTO charskills (characterID, skillID, quantity) ' .
+											'VALUES(' . $lastCharacterID . ', ' . $character['charSkills'][$curID]['id'] . ', ' . $character['charSkills'][$curID]['qty'] . ')';
+					// echo 'skillInsertQuery: ' . $skillInsertQuery . '<br />';
+					$skillInsertResult = $this->dbh->query($skillInsertQuery);
+				}
+				
+				// Insert character spells
+				for ($k = 0; $k < count($character['charSpells']); $k++) {
+					$spellInsertQuery = 	'INSERT INTO charspells (characterID, spellID) ' .
+											'VALUES(' . $lastCharacterID . ', ' . $character['charSpells'][$k] . ')';
+					$spellInsertResult = $this->dbh->query($spellInsertQuery);
+				}
+
+				// Insert character feats
+				for ($m = 0; $m < count($character['charFeats']); $m++) {
+					$featInsertQuery = 	'INSERT INTO charfeats (characterID, featID) ' .
+										'VALUES(' . $lastCharacterID . ', ' . $character['charFeats'][$m] . ')';
+					$featInsertResult = $this->dbh->query($featInsertQuery);
+				}
+				
+				// Add CP record with correct number of starting CP
+				$cp = new CP();
+
+				$cpRecord = $cp->createCPRecord('character', $lastCharacterID, $mysql['playerID'], $_SESSION['baseCP'], 14, 'Starting CP for ' . $mysql['charType'] . ' character "' . $mysql['charName'] . '."');
+
+				// Transfer player CP to this character
+				$cpTransferQuery = 	"UPDATE cp
+									SET 
+										cp.CPType = 'character',
+										cp.characterID = " . $lastCharacterID . 
+									" WHERE cp.CPType = 'player'
+									AND cp.playerID = " . $mysql['playerID'];
+				
+				if ($cpTransferResult = $this->dbh->query($cpTransferQuery)) {
+					$log->addLogEntry('Transferred player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				}
+
+				// Find information for player this character belongs to
+				$playerQuery = "SELECT p.firstName, p.lastName 
+								FROM players p 
+								WHERE p.playerID = " . $mysql['playerID'];
+
+				if ($playerResult = $this->dbh->query($playerQuery)) {
+					while ($player = $playerResult->fetch_assoc()) {
+						$playerName = $player['firstName'] . ' ' . $player['lastName'];
+					}
+				} else {
+					$playerName = '';
+					$log->addLogEntry('Error retrieving player information: ' . $mysqli->error . '. Query: ' . $playerQuery, $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				}
+							
+				// Add tracking entry to log for this player/character
+				$log->addLogEntry('Created character "' . $character['charName'] . '" for player ' . $playerName . ' (ID: ' . $mysql['playerID'] . ').', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				
+				// Add CP info to log for this player/character
+				$log->addLogEntry('Automatically granted starting CP of ' . $_SESSION['baseCP'] . ' to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				
+				// Create success message to display at top of page. 
+				$_SESSION['UIMessage'] = new UIMessage(	'success', 
+														'Character created successfully',
+														'<p>The character "' . $character['charName'] . '" has been created.</p>');
+				
+				$_SESSION['debug']->outputDebug();	
+				return true;
 			} else {
-				$playerName = '';
-				$log->addLogEntry('Error running query: ' . $mysqli->error . '. Query: ' . $playerQuery, $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				// Problem retrieving last character ID
+				// Create partial success message to display at top of page. 
+				// TODO: This is a bad state and causes CP problems. Need to add transaction handling to deal with this. 
+				$_SESSION['UIMessage'] = new UIMessage(	'error', 
+														'Character created with warnings',
+														'<p>The character "' . $character['charName'] . '" has been created, but we encountered problems
+														while adding supporting information.</p>
+														<p>Please verify that your character has all the expected headers, skills, etc. You can edit your character and re-select them if necessary. </p>
+														<p>If you continue to encounter problems, please contact the <a href="mailto:' . $_SESSION['webmasterEmail'] . '">Administrator</a>.</p>');
+
+				$logMsg = 'Error during character creation: Unable to retrieve last character ID. Error: ' . $this->dbh->error . '. Query: ' . $lastCharacterQuery;
+				$log->addLogEntry($logMsg, $_SESSION['playerID'], $_SESSION['playerID'], '', 'Wizard', 'createCharacter', 'Error');
 			}
-						
-			// Add tracking entry to log for this player/character
-			$log->addLogEntry('Created character "' . $character['charName'] . '" for player ' . $playerName . ' (ID: ' . $mysql['playerID'] . ').', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
-			
-			// Add CP info to log for this player/character
-			$log->addLogEntry('Automatically granted starting CP of ' . $_SESSION['baseCP'] . ' to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
-			
-			// Create success message to display at top of page. 
-			$_SESSION['UIMessage'] = new UIMessage(	'success', 
-													'Character created successfully',
-													'<p>The character "' . $character['charName'] . '" has been created.</p>');
-			
-			$_SESSION['debug']->outputDebug();	
-			return true;
+		} else {
+			// Problem inserting character
+			$_SESSION['UIMessage'] = new UIMessage(	'error', 
+														'Unable to add character',
+														'<p>We weren\'t able to add the new character "' . $character['charName'] . '" to the system. </p>
+														<p>Please try again. If you continue to encounter problems, please contact the <a href="mailto:' . $_SESSION['webmasterEmail'] . '">Administrator</a>.</p>');
+
+			$logMsg = 'Error during character creation: Unable to insert new character into database. Error: ' . $this->dbh->error . '. Query: ' . $charInsertQuery;
+			$log->addLogEntry($logMsg, $_SESSION['playerID'], $mysql['playerID'], '', 'Wizard', 'createCharacter', 'Error');
+			return false;
 		}
+		// If we got to this point, we encountered some problems along the way. Return false. 
 		$_SESSION['debug']->outputDebug();	
 		return false;
 	}
@@ -360,6 +435,7 @@ class Wizard {
 	// $character: Associative array of character data
 	// TODO: Add transaction-handling around all inserts; we need to roll back if any part of the inserts fails. 
 	public function updateCharacter($character, $characterID, $mode = 'wizard') {
+		$log = new Log();
 		$character['characterID'] = $characterID;
 
 		if (!isset($character['playerID']) || is_empty($character['playerID'])) {

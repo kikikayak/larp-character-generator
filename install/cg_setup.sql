@@ -1,17 +1,15 @@
 /*
- Navicat Premium Data Transfer
+ Character Generator 2.0 Setup Script
 
- Source Server         : Localhost
- Source Server Type    : MySQL
- Source Server Version : 50615
- Source Host           : localhost
- Source Database       : zombiesCG
+ See the accompanying README file or the latest installation instructions at
+ https://code.google.com/p/larp-character-generator/wiki/Installation
+ for setup guidelines. 
 
  Target Server Type    : MySQL
- Target Server Version : 50615
+ Target Server Version : 50616
  File Encoding         : utf-8
 
- Date: 01/31/2014 15:11:27 PM
+ Created: 01/28/2015 20:30:46 PM
 */
 
 SET NAMES utf8;
@@ -50,7 +48,7 @@ CREATE TABLE `characters` (
   CONSTRAINT `countryID` FOREIGN KEY (`countryID`) REFERENCES `countries` (`countryID`),
   CONSTRAINT `playerID` FOREIGN KEY (`playerID`) REFERENCES `players` (`playerID`),
   CONSTRAINT `raceID` FOREIGN KEY (`raceID`) REFERENCES `races` (`raceID`)
-) ENGINE=InnoDB AUTO_INCREMENT=261 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `charfeats`
@@ -167,7 +165,7 @@ CREATE TABLE `cp` (
   KEY `NumberCP` (`numberCP`),
   KEY `PlayerID` (`playerID`),
   KEY `UserID` (`staffMember`)
-) ENGINE=InnoDB AUTO_INCREMENT=3212 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3219 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `cpcategories`
@@ -196,7 +194,7 @@ CREATE TABLE `feats` (
   `featDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`featID`),
   KEY `featID` (`featID`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `headers`
@@ -262,13 +260,17 @@ CREATE TABLE `hiddenspellsaccess` (
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
   `logID` int(11) NOT NULL AUTO_INCREMENT,
+  `severity` varchar(50) DEFAULT NULL,
   `logTimestamp` timestamp NULL DEFAULT NULL,
-  `logMessage` varchar(255) DEFAULT NULL,
+  `logMessage` text,
+  `loggedInPlayerID` int(11) DEFAULT NULL,
   `playerID` int(11) DEFAULT NULL,
   `characterID` int(11) DEFAULT NULL,
+  `className` varchar(50) DEFAULT NULL,
+  `methodName` varchar(50) DEFAULT NULL,
   `logDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`logID`)
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `players`
@@ -365,7 +367,7 @@ CREATE TABLE `skills` (
   `skillDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`skillID`),
   KEY `SkillID` (`skillID`)
-) ENGINE=InnoDB AUTO_INCREMENT=291 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=290 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `skillsheaders`
@@ -406,7 +408,7 @@ CREATE TABLE `spells` (
   `spellDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`spellID`),
   KEY `SpellID` (`spellID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `spellskills`
@@ -451,7 +453,7 @@ CREATE TABLE `traits` (
   `traitDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`traitID`),
   KEY `TraitID` (`traitID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `users`

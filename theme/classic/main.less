@@ -54,24 +54,25 @@ pre {
 	font-size: 1.5em;
 }
 
+h1, h2, h3, h4, h5 {
+	font-weight: 300;
+}
+
 h1 {
 	margin: 0;
 	padding: 10px 0 5px 10px;
 	color: #fff;
 	font-size: 2em;
-	font-weight: 300;
 }
 
 h2 {
 	margin-top: 0;
 	padding-top: 15px;
 	font-size: 1.8em;
-	font-weight: 300;
 }
 
 h3 {
 	font-size: 1.6em;
-	font-weight: 300;
 }
 
 .fldOutput {
@@ -136,7 +137,7 @@ h3 {
 
 .legal {
 	clear: both;
-	font-size: .9em;
+	font-size: 1.1em;
 	color: #999999;
 	padding-top: 1.5em;
 }
@@ -704,6 +705,7 @@ LOGIN PAGE
 	#forgotPwdLink,
 	#requestLoginLink {
 		color: #333;
+		font-size: 1.1em;
 	}
 
 	#forgotPwdLink {
@@ -812,6 +814,10 @@ PAGE-SPECIFIC STYLES
 
 	#content {
 		padding: 15px 10px 0 10px;
+	}
+
+	.hint {
+		margin-left: 0;
 	}
 
 }
@@ -1178,13 +1184,16 @@ WIZARD PAGE
 		}
 	}
 
-	.chzn-container {
+	.chzn-container,
+	.chosen-container {
 		min-width: 50px;
 	}
 
 	.chzn-container a,
-	.chzn-container li {
-		font-size: 1.2em;
+	.chosen-container a,
+	.chzn-container li,
+	.chosen-container li {
+		font-size: 1.1em;
 	}
 
 	#content {
@@ -1503,7 +1512,8 @@ WIZARD SECTION-SPECIFIC STYLES
 		}
 	}
 
-	.chzn-container {
+	.chzn-container,
+	.chosen-container {
 		min-width: 200px;
 	}
 }
@@ -1716,20 +1726,38 @@ ATTRIBUTE VISUALIZATION
 		float: left;
 		width: 50px;
 	}
+
+	.errorMsg {
+		float: left;
+		margin-left: 10px;
+		margin-top: 2px;
+	}
 }
 
 .attributeVis {
 	float: left;
 }
 
-.attributeTick {
+.attributeTick,
+.attributePt,
+.skillTick {
 	width: 20px;
 	height: 20px;
-	background-color: #FF9900;
+	display: block;
 	float: left;
 	margin-right: 2px;
 	-moz-border-radius: 3px;
 	border-radius: 2px;
+}
+
+.attributeTick,
+.attributePt {
+	background-color: #FF9900;
+}
+
+.skillTick {
+	background-color: #6699CC;
+	border: 0px none;
 }
 
 .attributeNumDisplay {
@@ -1788,29 +1816,19 @@ ATTRIBUTE VISUALIZATION
 	h2 {
 		margin-top: 0;
 		padding-top: 0;
-		font-size: 1.2em;
+		font-size: 1.5em;
 	}
 
 	h3 {
 		background: none;
-		font-size: 1.2em;
+		font-size: 1.3em;
 		color: #016633;
 		font-weight: bold;
-		margin-bottom: .7em;
+		margin: .7em 0;
 	}
 
 	p {
-		font-size: 1em;
-	}
-
-	.attributePt {
-		display: block;
-		width: 10px;
-		height: 10px;
-		background-color: #FF9900;
-		float: left;
-		border: 1px solid #ccc;
-		margin: 2px 6px;
+		font-size: 1.2em;
 	}
 
 	.availablePts,
@@ -1818,12 +1836,17 @@ ATTRIBUTE VISUALIZATION
 		width: 140px;
 		float: left;
 		font-weight: bold;
+		margin-top: 0;
 	}
 
 	.attributePts,
 	.skillAttributeUsage {
 		float: left;
 		width: 150px;
+	}
+
+	.noResults {
+		margin-top: 0;
 	}
 
 }
@@ -1835,16 +1858,6 @@ ATTRIBUTE VISUALIZATION
 	left: 281px;
 	background: transparent url(images/popup_arrow_left.png) no-repeat top left;
 	z-index: 1000;
-}
-
-.skillTick {
-	width: 10px;
-	height: 10px; 
-	background-color: #6699CC;
-	border: 1px solid #999999;
-	display: block;
-	float: left;
-	margin: 0 2px;
 }
 
 .unavailable .skillTick {

@@ -28,10 +28,6 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 	if ($_SESSION['isLoggedIn'] == 1) {	
 		header('Location: main/index.php'); // Take user to main page
 		exit();
-	} else {
-		$_SESSION['UIMessage'] = new UIMessage(	'error', 
-												'Invalid user name and/or password',
-												'<p>Please try again, or <a href="lostPassword.php">reset your password</a>.</p>');
 	}
 		
 }
@@ -44,6 +40,8 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo $_SESSION['campaignName']; ?> Character Generator | <?php echo $_SESSION['campaignName']; ?> Character Generator</title>
+
+<link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="js/ui/css/theme/ui.min.css" />
 <link rel="stylesheet/less" type="text/css" href="theme/classic/main.less" />
 

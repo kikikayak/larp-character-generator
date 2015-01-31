@@ -42,7 +42,8 @@
             	<li><a href="players.php">Manage Players</a>: Set up new players or edit existing players, including changing passwords. </li>
                 <li><a href="characters.php">Manage Characters</a>: Create new characters. View or edit existing characters. Filter characters using multiple criteria. </li>
                 <li><a href="cp.php">Administer CP</a>: Assign CP to players and characters and view existing CP records using a variety of criteria.</li>
-                <li><strong>Set up game world</strong>: Manage the headers, skills, and other features of your game world. 
+                <li>
+                  <div><strong>Set up game world</strong>: Manage the headers, skills, and other features of your game world. </div>
                 	<div class="leftCol">
                       <ul>
                           <li><a href="headers.php">Headers</a></li>

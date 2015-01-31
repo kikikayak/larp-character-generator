@@ -14,6 +14,13 @@ class Character {
 	
 	function __construct() {
 		$this->dbh = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE); // Open database connection using params from the config file
+
+		if ($this->dbh->connect_errno) {
+			$_SESSION['UIMessage'] = new UIMessage('error', 
+												'System Error',
+												'<p>Unable to contact Character Generator system. Please try again later.</p>
+												<p>If you continue to encounter problems, please contact the <a href="mailto:' . WEBMASTER_EMAIL . '">System Administrator</a> for assistance.</p>');
+		}
 	}
 	
 	public function getAllCharacters() {
@@ -978,19 +985,21 @@ class Character {
 		
 		/* SPELL CP */
 		$totalSpellCost = 0;
-		$spellIDList = implode(',', $character['charSpells']); // Build list of selected spells
-		$spellCostQuery = 'SELECT SUM(sp.spellCost) as totalSpellCP ' .
-					'FROM spells sp ' .
-					'WHERE sp.spellID IN (' . $spellIDList . ')';
-					
-		if ($spellCostResult = $this->dbh->query($spellCostQuery)) {
-			while ($row = $spellCostResult->fetch_assoc()) {
-				$totalSpellCost = $row['totalSpellCP'];
+		if (!empty($character['charSpells'])) {
+			$spellIDList = implode(',', $character['charSpells']); // Build list of selected spells
+			$spellCostQuery = 	'SELECT SUM(sp.spellCost) as totalSpellCP ' .
+								'FROM spells sp ' .
+								'WHERE sp.spellID IN (' . $spellIDList . ')';
+						
+			if ($spellCostResult = $this->dbh->query($spellCostQuery)) {
+				while ($row = $spellCostResult->fetch_assoc()) {
+					$totalSpellCost = $row['totalSpellCP'];
+				}
+			} else {
+				$logMsg = 'Error running query spellCostQuery: ' . $this->dbh->error . '. Query: ' . $spellCostQuery;
+				$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
+				return false;
 			}
-		} else {
-			$logMsg = 'Error running query: ' . $this->dbh->error . '. Query: ' . $query;
-			$log->addLogEntry($logMsg, $_SESSION['playerID'], '', '', 'Character', 'getWizardUsedCP', 'Error');
-			return false;
 		}
 
 		/* Feat CP */

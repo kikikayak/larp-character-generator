@@ -48,7 +48,7 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="../js/ui/css/theme/ui.min.css" />
-	<link rel="stylesheet/less" type="text/css" href="../theme/zombies/cheatSheet.less" />
+	<link rel="stylesheet/less" type="text/css" href="../theme/classic/cheatSheet.less" />
 
 	<script type="text/javascript">
 	    // Set LESS parameters

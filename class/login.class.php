@@ -7,13 +7,22 @@ NOTES:	This file holds all the classes for login and authentication.
 class Login {
 	
 	private $dbh; // Database handle
-	
+
 	function __construct() {
-		$this->dbh = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE); // Open database connection using params from the config file
+		// Open database connection using params from the config file
+		$this->dbh = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+		
+		if ($this->dbh->connect_errno) {
+			$_SESSION['UIMessage'] = new UIMessage('error', 
+												'System Error',
+												'<p>Unable to contact Character Generator system. Please try again later.</p>
+												<p>If you continue to encounter problems, please contact the <a href="mailto:' . WEBMASTER_EMAIL . '">System Administrator</a> for assistance.</p>');
+		}
 	}
 	
 	public function authenticateUser($email, $password) {
 		// echo $email . ', ' . $password;
+		$log = new Log();
 		
 		$user = array();
 		$user['email'] = $email;
@@ -36,28 +45,38 @@ class Login {
 		*/
 		
 		/* New (encrypted) version */
-		$authenticateQuery = 	"SELECT p.email, p.password 
+		$authenticateQuery = 	"SELECT p.email, p.password, p.playerID 
 								FROM players p
 								WHERE p.email = '" . $mysql['email'] . "' 
 								AND p.userStatus = 'active' 
 								AND p.playerDeleted IS NULL";
 								
 		if ($authenticateResult = $this->dbh->query($authenticateQuery)) {
+			if ($authenticateResult->num_rows > 0) {
+				while ($row = $authenticateResult->fetch_assoc()) {
 
-			while ($row = $authenticateResult->fetch_assoc()) {
+					// Generate salted hash of password user entered
+					$hashedPassword = generateHash($password, $row['password']);
 
-			  // Generate salted hash of password user entered
-			  $hashedPassword = generateHash($password, $row['password']);
-			  
-			  // Compare the hashed password retrieved from the DB
-			  // to the hashed version of the password the user entered. 
-			  if ($row['password'] == $hashedPassword) { // Passwords match!
-				  $this->initSession(); // Call method to initialize settings
-				  $this->initUser($mysql['email']); // Call method to initialize user data
-				  return 1;
-			  }
+					// Compare the hashed password retrieved from the DB
+					// to the hashed version of the password the user entered. 
+					if ($row['password'] == $hashedPassword) { // Passwords match!
+						$this->initSession(); // Call method to initialize settings
+						$this->initUser($mysql['email']); // Call method to initialize user data
+						return 1;
+					} else { // Passwords don't match
+						$logMsg = 'User ' . $mysql['email'] . ' failed to log in; password incorrect.';
+						$log->addLogEntry($logMsg, '', '', '', 'Login', 'authenticateUser', 'Warning');
+					}
+				} // end while loop
+			} else { // zero rows returned
+				$logMsg = 'User attempted to log in using an email address not in the system: ' . $mysql['email'];
+				$log->addLogEntry($logMsg, '', '', '', 'Login', 'authenticateUser', 'Warning');
 			}
-		} 
+		} else {
+			$logMsg = 'Error authenticating user with email address ' . $mysql['email'] . '. Error: ' . $this->dbh->error . '. authenticateQuery: ' . $authenticateQuery;
+			$log->addLogEntry($logMsg, '', '', '', 'Login', 'authenticateUser', 'Error');
+		}
 		$_SESSION['UIMessage'] = new UIMessage('error', 
 												'Invalid user name and/or password',
 												'<p>Please try again, or <a href="lostPassword.php">reset your password</a>.</p>');

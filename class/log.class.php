@@ -53,8 +53,12 @@ class Log {
 		Information: Messages that do not indicate a problem or require action, but allow administrators to trace 
 						the actions of the system (e.g. success messages)
 	*/
-	public function addLogEntry($msg, $loggedInPlayerID, $playerID = '', $characterID = '', $className = '', $methodName = '', $severity = 'Information') {
+	public function addLogEntry($msg, $loggedInPlayerID = '', $playerID = '', $characterID = '', $className = '', $methodName = '', $severity = 'Information') {
 		// Deal with optional fields
+		if ($loggedInPlayerID == '') {
+			$loggedInPlayerID = 'NULL';
+		}
+
 		if ($playerID == '') {
 			$playerID = 'NULL';
 		}

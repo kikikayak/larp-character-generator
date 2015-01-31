@@ -403,31 +403,6 @@ else if ($ajaxAction == 'getAttributeUsage' && isset($_POST['attributeName'])) {
 	} // end overall condition for number of results 
 	?>
 
-	
-	<!--<p class="skillName">Breath of Fresh Air<br />
-	<span class="numPts">(2 Air)</span></p>
-	<div class="skillAttributeUsage">
-		<div class="skillUse">
-			<span class="skillTick"></span>
-			<span class="skillTick"></span>
-		</div>
-		<div class="skillUse unavailable">
-			<span class="skillTick"></span>
-			<span class="skillTick"></span>
-		</div>
-	</div>
-	<br class="clear" />
-	
-	<p class="skillName">Tornado<br />
-	<span class="numPts">(4 Air)</span></p>
-	<div class="skillAttributeUsage">
-		<div class="skillUse unavailable">
-			<span class="skillTick"></span>
-			<span class="skillTick"></span>
-			<span class="skillTick"></span>
-			<span class="skillTick"></span>
-		</div>
-	</div>-->
 	<br class="clear" />
 
 
