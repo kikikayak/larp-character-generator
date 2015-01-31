@@ -3,3 +3,6 @@ retired/
 Devel/
 .DS_Store
 Thumbs.db
+includes/config.local.php
+includes/config.php
+includes/config.remote.php
