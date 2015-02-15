@@ -48,7 +48,7 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="../js/ui/css/theme/ui.min.css" />
-	<link rel="stylesheet/less" type="text/css" href="../theme/classic/cheatSheet.less" />
+	<link rel="stylesheet/less" type="text/css" href="../theme/<?php echo $_SESSION['theme']; ?>/cheatSheet.less" />
 
 	<script type="text/javascript">
 	    // Set LESS parameters
@@ -221,6 +221,12 @@
 	} // end of main character result loop
 ?>
 
+<?php
+	$featObj = new Feat();
+	$totalFeats = $featObj->getTotalFeats();
+	if ($totalFeats > 0) { // Only show feats section if there are any in the system
+?>
+
 <!-- ****************************************************************************
 	FEATS
 	************************************************************************* -->
@@ -268,6 +274,10 @@
 	?>
 
 </div><!--#feats-->
+
+<?php
+	} // end of "if any feats exist" condition
+?>
 
 
 

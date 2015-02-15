@@ -18,6 +18,7 @@ define('WEBMASTER_EMAIL', 'test@email.com');
 define('WEBMASTER_NAME', 'Webmaster name here');
 define('COPYRIGHT_DATE', '2014');
 define('GENERATOR_LOCATION', 'URL goes here'); // Complete URL, including http://
+define('THEME', 'classic'); // Name of active theme. Default is "classic"
 define('DEBUG', 'off'); // Values: 'off' or 'on.' Recommend leaving off. 
 
 define('DB_HOST', 'localhost'); // Replace with server name at your hosting provider

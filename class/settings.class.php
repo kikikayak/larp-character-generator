@@ -44,7 +44,6 @@ class Settings {
 		$mysql['attribute5Label'] = db_escape($settings['attribute5Label'], $this->dbh);
 		$mysql['vitalityLabel'] = db_escape($settings['vitalityLabel'], $this->dbh);
 		$mysql['campaignName'] = db_escape($settings['campaignName'], $this->dbh);
-		$mysql['themeID'] = db_escape($settings['themeID'], $this->dbh);
 		$mysql['contactName'] = db_escape($settings['contactName'], $this->dbh);
 		$mysql['contactEmail'] = db_escape($settings['contactEmail'], $this->dbh);
 		$mysql['webmasterName'] = db_escape($settings['webmasterName'], $this->dbh);
@@ -65,7 +64,6 @@ class Settings {
 					s.attribute5Label = '" . $mysql['attribute5Label'] . "', 
 					s.vitalityLabel = '" . $mysql['vitalityLabel'] . "', 
 					s.campaignName = '" . $mysql['campaignName'] . "', 
-					s.themeID = " . $mysql['themeID'] . ", 
 					s.contactName = '" . $mysql['contactName'] . "', 
 					s.contactEmail = '" . $mysql['contactEmail'] . "', 
 					s.webmasterName = '" . $mysql['webmasterName'] . "', 

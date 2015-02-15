@@ -108,7 +108,7 @@ class Login {
 				$_SESSION['attribute5Label'] = $row['attribute5Label'];
 				$_SESSION['vitalityLabel'] = $row['vitalityLabel'];
 				$_SESSION['campaignName'] = $row['campaignName'];
-				$_SESSION['themeID'] = $row['themeID'];
+				$_SESSION['theme'] = THEME;
 				$_SESSION['contactName'] = $row['contactName'];
 				$_SESSION['contactEmail'] = $row['contactEmail'];
 				$_SESSION['webmasterName'] = $row['webmasterName'];

@@ -26,11 +26,11 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:400,300' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="js/ui/css/theme/ui.min.css" />
 <link rel="stylesheet" type="text/css" href="js/chosen/chosen.css" />
-<link rel="stylesheet/less" type="text/css" href="theme/classic/main.less" />
+<link rel="stylesheet/less" type="text/css" href="theme/<?php echo THEME; ?>/main.less" />
 
 <?php 
 	if (isset($styleLink)) {
-		echo '<link rel="stylesheet/less" type="text/css" href="theme/classic/' . $styleLink . '" />'; // Include custom stylesheet for this page, if there is one. 
+		echo '<link rel="stylesheet/less" type="text/css" href="theme/' . THEME . '/' . $styleLink . '" />'; // Include custom stylesheet for this page, if there is one. 
 	}
 ?>
 

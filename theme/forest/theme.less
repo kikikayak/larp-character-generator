@@ -7,54 +7,55 @@ NOTES: 	This files holds all the basic colors, variables, etc for the theme.
 // DEFINE VARIABLES
 
 // Main layout styles
-@bg-body: #eee;
-@bg-color-mast: #629A6E;
-@bg-color-footer: #629A6E;
-@bg-color-header: #629A6E;
+// 	Good accent color: #849851
+@bg-body: #2e3512 url(images/forest-BG.jpg) no-repeat top left;
+@bg-color-mast: transparent;
+@bg-color-footer: transparent;
+@bg-color-header: transparent;
 
-@bg-color-content: #fff;
-@border-content-left: 10px solid @bg-color-header;
-@border-content-right: 10px solid @bg-color-header;
+@bg-color-content: #f8fcec;
+@border-content-left: 0px none;
+@border-content-right: 0px none;
 @border-content-top: 0px none;
 @border-content-bottom: 0px none;
 
-@bg-section-head: @bg-color-header;
-@bg-login-form: #ffffff;
-@bg-color-help: #D9EBD9;
+@bg-section-head: #849851;
+@bg-login-form: #f8fcec;
+@bg-color-help: #d7e1bf;
 
-@bg-color-table-header: #d9ebd9;
-@bg-color-table-even: #f4f4f4;
+@bg-color-table-header: #d7e1bf;
+@bg-color-table-even: #ecf1e0;
 
 // Button styles
-@bg-color-btn-primary: #629A6E;
+@bg-color-btn-primary: #849851;
 @text-color-btn-primary: #ffffff;
 @border-btn-primary: 0px none;
 
 @bg-color-btn-secondary: #666666;
 @text-color-btn-secondary: #ffffff;
-@border-btn-secondary: 1px solid #656565;
+@border-btn-secondary: 0px none;
 
 @bg-color-btn-disabled: #cccccc;
 @text-color-btn-disabled: #999999;
 @border-btn-disabled: 1px solid #bcbcbc;
 
-@bg-color-btn-login: @bg-color-header;
+@bg-color-btn-login: #849851;
 @border-btn-login: 0px none;
 
 // Navigation styles
-@bg-color-nav: #629A6E; // Overall background for navigation area
-@bg-nav-item: #bbb; // Background for non-selected nav items
-@bg-nav-item-selected: @bg-color-content; // Background for currently selected nav item
+@bg-color-nav: #849851; // Overall background for navigation area
+@bg-nav-item: #849851; // Background for non-selected nav items
+@bg-nav-item-selected: #a1b470; // Background for currently selected nav item
 
 // Tab styles
 @tab-panel-item: #999;
-@tab-panel-item-selected: #669966;
+@tab-panel-item-selected: #849851;
 
 // Text styles
 @text-color: #333;
-@text-color-char-header: #016633;
+@text-color-char-header: #63792b;
 @text-color-mast: #fff;
-@text-color-nav: #333;
+@text-color-nav: #fff;
 @text-color-footer: #fff;
 @text-color-error: #cc0000;
 
@@ -70,7 +71,7 @@ MIXINS
 	filter: alpha(opacity=@ie); /* For IE8 and earlier */
 }
 
-.rounded-corners (@radius-top-left: 15px; @radius-top-right: 15px; @radius-bottom-right: 0; @radius-bottom-left: 0) {
+.rounded-corners (@radius-top-left: 3px; @radius-top-right: 3px; @radius-bottom-right: 3px; @radius-bottom-left: 3px) {
   -webkit-border-radius: @arguments;
   -moz-border-radius: @arguments;
   -ms-border-radius: @arguments;

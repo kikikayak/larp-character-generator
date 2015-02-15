@@ -41,7 +41,6 @@
 		$html['attribute5Label'] = isset($_POST['attribute5Label']) ? htmlentities($_POST['attribute5Label']) : htmlentities($savedSettings['attribute5Label']);
 		$html['vitalityLabel'] = isset($_POST['vitalityLabel']) ? htmlentities($_POST['vitalityLabel']) : htmlentities($savedSettings['vitalityLabel']);
 		$html['campaignName'] = isset($_POST['campaignName']) ? htmlentities($_POST['campaignName']) : htmlentities($savedSettings['campaignName']);
-		$html['themeID'] = isset($_POST['themeID']) ? htmlentities($_POST['themeID']) : htmlentities($savedSettings['themeID']);
 		$html['contactName'] = isset($_POST['contactName']) ? htmlentities($_POST['contactName']) : htmlentities($savedSettings['contactName']);
 		$html['contactEmail'] = isset($_POST['contactEmail']) ? htmlentities($_POST['contactEmail']) : htmlentities($savedSettings['contactEmail']);
 		$html['webmasterName'] = isset($_POST['webmasterName']) ? htmlentities($_POST['webmasterName']) : htmlentities($savedSettings['webmasterName']);
@@ -54,10 +53,7 @@
 	$pageHeader = 'Settings';
 	$btnLabel = 'Save';
 	$scriptLink = 'settings.js';
-	
-	$themeObj = new Theme();
-	$themes = $themeObj->getAllThemes();
-	
+		
 	include('../includes/header_admin.php');
 
 ?>	
@@ -115,17 +111,6 @@
                 <p>This setting determines whether or not this game has a concept of races. </p>
                 <p>If you set this to "no," players will not see any race selection options in the character wizard.</p>
                 <p>You will still be able to configure races in the Admin section, but players will not be able to use them. </p>
-            </div>
-            <div class="helpBottom"></div>
-        </div>
-        
-        <div id="themeIDHelp" class="help" style="display: none">
-            <div class="helpTop">
-              <a href="#" class="closeLink">X</a>
-            </div>
-            <div class="helpContent">
-                <p>This setting controls the look and feel of the player-facing section. </p>
-                <p>A future release will support the creation of custom themes.</p>
             </div>
             <div class="helpBottom"></div>
         </div>
@@ -268,26 +253,6 @@
                         <br class="clear" />
                     </div>
                 </div>
-              
-              <div class="hidden">  
-                <?php cg_createRow('themeID'); ?>
-                    <div class="cell">
-                        <label for="themeID">* Theme</label>
-                        <select name="themeID" id="themeID">
-                          <?php
-                            // Open characters loop
-                            while ($themeRow = $themes->fetch_assoc()) {
-                          ?>
-                            <option value="<?php echo $themeRow['themeID']; ?>" <?php if ($html['themeID'] == $themeRow['themeID']) echo 'selected="selected"'; ?>><?php echo $themeRow['themeName']; ?></option>
-                          <?php
-                            }
-                          ?>
-                        </select>
-                        <?php cg_showError('themeID'); ?>
-                        <br class="clear" />
-                    </div>
-                </div>
-               </div><!--.hidden--> 
 
               </fieldset>
             </div><!--#generalSettings-->

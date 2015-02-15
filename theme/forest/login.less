@@ -1,0 +1,144 @@
+@charset "utf-8";
+/*********************************************
+NAME: 	login.less
+NOTES: 	This files holds all the styles for the login and other unauthenticated pages. 
+***********************************************/
+
+@import url('theme.less');
+@import url('main.less');
+
+body {
+	.body;
+}
+
+h1 {
+	font-size: 2em;
+	margin-bottom: 10px;
+	color: #fff;
+}
+
+#footer {
+	width: 800px;
+	color: #fff;
+	margin: 0 auto;
+	padding: 0 10px;
+
+	a {
+		color: #fff;
+	}
+}
+
+#mast {
+	width: 820px;
+	margin: 10px auto;
+	padding: 0;
+	position: relative;
+	border: 0 none;
+
+	h1 {
+		margin-bottom: 0;
+	}
+
+	
+
+}
+
+#main {
+	padding: 0;
+	width: 600px;
+	margin: 0 auto;
+}
+
+#content {
+	padding: 1px 10px 0 10px;
+	margin: 0 auto;
+	position: relative;
+	width: 800px;
+	background-color: #fff;
+	.rounded-corners(15px; 15px; 15px; 15px);
+}
+
+
+
+/***********************************************************************************
+LOGIN PAGE
+************************************************************************************/
+
+#loginPage {
+	#content {
+		background-color: transparent;
+		border-radius: 0;
+	}
+}
+
+#loginForm {
+	background-color: #0A0C00;
+	padding: 20px 0 15px 20px;
+	.transparency(80; 0.8);
+	.rounded-corners(15px; 15px; 15px; 15px);
+
+	label {
+		color: #fff;
+		font-weight: normal;
+	}
+	
+	input {
+		height: 35px;
+		font-size: 1.4em;
+	}
+
+	#forgotPwdLink,
+	#requestLoginLink {
+		color: #fff;
+	}
+
+	#forgotPwdLink {
+		display: block;
+		float: none;
+		clear: both;
+		padding-top: 5px;
+	}
+
+	#requestLoginLink {
+		float: left;
+		display: block;
+		margin-left: 0;
+		font-size: 1.1em;
+		line-height: 25px;
+	}
+
+	.btnArea {
+		margin: 0 0 15px 0;
+
+		a {
+			margin-left: 1.5em;
+		}
+	}
+	
+	#loginBtn {
+		margin-left: 0;
+		height: 35px;
+		width: 335px;
+	}
+
+}
+
+#loginArea {
+	width: 375px;
+	margin-top: 75px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 0;
+
+	p {
+		padding: 0;
+	}
+
+	a:visited {
+		color: #003366;
+	}
+
+	a:hover {
+		color: #990000;
+	}	
+}

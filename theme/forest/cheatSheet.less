@@ -1,0 +1,136 @@
+/*****************************************************************
+	NAME: 	cheatSheet.less
+	NOTES: 	Contains all the CSS for the cheat sheet page. 
+******************************************************************/
+
+@import url('theme.less');
+
+body {
+	margin: 0;
+	margin-left: 20px;
+	padding: 0;
+	font-size: 65.5%;
+	font-family: @font-main;
+	color: #333;
+	background-image: none;
+	background-color: #fff;
+}
+
+p, h1, h2, h3 {
+	font-weight: 300;
+}
+
+h1 {
+	font-size: 2em;
+	margin-bottom: 0;
+}
+
+h2 {
+	margin-top: 0;
+	font-size: 1.4em;
+}
+
+p {
+	font-size: 1.3em;
+}
+
+.section h3 {
+	margin: 20px 0 5px 0;
+	font-size: 1.6em;
+	padding: 3px 0;
+}
+
+th, td {
+	font-size: 1.3em;
+	padding: 5px;
+	vertical-align: top;
+	font-weight: 300;
+}
+
+thead th {
+	font-weight: 400;
+}
+
+.odd th,
+.odd td {
+	background-color: #f7f7f7;
+}
+
+.section {
+	margin-top: 30px;
+}
+
+.noResults {
+	font-style: italic;
+	margin-top: 0;
+}
+
+#attributes {
+	margin-top: 20px;
+}
+
+#charStats {
+	width: 600px;
+}
+
+.statBox {
+	color: #000;
+	background-color: #eee;
+	width: 32.8%;
+	margin: 0 .5% 20px 0;
+	padding: 5px 0;
+	float: left;
+
+	p {
+		font-size: 2.8em;
+		line-height: 1.4em;
+		margin: 0;
+		text-align: center;
+		font-weight: 300;
+	}
+
+	.lbl {
+		font-size: 1.2em;
+	}
+}
+
+
+/* COSTS AND GUIDELINES SECTION */
+#costs {
+	width: 600px;
+}
+
+.costTable {
+	width: 600px;
+
+	th {
+		background-color: #eee;
+		text-align: left;
+	}
+
+	.col1 {
+		width: 140px;
+	}
+}
+
+/* SKILL USAGE SECTION */
+
+#usage {
+	width: 600px;
+	margin-bottom: 25px;
+}
+
+.usageTable {
+	width: 100%;
+
+	thead th {
+		background-color: #ccc;
+		text-align: left;
+	}
+
+	tbody th {
+		text-align: right;
+		width: 70px;
+		padding-right: 15px;
+	}
+}

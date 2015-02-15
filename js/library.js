@@ -258,18 +258,20 @@ function removeError(fld) {
 SHOW/HIDE FUNCTIONS
 ***********************************************/
 
+// tabObj: jQuery object
 function changeTab(tabObj, section) {
 	// Find all sections and hide them
 	$('.section-tabbed').each(function() {
 		$(this).hide();
 	});
-	tabLink = $('#' + tabObj.id);
+	// tabLink = $('#' + tabObj.id);
+
 	$('#' + section).show();
 	// Find parent tabPanel
-	tabLink.closest('.tabPanel').find('a').each(function() {
+	tabObj.closest('.tabPanel').find('a').each(function() {
 		$(this).removeClass('selected');
 	});
-	tabLink.addClass('selected');
+	tabObj.addClass('selected');
 }
 
 // Animate and remove a table row
@@ -362,6 +364,11 @@ function stripeTableRows(tableID) {
 
 function closeAllMenus() {
 	$('.menu').hide();
+}
+
+// filename: string name of page including extension, e.g. 'index.php'
+function goToPage(filename) {
+	window.location.href=filename;
 }
 
 

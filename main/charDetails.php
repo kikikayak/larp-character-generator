@@ -71,7 +71,7 @@
 			</div>
 			
 			
-			<div id="basics" style="display: none">
+			<div id="basics">
 				<table id="basicsTable" cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="odd">
@@ -89,8 +89,8 @@
 						<tr class="odd">
 							<th class="col1"><?php echo $_SESSION['attribute3Label']; ?></th>
 							<td class="col2"><?php echo $row['attribute3']; ?></td>
-							<th class="col3">Age</th>
-							<td class="col4"><?php echo $row['charAge']; ?></td>
+							<th class="col3">&nbsp;</th>
+							<td class="col4">&nbsp;</td>
 						</tr>
 						<tr class="even">
 							<th class="col1"><?php echo $_SESSION['attribute4Label']; ?></th>
@@ -112,14 +112,14 @@
 						<tr class="odd">
 							<th class="col1"><?php echo $_SESSION['attribute5Label']; ?></th>
 							<td class="col2"><?php echo $row['attribute5']; ?></td>
-							<th class="col3">Total CP</th>
-							<td class="col4"><?php echo $charTotalCP; ?></td>
+							<th class="col3">&nbsp;</th>
+							<td class="col4">&nbsp;</td>
 						</tr>
 						<tr class="even">
 							<th class="col1"><?php echo $_SESSION['vitalityLabel']; ?></th>
 							<td class="col2"><?php echo $row['vitality']; ?></td>
-							<th class="col3">Free CP</th>
-							<td class="col4"><?php echo $charFreeCP; ?></td>
+							<th class="col3">&nbsp;</th>
+							<td class="col4">&nbsp;</td>
 						</tr>
 					</tbody>	
 				</table>
@@ -176,25 +176,7 @@
                     if ($charHeaders->num_rows == 0) {
                         echo '<div class="header"><p class="empty">None</p></div>';
                     }
-
-                ?>
-
-				<h3>Feats</h3>
-                <?php 
-                    while ($feat = $charFeats->fetch_assoc()) { // Loop through feats
-                ?>
-                <div class="feat">
-                    <p><?php echo $feat['featName']; ?></p>
-                  
-                </div><!--/feat div-->
-                
-                <?php 
-                    } // Close feats loop
-                    if ($charFeats->num_rows == 0) {
-                        echo '<p class="empty">None</p>';
-                    }
-
-                ?>           
+                ?>        
                 
             </div><!--/summaryView-->
             
@@ -244,11 +226,20 @@
                     if ($charHeaders->num_rows == 0) {
                         echo '<div class="header"><p class="empty">None</p></div>';
                     }
+
                 ?>
 
-                <h3>Feats</h3>
+            </div><!--end of detailed view-->
+
+            <?php
+
+				$featObj = new Feat();
+				$totalFeats = $featObj->getTotalFeats();
+				if ($totalFeats > 0) { // Only show feats section if there are any in the system
+			?>
+			
+				<h3>Feats</h3>
                 <?php 
-                    $charFeats->data_seek(0); // Reset result counter to first result
                     while ($feat = $charFeats->fetch_assoc()) { // Loop through feats
                 ?>
                 <div class="feat">
@@ -256,29 +247,29 @@
                   
                 </div><!--/feat div-->
                 
-                <?php 
+            <?php 
                     } // Close feats loop
                     if ($charFeats->num_rows == 0) {
                         echo '<p class="empty">None</p>';
                     }
-                ?>
-                
-            </div><!--end of detailed view-->
+                } // End feats condition
+
+            ?> 
 				
-				<div id="traits">
-					<h3>Traits</h3>
-					<?php 
-						while ($trait = $charTraits->fetch_assoc()) { // Loop through traits for this character
-					?>
-						<p><?php echo $trait['traitName']; ?></p>
-					<?php
-						} // Close traits loop
-						if ($charTraits->num_rows == 0) {
-							echo '<p class="empty">None</p>';
-						}
-					?>
-					
-				</div><!--end of traits-->
+			<div id="traits">
+				<h3>Traits</h3>
+				<?php 
+					while ($trait = $charTraits->fetch_assoc()) { // Loop through traits for this character
+				?>
+					<p><?php echo $trait['traitName']; ?></p>
+				<?php
+					} // Close traits loop
+					if ($charTraits->num_rows == 0) {
+						echo '<p class="empty">None</p>';
+					}
+				?>
+				
+			</div><!--end of traits-->
 			
 			<?php 
 				} // end of result loop

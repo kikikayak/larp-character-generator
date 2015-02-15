@@ -20,8 +20,6 @@
 	require(LOCATION . 'class/login.class.php');
 	require(LOCATION . 'class/player.class.php');
 	require(LOCATION . 'class/settings.class.php');
-	require(LOCATION . 'class/theme.class.php');
-	require(LOCATION . 'class/user.class.php');
 	require(LOCATION . 'class/UIMessage.class.php');
 	require(LOCATION . 'class/validator.class.php');
 	require(LOCATION . 'class/cp.class.php');

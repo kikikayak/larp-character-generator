@@ -806,14 +806,6 @@ class Validator {
 			$errorList['useRaces']['error'] = 'Please specify Yes or No';
 		}
 		
-		if (is_empty($settings['themeID'])) {
-			$errorList['themeID']['fldLbl'] = 'Theme';
-			$errorList['themeID']['error'] = 'Please select a theme';
-		} else if (!isValidText($settings['themeID'])) {
-			$errorList['themeID']['fldLbl'] = 'Theme';
-			$errorList['themeID']['error'] = 'Invalid value';
-		}
-		
 		if (is_empty($settings['communityLabel'])) {
 			$errorList['communityLabel']['fldLbl'] = 'Custom name for communities';
 			$errorList['communityLabel']['error'] = 'Please enter a name';

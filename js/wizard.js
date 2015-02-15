@@ -46,6 +46,49 @@ function init() {
 		});
 	}
 
+	$('.tabPanel a').click(function() {
+		// Find clicked section
+		var tabId = $(this).attr('id');
+		var section = tabId.split('_')[0];
+		changeTab($(this), section);
+		return false;
+	});
+
+	$('.attributeIncrease').click(function() {
+		attributeID = $(this).attr('id'); // Get ID of clicked link
+		attributeNum = attributeID.split('_')[0];
+		incrementAttribute(attributeNum, 'up');
+		return false;
+	});
+
+	$('.attributeDecrease').click(function() {
+		attributeID = $(this).attr('id'); // Get ID of clicked link
+		attributeNum = attributeID.split('_')[0];
+		incrementAttribute(attributeNum, 'down');
+		return false;
+	});
+
+	$('.expandContractArrow').click(function() {
+		var arrowID = $(this).attr('id');
+		var section = 'header' + arrowID.split('_')[1] + 'Skills';
+		doOnclickHeaderArrow($(this), section);
+	});
+
+	$('.shortDescLink').click(function() {
+		showLongDescription($(this));
+		return false;
+	});
+
+	$('.longDescLink').click(function() {
+		hideLongDescription($(this));
+		return false;
+	});
+
+	$('#cancelBtn').click(function() {
+		goToPage('index.php');
+		return false;
+	});
+
 	$('#playerID').chosen({disable_search_threshold: 2});
 
 	$('#countryID').chosen({disable_search_threshold: 10});
@@ -191,25 +234,20 @@ function doOnclickHeaderArrow(arrow, section, mode) {
 	}
 }
 
-/* 
-TODO: Implementation of passing link is kludgy. Currently the link needs to have an id, which is undesirable since the links are dynamic. 
-Figure out a better way to do this with "this" or jquery event handling? */
-function showLongDescription(aLink) {
-	aLink = $('#' + aLink); // extend
-	var shortDescriptionDiv = aLink.closest('.description');
-	var longDescriptionDiv = shortDescriptionDiv.nextAll('.longDescription');
-	// shortDescriptionDiv.toggle();
-	shortDescriptionDiv.find('.shortDescLink').hide();
-	longDescriptionDiv.toggle();
+// linkObj: jQuery object
+function showLongDescription(linkObj) {
+	var shortDescription = linkObj.closest('.description');
+	var longDescription = shortDescription.nextAll('.longDescription');
+	shortDescription.hide();
+	longDescription.show();
 }
 
-function hideLongDescription(aLink) {
-	aLink = $('#' + aLink); // extend
-	var longDescriptionDiv = aLink.closest('.longDescription');
-	var shortDescriptionDiv = longDescriptionDiv.prevAll('.description');
-	// shortDescriptionDiv.toggle();
-	shortDescriptionDiv.find('.shortDescLink').show();
-	longDescriptionDiv.toggle();
+// linkObj: jQuery object
+function hideLongDescription(linkObj) {
+	var longDescription = linkObj.closest('.longDescription');
+	var shortDescription = longDescription.prevAll('.description');
+	shortDescription.show();
+	longDescription.hide();
 }
 
 // attribute: String attribute name, e.g. "attribute1" or "vitality"

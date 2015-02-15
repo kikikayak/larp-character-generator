@@ -138,13 +138,13 @@ h3 {
 .legal {
 	clear: both;
 	font-size: 1.1em;
-	color: #fff;
+	color: #ccc;
 	width: 360px;
 	margin-left: auto;
 	margin-right: auto;
 
 	a {
-		color: #fff;
+		color: #ccc;
 	}
 }
 
@@ -217,26 +217,26 @@ LAYOUT
 
 #nav {
 	width: 800px;
-	height: 25px;
+	height: 35px;
 	margin: 0 auto 0 auto;
-	padding: 0 10px;
+	padding: 0;
 	background-color: @bg-color-nav;
 	// .transparency;
 
 	a {
 		width: 100px;
-		height: 25px;
+		height: 35px;
 		display: block;
 		float: left;
-		font-size: 1.2em;
+		font-size: 1.4em;
 		font-family: @font-main;
 		margin-right: 3px;
 		text-align: center;
-		line-height: 27px;
+		line-height: 35px;
 		color: @text-color-nav;
 		text-decoration: none;
 		background-color: @bg-nav-item;
-		.rounded-corners (3px; 3px; 0; 0);
+		// .rounded-corners (3px; 3px; 0; 0);
 	}
 	
 	a:hover {
@@ -262,15 +262,20 @@ LAYOUT
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
+	.rounded-corners (0; 0; 3px; 3px);
 	border-top: @border-content-top;
 	border-right: @border-content-right;
 	border-bottom: @border-content-bottom;
 	border-left: @border-content-left;
 }
 
+#wizardPage #content {
+	.rounded-corners (0; 0; 0; 3px)
+}
+
 #footer {
 	width: 800px;
-	height: 75px;
+	height: 60px;
 	background-color: @bg-color-footer;
 	// .transparency(85; 0.85);
 	margin: 0 auto 0 auto;
@@ -279,7 +284,7 @@ LAYOUT
 
 	p {
 		text-align: center;
-		font-size: 1.1em;
+		font-size: 1.3em;
 		line-height: 1.2em;
 		font-family: @font-main;
 		margin: 0;
@@ -298,7 +303,6 @@ LAYOUT
 
 	.legal {
 		margin: 0;
-		width: 100%;
 
 		p {
 			padding-top: 0;
@@ -366,7 +370,7 @@ TAB STYLES
 .tabPanel a {
 	display: block;
     float: left;
-    background-color: @tab-panel-item;
+	background-color: @tab-panel-item;
 	color: #FFFFFF;
     font-size: 1.3em;
     height: 20px;
@@ -376,9 +380,9 @@ TAB STYLES
     text-decoration: none;
     width: 100px;
 	outline: none;
-	.rounded-corners (5px; 5px; 0; 0);
+	.rounded-corners (3px; 3px; 0; 0);
 
-	&.first {
+	&:first-child {
 		margin-left: 0;
 	}
 
@@ -409,7 +413,7 @@ HELP STYLES
 	position: absolute;
 	left: 490px;
 	font-size: .9em;
-	width: 290px;
+	width: 270px;
 	background-color: @bg-color-help;
 	.rounded-corners(5px; 5px; 5px; 5px);
 
@@ -653,7 +657,7 @@ BUTTONS
 	cursor: pointer;
 	height: 35px;
 	width: 200px;
-	.rounded-corners(5px; 5px; 5px; 5px);
+	.rounded-corners;
 }
 
 .btn-primary {
@@ -692,7 +696,7 @@ LOGIN PAGE
 
 #loginPage {
 	
-	background-color: @bg-color-header;
+	background: @bg-body;
 	
 	#content {
 		background-color: transparent;
@@ -708,8 +712,10 @@ LOGIN PAGE
 
 #loginForm {
 	background-color: @bg-login-form;
+	// background-color: #e8ecd6;
 	padding: 20px 0 15px 20px;
 	.rounded-corners(15px; 15px; 15px; 15px);
+	// .transparency(70, .7);
 
 	label {
 		color: #333;
@@ -755,6 +761,7 @@ LOGIN PAGE
 		width: 335px;
 		background-color: @bg-color-btn-login;
 		border: @border-btn-login;
+		.transparency(10; 1)
 	}
 
 	#UIMessage {
@@ -1071,10 +1078,10 @@ CHARACTER DETAILS PAGE
 
 	h3 {
 		font-family: @font-header;
+		font-size: 1.8em;
 		background: none;
 		color: #333;
 		margin-bottom: 0;
-
 	}
 
 	h4, h5 {
@@ -1082,13 +1089,13 @@ CHARACTER DETAILS PAGE
 	}
 
 	h4 {
-		font-size: 1.4em;
+		font-size: 1.6em;
 		margin: 10px 0 10px 10px;
 	}
 
 	h5 {
-		font-size: 1.3em;
-		margin: 10px 0;
+		font-size: 1.5em;
+		margin: 20px 0 5px 0;
 	}
 
 	.editLink {
@@ -1283,11 +1290,11 @@ WIZARD SIDEBAR
 	position: fixed;
 	background-color: @bg-color-content;
 	padding-bottom: 15px;
-	margin: -18px 15px 0 790px;
+	margin: -15px 15px 0 790px;
 	border-right: 3px solid @bg-color-header;
 	border-top: 3px solid @bg-color-header;
 	border-bottom: 3px solid @bg-color-header;
-	.rounded-corners(0; 15px; 15px; 0);
+	.rounded-corners(0; 3px; 3px; 0);
 
 	h2 {
 		font-size: 1.4em;
@@ -1304,7 +1311,6 @@ WIZARD SIDEBAR
 		margin: 0;
 		padding: 0;
 		border: 1px solid #ddd;
-		background-color: #fff;
 	}
 
 	#cpCount,
@@ -1344,7 +1350,6 @@ WIZARD SIDEBAR
 		padding-top: .5em;
 		padding-left: .7em;
 		padding-bottom: .5em;
-		background-color: #fff;
 	}
 
 	span {
@@ -1352,7 +1357,7 @@ WIZARD SIDEBAR
 	}
 
 	span.label {
-		font-weight: bold;
+		font-weight: normal;
 	}
 
 	.summaryAttribute,
@@ -1360,7 +1365,7 @@ WIZARD SIDEBAR
 	#summaryHeaderList, 
 	#summaryFeatList,
 	#summarySpellList {
-		font-size: 1.2em;
+		font-size: 1.4em;
 	}
 
 } // #sidebar
@@ -1521,13 +1526,12 @@ WIZARD SECTION-SPECIFIC STYLES
 	}
 
 	label {
-		font-weight: bold;
 		margin-left: .8em;
 		text-align: left;
 		display: inline;
 		float: none;
 		color: @text-color-char-header;
-		font-size: 1.3em;
+		font-size: 1.6em;
 	}
 
 }
@@ -1536,7 +1540,7 @@ WIZARD SECTION-SPECIFIC STYLES
 
 	clear: both;
 	margin-bottom: 20px;
-
+	
 	.row {
 		input,
 		select,
@@ -1642,8 +1646,8 @@ WIZARD SECTION-SPECIFIC STYLES
 			text-align: left;
 			margin: 0;
 			line-height: 20px;
-			font-weight: bold;
 			width: 100%;
+			font-size: 1.4em;
 		}
 		
 		.hoverHelp {
@@ -1690,7 +1694,7 @@ WIZARD SECTION-SPECIFIC STYLES
 	
 	.description,
 	.longDescription {
-		padding-left: 48px;
+		padding-left: 50px;
 	}
 
 	.row {
