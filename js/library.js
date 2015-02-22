@@ -259,14 +259,14 @@ SHOW/HIDE FUNCTIONS
 ***********************************************/
 
 // tabObj: jQuery object
-function changeTab(tabObj, section) {
+function changeTab(tabObj, sectionID) {
 	// Find all sections and hide them
 	$('.section-tabbed').each(function() {
 		$(this).hide();
 	});
 	// tabLink = $('#' + tabObj.id);
 
-	$('#' + section).show();
+	$('#' + sectionID).show();
 	// Find parent tabPanel
 	tabObj.closest('.tabPanel').find('a').each(function() {
 		$(this).removeClass('selected');

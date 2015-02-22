@@ -49,8 +49,8 @@ function init() {
 	$('.tabPanel a').click(function() {
 		// Find clicked section
 		var tabId = $(this).attr('id');
-		var section = tabId.split('_')[0];
-		changeTab($(this), section);
+		var sectionId = tabId.split('_')[0];
+		changeTab($(this), sectionId);
 		return false;
 	});
 
@@ -69,9 +69,28 @@ function init() {
 	});
 
 	$('.expandContractArrow').click(function() {
+		// Find section
 		var arrowID = $(this).attr('id');
-		var section = 'header' + arrowID.split('_')[1] + 'Skills';
-		doOnclickHeaderArrow($(this), section);
+		var section = $('#header' + arrowID.split('_')[1] + 'Skills');
+
+		if (section.is(':visible')) {
+			hideSkillsSection($(this), section);
+		} else {
+			showSkillsSection($(this), section);
+		}
+		return false;
+	});
+
+	$('.headerFld').click(function() {
+		// Find expand/contract arrow for this section
+		arrowObj = $(this).closest('.row').find('.expandContractArrow');
+		chkboxID = $(this).attr('id');
+		var section = $('#header' + chkboxID.split('_')[1] + 'Skills');
+		
+		if ($(this).is(':checked')) {
+			showSkillsSection(arrowObj, section);
+		}
+		selectHeader($(this));
 	});
 
 	$('.shortDescLink').click(function() {
@@ -206,35 +225,21 @@ function expandContract(aLink, divName) {
 	}
 }
 
-function showHideSkillsSection(chkbox, section, mode) {
+// arrowObj: jQuery object of expand/contract arrow
+function showSkillsSection(arrowObj, section) {
 	var imgPath = '../images/';
-	chkbox = $(chkbox); // extend
-
-	// Find the header's arrow image
-	arrow = $(chkbox).closest('.row').find('.cell0 img');
-	if (chkbox.is(':checked')) {
-		$('#' + section).show();
-		arrow.attr('src', imgPath + 'arrowDown.png');
-	} else {
-		$('#' + section).hide();
-		arrow.attr('src', imgPath + 'arrowRight.png');
-	}
+	section.show();
+	arrowObj.attr('src', imgPath + 'arrowDown.png');
 }
 
-function doOnclickHeaderArrow(arrow, section, mode) {
+// arrowObj: jQuery object of expand/contract arrow
+function hideSkillsSection(arrowObj, section) {
 	var imgPath = '../images/';
-
-	// find checkbox to send to show/hide function
-	if ($('#' + section).is(':visible')) {
-		$('#' + section).hide();
-		$(arrow).attr('src', imgPath + 'arrowRight.png');
-	} else {
-		$('#' + section).show();
-		$(arrow).attr('src', imgPath + 'arrowDown.png');
-	}
+	section.hide();
+	arrowObj.attr('src', imgPath + 'arrowRight.png');
 }
 
-// linkObj: jQuery object
+// linkObj: jQuery object of "more" link
 function showLongDescription(linkObj) {
 	var shortDescription = linkObj.closest('.description');
 	var longDescription = shortDescription.nextAll('.longDescription');
@@ -242,7 +247,7 @@ function showLongDescription(linkObj) {
 	longDescription.show();
 }
 
-// linkObj: jQuery object
+// linkObj: jQuery object of "less" link
 function hideLongDescription(linkObj) {
 	var longDescription = linkObj.closest('.longDescription');
 	var shortDescription = longDescription.prevAll('.description');
@@ -389,11 +394,11 @@ function buildAttributeBlocks(attribute) {
 	$('#' + attribute + 'Vis').html(newHTML);
 }
 
-function selectHeader(fld, headerCost) {
-	fld = $('#' + fld.id);
-	if (fld.is(':checked') === false) {
+// chkbox: jQuery object for header checkbox
+function selectHeader(chkbox) {
+	if (chkbox.is(':checked') === false) {
 		// User is unchecking this header
-		removeHeaderSkills(fld); // Remove all skills under this header		
+		removeHeaderSkills(chkbox); // Remove all skills under this header		
 	}
 	calcAllUsedCP();
 	updateCharSummary();
@@ -408,13 +413,33 @@ function selectSkill(fld, skillCost) {
 	loadFeats();
 }
 
+function selectSpell(fld, spellCost) {
+	calcAllUsedCP();
+	updateCharSummary();
+}
+
 function selectFeat(fld, featCost) {
-	// Check parent header (regardless of whether or not it's already checked)
-	// $(fld).parents('.skillGrp').prev('.header').find('.headerFld').attr('checked', 'checked');
 	calcAllUsedCP();
 	updateCharSummary();
 	loadSpells();
 	loadFeats();
+}
+
+// Uncheck all the skills under a particular header that has just been unselected
+// fld: jQuery object (header's checkbox field)
+function removeHeaderSkills(chkbox) {
+	// Find all non-stackable skills under this header and loop through them
+	chkbox.closest('.header').next('.skillGrp').find('input.skillFld[type=checkbox]:checked').each(function() {
+		$(this).prop('checked', false); // Uncheck each skill
+	});
+
+	// Find all stackable skill quantity dropdowns and set them back to their original quantities
+	chkbox.closest('.header').next('.skillGrp').find('select.skillQtyFld').each(function() {
+		var fldId = $(this).attr('id');
+		var curSkillNum = fldId.slice(fldId.indexOf('_') + 1); // Find skill number to use
+		var origQuantity = $('#orig_quantity_' + curSkillNum).val(); // Find original selected quantity
+		$(this).val(origQuantity); // Set this skill back to its original quantity
+	});
 }
 
 // This function figures out all the currently selected skills,
@@ -495,16 +520,6 @@ function changeStackableSkill(fld, skillCost) {
 	}
 }
 
-function selectSpell(fld, spellCost) {
-	calcAllUsedCP();
-	updateCharSummary();
-}
-
-function selectFeat(fld, featCost) {
-	calcAllUsedCP();
-	updateCharSummary();
-}
-
 function calcAllUsedCP() {
 	var newTotalCP, totalUsedCP;
 	var origTotalCP = $('#origCPTotal').val();
@@ -556,6 +571,8 @@ function checkNegativeCP() {
 	}
 }
 
+// Calculate cost for all attributes
+// Calls calcAttributeCP() for each attribute
 function calcAllAttributeCP() {
 	var totalAttributeCP = calcAttributeCP('attribute1') + calcAttributeCP('attribute2') + calcAttributeCP('attribute3') + calcAttributeCP('attribute4') + calcAttributeCP('attribute5');
 	// Set new attribute cost and CP total
@@ -569,6 +586,7 @@ function calcAllAttributeCP() {
 	return totalAttributeCP;
 }
 
+// Calculate cost for a single attribute and return the cost
 function calcAttributeCP(attribute) {
 	var attributeCost = 0;
 	var baseAttribute = parseInt($('#baseAttribute').val());
@@ -578,37 +596,6 @@ function calcAttributeCP(attribute) {
 		attributeCost = attributeCost + i;
 	}
 	return attributeCost;
-}
-
-
-function oldCalcAttributeCP(attribute) {
-	// validateAttribute(attribute);
-	var baseAttribute = parseInt($('baseAttribute').val());
-	var oldValue = parseInt($('#prev_' + attribute).val());
-	var newValue = parseInt($('#' + attribute).val());
-	var totalCost = 0;
-	var totalCredit = 0;
-	var newTotalCost;
-
-	if (newValue > oldValue) {
-		// User is raising an attribute
-		for (var i = oldValue; i < newValue; i++) {
-			totalCost = totalCost + parseInt(i) + 1;
-		}
-		// newTotalCost = parseInt($('#totalAttributeCost').html()) + totalCost;
-	} else {
-		// User is lowering an attribute in the same session
-		for (var i = newValue; i < oldValue; i++) {
-			totalCredit = totalCredit + parseInt(i) + 1;
-		}
-		// newTotalCost = parseInt($('#totalAttributeCost').html()) - totalCredit;
-	}
-	// Set new attribute cost and CP total
-	$('#totalAttributeCost').html(newTotalCost);
-	$('#prev_' + attribute).val(newValue);
-	newVitality = parseInt((parseFloat($('#attribute2').val()) + parseFloat($('#attribute5').val())) / 2); // Vitality = average of earth and void, rounded down
-	$('#curVitality').html(newVitality);
-	$('#vitality').val(newVitality); // Set vitality to value of Earth attribute
 }
 
 // Version for Pirates
@@ -653,25 +640,7 @@ function calcAllHeaderCP() {
 	return totalHeaderCP; // Return total number of CP used for headers
 }
 
-// Uncheck all the skills under a particular header that has just been unselected
-// fld: object (header's checkbox field)
-function removeHeaderSkills(fld) {
-	// Find all non-stackable skills under this header and loop through them
-	$(fld).closest('.header').next('.skillGrp').find('input.skillFld[type=checkbox]:checked').each(function() {
-		$(this).prop('checked', false); // Uncheck each skill
-	});
-
-	// Find all stackable skill quantity dropdowns and set them back to their original quantities
-	$(fld).closest('.header').next('.skillGrp').find('select.skillQtyFld').each(function() {
-		var fldId = $(this).attr('id');
-		var curSkillNum = fldId.slice(fldId.indexOf('_') + 1); // Find skill number to use
-		var origQuantity = $('#orig_quantity_' + curSkillNum).val(); // Find original selected quantity
-		$(this).val(origQuantity); // Set this skill back to its original quantity
-	});
-}
-
 // Calculate all CP used for stackable and non-stackable skills and return the value
-/* NOTE: This function does not yet support "patterned" skills (e.g. skills whose costs increase in a 1, 2, 3 or 2, 4, 6 pattern) */
 function calcAllSkillCP() {
 	var totalSkillCP = 0;
 	// Calculate total CP for non-stackable skills
@@ -821,92 +790,3 @@ function getSelectedFeats() {
 		$('#summaryFeatList').html('<em>None</em>');
 	}
 }
-
-/**************************************************************
-RETIRED COST CALCULATION FUNCTIONS
-These are the old versions that update the CP total relative
-to the current total. They have been retired in favor of the
-more robust "absolute" calculation scripts above. 
-*************************************************************
-
-// fld: native DOM field object
-// skillCost: string number
-function calcHeaderCP(fld, headerCost) {
-	var curCPTotal = parseFloat($('#cpNum').html());
-	var newTotalCP;
-	if (fld.checked) {
-		// User is adding this header to their character. 
-		// subtract CP for this header from total
-		newTotalCP = curCPTotal - headerCost;
-	} else {
-		// User is removing this header from their character
-		// add CP for this header back to total
-		removeHeaderSkills(fld);
-		newTotalCP = curCPTotal + headerCost;
-	}
-	updateTotalCP(newTotalCP);
-}
-
-// fld: native DOM field object
-// skillCost: string number
-function calcSkillCP(fld, skillCost) {
-	// alert('calcSkillCP ' + fld + ', ' + skillCost);
-	var curCPTotal = parseFloat($('#cpNum').html());
-	var newTotalCP;
-	if (fld.checked) {
-		// User is adding this skill to their character. 
-		// subtract CP for this skill from total
-		newTotalCP = curCPTotal - skillCost;
-	} else {
-		// User is removing this skill from their character
-		// add CP for this skill back to total
-		newTotalCP = curCPTotal + skillCost;
-	}
-	// alert('curCPTotal: ' + curCPTotal + '\n' + 'newTotalCP: ' + newTotalCP);
-	updateTotalCP(newTotalCP);
-}
-
-// fld: native DOM field object
-// skillCost: string number
-function calcStackableSkillCP(fld, skillCost) {
-	var diff;
-	var totalCost = 0;
-	var totalCredit = 0;
-	var fldId = fld.id;
-	var curCPTotal = parseFloat($('#cpNum').html());
-	var newQuantity = $(fld).val();
-	
-	var skillNum = fldId.slice(fldId.indexOf('_') +1); // Find skill number to use
-	var oldQuantityFld = $(fld).nextAll('#prev_quantity_' + skillNum);
-	var oldQuantity = oldQuantityFld.val();
-	if (newQuantity > oldQuantity) {
-		// User is increasing the number of this skill s/he has
-		// Get difference between old value and new one
-		diff = newQuantity - oldQuantity;
-		totalCost = skillCost * diff;
-		updateTotalCP(curCPTotal - totalCost);
-	} else if (oldQuantity > newQuantity) {
-		// User is reducing the number of this skill s/he has
-		// Get difference between old value and new one
-		diff = oldQuantity - newQuantity;
-		totalCredit = skillCost * diff;
-		updateTotalCP(curCPTotal + totalCredit);
-	}
-	oldQuantityFld.val($(fld).val());
-}
-
-function calcSpellCP(fld, spellCost) {
-	var curCPTotal = parseFloat($('#cpNum').html());
-	var newTotalCP;
-	if (fld.checked) {
-		// User is adding this skill to their character. 
-		// subtract CP for this skill from total
-		newTotalCP = curCPTotal - spellCost;
-	} else {
-		// User is removing this skill from their character
-		// add CP for this skill back to total
-		newTotalCP = curCPTotal + spellCost;
-	}
-	updateTotalCP(newTotalCP);
-}
-*/

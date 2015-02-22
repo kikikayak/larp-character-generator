@@ -174,20 +174,20 @@
 			$html['countryID'] = isset($_SESSION['character']['countryID']) ? htmlentities($_SESSION['character']['countryID']) : htmlentities($savedCharDetails['countryID']);
 			$html['communityID'] = isset($_SESSION['character']['communityID']) ? htmlentities($_SESSION['character']['communityID']) : htmlentities($savedCharDetails['communityID']);
 			$html['raceID'] = isset($_SESSION['character']['raceID']) ? htmlentities($_SESSION['character']['raceID']) : htmlentities($savedCharDetails['raceID']);
-			$html['attribute1'] = isset($_SESSION['character']['attribute1']) ? htmlentities($_SESSION['character']['attribute1']) : htmlentities($_SESSION['baseAttribute']);
-			$html['attribute2'] = isset($_SESSION['character']['attribute2']) ? htmlentities($_SESSION['character']['attribute2']) : htmlentities($_SESSION['baseAttribute']);
-			$html['attribute3'] = isset($_SESSION['character']['attribute3']) ? htmlentities($_SESSION['character']['attribute3']) : htmlentities($_SESSION['baseAttribute']);
-			$html['attribute4'] = isset($_SESSION['character']['attribute4']) ? htmlentities($_SESSION['character']['attribute4']) : htmlentities($_SESSION['baseAttribute']);
-			$html['attribute5'] = isset($_SESSION['character']['attribute5']) ? htmlentities($_SESSION['character']['attribute5']) : htmlentities($_SESSION['baseAttribute']);
+			$html['attribute1'] = isset($_SESSION['character']['attribute1']) ? htmlentities($_SESSION['character']['attribute1']) : htmlentities($savedCharDetails['attribute1']);
+			$html['attribute2'] = isset($_SESSION['character']['attribute2']) ? htmlentities($_SESSION['character']['attribute2']) : htmlentities($savedCharDetails['attribute2']);
+			$html['attribute3'] = isset($_SESSION['character']['attribute3']) ? htmlentities($_SESSION['character']['attribute3']) : htmlentities($savedCharDetails['attribute3']);
+			$html['attribute4'] = isset($_SESSION['character']['attribute4']) ? htmlentities($_SESSION['character']['attribute4']) : htmlentities($savedCharDetails['attribute4']);
+			$html['attribute5'] = isset($_SESSION['character']['attribute5']) ? htmlentities($_SESSION['character']['attribute5']) : htmlentities($savedCharDetails['attribute5']);
 			$html['vitality'] = isset($_SESSION['character']['vitality']) ? htmlentities($_SESSION['character']['vitality']) : htmlentities($savedCharDetails['vitality']);
 			// Initialize all saved attribute values to value pulled from database
 			// Value will be used to calculate whether a user has set the attribute value too low
 			// User is not allowed to reduce attribute value below saved value. 
-			$html['saved_attribute1'] = htmlentities($_SESSION['baseAttribute']);
-			$html['saved_attribute2'] = htmlentities($_SESSION['baseAttribute']);
-			$html['saved_attribute3'] = htmlentities($_SESSION['baseAttribute']);
-			$html['saved_attribute4'] = htmlentities($_SESSION['baseAttribute']);
-			$html['saved_attribute5'] = htmlentities($_SESSION['baseAttribute']);
+			$html['saved_attribute1'] = htmlentities($savedCharDetails['attribute1']);
+			$html['saved_attribute2'] = htmlentities($savedCharDetails['attribute2']);
+			$html['saved_attribute3'] = htmlentities($savedCharDetails['attribute3']);
+			$html['saved_attribute4'] = htmlentities($savedCharDetails['attribute4']);
+			$html['saved_attribute5'] = htmlentities($savedCharDetails['attribute5']);
 		} // end of savedCharDetails loop
 		
 			$html['freeCP'] = $savedChar->getWizardSavedCharFreeCP($_GET['characterID'], $html['playerID']);
@@ -274,6 +274,7 @@
 			$finalNote = '';
 	}
 	
+	$scriptLink = 'wizard.js';
 	// Include page header
 	include('../includes/header_admin.php');
 ?>
@@ -299,28 +300,52 @@
 				<div id="charSummary">
 					<h2>Character Summary</h2>
 					<div id="charDetails" class="inner">
-						<span class="label">Name:</span> <span id="summaryName"><em>None</em></span> <br /><br />
-						<span class="label"><?php echo $_SESSION['attribute1Label']; ?>:</span> <span id="summaryAttribute1" class="summaryAttribute"><?php echo $html['attribute1']; ?></span><br />
-						<span class="label"><?php echo $_SESSION['attribute2Label']; ?>:</span> <span id="summaryAttribute2" class="summaryAttribute"><?php echo $html['attribute2']; ?></span><br />
-						<span class="label"><?php echo $_SESSION['attribute3Label']; ?>:</span> <span id="summaryAttribute3" class="summaryAttribute"><?php echo $html['attribute3']; ?></span><br />
-						<span class="label"><?php echo $_SESSION['attribute4Label']; ?>:</span> <span id="summaryAttribute4" class="summaryAttribute"><?php echo $html['attribute4']; ?></span><br />
-						<span class="label"><?php echo $_SESSION['attribute5Label']; ?>:</span> <span id="summaryAttribute5" class="summaryAttribute"><?php echo $html['attribute5']; ?></span><br />
-						<span class="label"><?php echo $_SESSION['vitalityLabel']; ?>:</span> <span id="summaryVitality" class="summaryAttribute"><?php echo $html['vitality']; ?></span><br /><br />
+						<div class="summarySection">
+							<span class="label">Name:</span><br />
+							<span id="summaryName"><em>None</em></span>
+						</div>
 						
-						<span class="label">Headers &amp; Skills</span><br />
-						<div id="summaryHeaderList">
-							Open Skills
-                        </div><br />
-						
-						<span class="label">Spells</span><br />
-						<div id="summarySpellList">
-							<em>None</em>
-                        </div>
+						<div class="summarySection">
+							<span class="label"><?php echo $_SESSION['attribute1Label']; ?>:</span>
+							<span id="summaryAttribute1" class="summaryAttribute"> <?php echo $html['attribute1']; ?></span><br />
 
-						<span class="label">Feat</span><br />
-						<div id="summaryFeatList">
-							<em>None</em>
-                        </div>
+							<span class="label"><?php echo $_SESSION['attribute2Label']; ?>:</span>
+							<span id="summaryAttribute2" class="summaryAttribute"> <?php echo $html['attribute2']; ?></span><br />
+
+							<span class="label"><?php echo $_SESSION['attribute3Label']; ?>:</span>
+							<span id="summaryAttribute3" class="summaryAttribute"> <?php echo $html['attribute3']; ?></span><br />
+
+							<span class="label"><?php echo $_SESSION['attribute4Label']; ?>:</span> 
+							<span id="summaryAttribute4" class="summaryAttribute"><?php echo $html['attribute4']; ?></span><br />
+
+							<span class="label"><?php echo $_SESSION['attribute5Label']; ?>:</span>
+							<span id="summaryAttribute5" class="summaryAttribute"> <?php echo $html['attribute5']; ?></span><br />
+
+							<span class="label"><?php echo $_SESSION['vitalityLabel']; ?>:</span>
+							<span id="summaryVitality" class="summaryAttribute"> <?php echo $html['vitality']; ?></span><br />
+						</div>
+
+						<div class="summarySection">
+							<span class="label">Headers &amp; Skills</span><br />
+							<div id="summaryHeaderList">
+								Open Skills
+	                        </div>
+	                    </div>
+						
+						<div class="summarySection">
+							<span class="label">Spells</span><br />
+							<div id="summarySpellList">
+								<em>None</em>
+	                        </div>
+	                    </div>
+
+	                    <div class="summarySection">
+							<span class="label">Feat</span><br />
+							<div id="summaryFeatList">
+								<em>None</em>
+	                        </div>
+	                    </div>
+
 					</div><!--/charDetails-->
 				</div><!--/charSummary-->
 			</div><!--/sidebar-->
@@ -333,9 +358,9 @@
 				<?php echo $pageIntro; ?>
 				
 				<div id="wizardTabPanel" class="tabPanel">
-					<a href="#" id="basicsTab" class="first selected" onClick="changeTab(this, 'basics');">Basics</a>
-					<a href="#" id="attributesTab" onClick="changeTab(this, 'attributes');">Attributes</a>
-					<a href="#" id="skillsTab" onClick="changeTab(this, 'skills');">Headers &amp; Skills</a>
+					<a href="#" id="basics_tab" class="selected">Basics</a>
+					<a href="#" id="attributes_tab">Attributes</a>
+					<a href="#" id="skills_tab">Headers &amp; Skills</a>
 					
                     <?php
 						// Show spells tab if there are any spells in the system
@@ -343,7 +368,7 @@
 						$totalSpells = $spellObj->getTotalSpells();
 						if ($totalSpells > 0) {
 					?>
-                    	<a href="#" id="spellsTab" onClick="changeTab(this, 'spells');">Spells</a>
+                    	<a href="#" id="spells_tab">Spells</a>
                     <?php
 						}
 						// Show feats tab if there are any feats in the system
@@ -351,7 +376,7 @@
 						$totalFeats = $featObj->getTotalFeats();
 						if ($totalFeats > 0) {
 					?>
-                    	<a href="#" id="featsTab" onClick="changeTab(this, 'feats');">Feats</a>
+                    	<a href="#" id="feats_tab">Feats</a>
                     <?php
 					  }
 					?>
@@ -485,8 +510,8 @@
 					<!--ATTRIBUTE 1: AIR-->
 					<div class="row">
 						<label><?php echo $_SESSION['attribute1Label']; ?><br />
-							<a href="#" class="attributeIncrease" title="Increase <?php echo $_SESSION['attribute1Label']; ?> by 1" onClick="incrementAttribute('attribute1', 'up', 'admin'); return false"></a>
-							<a href="#" class="attributeDecrease" title="Decrease <?php echo $_SESSION['attribute1Label']; ?> by 1" onClick="incrementAttribute('attribute1', 'down', 'admin'); return false"></a>
+							<a href="#" class="attributeIncrease" id="attribute1_increase" title="Increase <?php echo $_SESSION['attribute1Label']; ?> by 1"></a>
+							<a href="#" class="attributeDecrease" id="attribute1_decrease" title="Decrease <?php echo $_SESSION['attribute1Label']; ?> by 1"></a>
 						</label>
 						<div id="attribute1Display" class="attributeNumDisplay"><?php echo $html['attribute1']; ?></div>
 						<div id="attribute1Vis" class="attributeVis" onMouseOver="showAttributeUsage('attribute1')" onMouseOut="hideAttributeUsage('attribute1')">
@@ -506,8 +531,8 @@
 					<!--ATTRIBUTE 2: EARTH-->
 					<div class="row">
 						<label><?php echo $_SESSION['attribute2Label']; ?><br />
-							<a href="#" class="attributeIncrease" title="Increase <?php echo $_SESSION['attribute2Label']; ?> by 1" onClick="incrementAttribute('attribute2', 'up', 'admin'); return false"></a>
-							<a href="#" class="attributeDecrease" title="Decrease <?php echo $_SESSION['attribute2Label']; ?> by 1" onClick="incrementAttribute('attribute2', 'down', 'admin'); return false"></a>
+							<a href="#" class="attributeIncrease" id="attribute2_increase" title="Increase <?php echo $_SESSION['attribute2Label']; ?> by 1"></a>
+							<a href="#" class="attributeDecrease" id="attribute2_decrease" title="Decrease <?php echo $_SESSION['attribute2Label']; ?> by 1"></a>
 						</label>
 						<div id="attribute2Display" class="attributeNumDisplay"><?php echo $html['attribute2']; ?></div>
 						<div id="attribute2Vis" class="attributeVis" onMouseOver="showAttributeUsage('attribute2')" onMouseOut="hideAttributeUsage('attribute2')">
@@ -527,8 +552,8 @@
 					<!--ATTRIBUTE 3: FIRE-->  
 					<div class="row">
 						<label><?php echo $_SESSION['attribute3Label']; ?><br />
-							<a href="#" class="attributeIncrease" title="Increase <?php echo $_SESSION['attribute3Label']; ?> by 1" onClick="incrementAttribute('attribute3', 'up', 'admin'); return false"></a>
-							<a href="#" class="attributeDecrease" title="Decrease <?php echo $_SESSION['attribute3Label']; ?> by 1" onClick="incrementAttribute('attribute3', 'down', 'admin'); return false"></a>
+							<a href="#" class="attributeIncrease" id="attribute3_increase" title="Increase <?php echo $_SESSION['attribute3Label']; ?> by 1"></a>
+							<a href="#" class="attributeDecrease" id="attribute3_decrease" title="Decrease <?php echo $_SESSION['attribute3Label']; ?> by 1"></a>
 						</label>
 						<div id="attribute3Display" class="attributeNumDisplay"><?php echo $html['attribute3']; ?></div>
 						<div id="attribute3Vis" class="attributeVis" onMouseOver="showAttributeUsage('attribute3')" onMouseOut="hideAttributeUsage('attribute3')">
@@ -549,8 +574,8 @@
 					<!--ATTRIBUTE 4: WATER-->
 					<div class="row">
 						<label><?php echo $_SESSION['attribute4Label']; ?><br />
-							<a href="#" class="attributeIncrease" title="Increase <?php echo $_SESSION['attribute4Label']; ?> by 1" onClick="incrementAttribute('attribute4', 'up', 'admin'); return false"></a>
-							<a href="#" class="attributeDecrease" title="Decrease <?php echo $_SESSION['attribute4Label']; ?> by 1" onClick="incrementAttribute('attribute4', 'down', 'admin'); return false"></a>
+							<a href="#" class="attributeIncrease" id="attribute4_increase" title="Increase <?php echo $_SESSION['attribute4Label']; ?> by 1"></a>
+							<a href="#" class="attributeDecrease" id="attribute4_decrease" title="Decrease <?php echo $_SESSION['attribute4Label']; ?> by 1"></a>
 						</label>
 						<div id="attribute4Display" class="attributeNumDisplay"><?php echo $html['attribute4']; ?></div>
 						<div id="attribute4Vis" class="attributeVis" onMouseOver="showAttributeUsage('attribute4')" onMouseOut="hideAttributeUsage('attribute4')">
@@ -571,8 +596,8 @@
 					<!--ATTRIBUTE 5: VOID-->  
 					<div class="row">
 						<label><?php echo $_SESSION['attribute5Label']; ?><br />
-							<a href="#" class="attributeIncrease" title="Increase <?php echo $_SESSION['attribute5Label']; ?> by 1" onClick="incrementAttribute('attribute5', 'up', 'admin'); return false"></a>
-							<a href="#" class="attributeDecrease" title="Decrease <?php echo $_SESSION['attribute5Label']; ?> by 1" onClick="incrementAttribute('attribute5', 'down', 'admin'); return false"></a>
+							<a href="#" class="attributeIncrease" id="attribute5_increase" title="Increase <?php echo $_SESSION['attribute5Label']; ?> by 1"></a>
+							<a href="#" class="attributeDecrease" id="attribute5_decrease" title="Decrease <?php echo $_SESSION['attribute5Label']; ?> by 1"></a>
 						</label>
 						<div id="attribute5Display" class="attributeNumDisplay"><?php echo $html['attribute5']; ?></div>
 						<div id="attribute5Vis" class="attributeVis" onMouseOver="showAttributeUsage('attribute5')" onMouseOut="hideAttributeUsage('attribute5')">
@@ -627,7 +652,7 @@
 					<div id="<?php echo 'headerID_' . $row['headerID'] . 'Hdr'; ?>" class="header">
 						<div class="row">
 							<div class="cell0">
-								<img src="styles/images/arrowRight.png" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" onClick="doOnclickHeaderArrow(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>);" />							</div>
+								<img src="../theme/<?php echo THEME; ?>/images/arrowRight.png" class="expandContractArrow" id="<?php echo 'headerID_' . $row['headerID'] . '_arrow'; ?>" alt="Click to expand or contract header contents" title="Click to expand or contract header contents" /></div>
 							<div class="cell1">
 								
                                 <input 	type="checkbox" 
@@ -635,7 +660,7 @@
                                         name="headerID[]" 
                                         id="<?php echo 'headerID_' . $row['headerID']; ?>" 
                                         value="<?php echo $row['headerID']; ?>" 
-                                        onclick="showHideSkillsSection(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>); selectHeader(this, <?php echo $row['headerID']; ?>)" 
+                                        checked="checked"
 										<?php if ((isset($_SESSION['character']) && in_array($row['headerID'], $_SESSION['character']['charHeaders'])) || ($action == 'update' && isset($_SESSION['savedCharacter']) && in_array($row['headerID'], $_SESSION['savedCharacter']['charHeaders']))) echo 'checked="checked"'; ?> 
 								/>
                                         
@@ -716,7 +741,7 @@
 								if ($skillRow['maxQuantity'] > 1) {
 							?>
 							<div class="maxLevels">
-								<span class="maxLvlHdr">Max Levels:</span> <?php echo $skillRow['maxQuantity']; ?>							</div>
+								<span class="maxLvlHdr">Max Levels:</span> <?php echo $skillRow['maxQuantity']; ?></div>
 							<?php
 								} // end of "if stackable" condition
 							?>
@@ -724,8 +749,9 @@
 								<p><?php echo $skillRow['shortDescription']; ?> 
 									<?php
 										if (!is_empty($skillRow['skillDescription'])) {
-									?>&nbsp;
-									<a href="#" class="shortDescLink" id="<?php echo 'shortDescLink_' . $skillRow['skillID']; ?>" onclick="showLongDescription('<?php echo 'shortDescLink_' . $skillRow['skillID']; ?>'); return false;">More &gt;&gt;</a>
+									?>
+									&nbsp;
+									<a href="#" class="shortDescLink" id="<?php echo 'shortDescLink_' . $skillRow['skillID']; ?>">Details &gt;&gt;</a>
 									<?php
 										}
 									?>
@@ -733,7 +759,7 @@
 							</div>
 							<div class="longDescription" style="display:none">
 								<p><?php echo $skillRow['skillDescription']; ?> &nbsp;
-									<a href="#" class="longDescLink" id="<?php echo 'longDescLink_' . $skillRow['skillID']; ?>" onClick="hideLongDescription('<?php echo 'longDescLink_' . $skillRow['skillID']; ?>');return false;">&lt;&lt; Less</a>
+									<a href="#" class="longDescLink" id="<?php echo 'longDescLink_' . $skillRow['skillID']; ?>">&lt;&lt; Hide Details</a>
 								</p>
 							</div>
 						</div><!--.row-->
@@ -779,7 +805,7 @@
 						echo $pageOutro;
 					?>
 						<input type="submit" name="submit" id="submitBtn" class="btn-primary" value="<?php echo $btnLabel; ?>" />
-						<input type="button" name="cancel" id="cancelBtn" class="btn-secondary" value="Cancel" onclick="window.location.href='characters.php'" />
+						<input type="button" name="cancel" id="cancelBtn" class="btn-secondary" value="Cancel" />
 					
 					<div id="submitWarning" class="warning" style="display:none"></div>
 					<br class="clear" />

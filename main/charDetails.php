@@ -126,8 +126,8 @@
 			</div><!--/basics-->
             
             <div id="charDetailsTabPanel" class="tabPanel">
-                <a href="#" id="summaryTab" class="selected" onclick="changeTab(this, 'summaryView'); return false">Summary</a>
-                <a href="#" id="detailsTab" onclick="changeTab(this, 'detailedView'); return false">Details</a>
+                <a href="#" id="summaryTab" class="selected">Summary</a>
+                <a href="#" id="detailsTab">Details</a>
                 <br class="clear" />
             </div>
             

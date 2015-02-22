@@ -138,10 +138,10 @@
 			</div><!--/basics-->
 			            
             <div id="charDetailsTabPanel" class="tabPanel">
-                <a href="#" id="summaryTab" class="first selected" onclick="changeTab(this, 'summaryView'); return false">Summary View</a>
-                <a href="#" id="detailsTab" onclick="changeTab(this, 'detailedView'); return false">Detailed View</a>
-                <a href="#" id="traitsTab" onclick="changeTab(this, 'traitsView'); return false">Traits</a>
-                <a href="#" id="cpListTab" onclick="changeTab(this, 'charCPList'); return false">Character CP</a>
+                <a href="#" id="summaryTab" class="selected">Summary View</a>
+                <a href="#" id="detailsTab">Detailed View</a>
+                <a href="#" id="traitsTab">Traits</a>
+                <a href="#" id="cpListTab">Character CP</a>
                 <br class="clear" />
             </div>
             

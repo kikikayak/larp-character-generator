@@ -43,6 +43,17 @@ function init() {
 		$("#aboutDialog").dialog("open");
 	});
 
+	$('#summaryTab').click(function() {
+		changeTab($(this), 'summaryView');
+		return false;
+	});
+
+	$('#detailsTab').click(function() {
+		changeTab($(this), 'detailedView');
+		return false;
+	});
+
+/*
 	$("#summaryViewLink").click(function() {
 		$("#summaryView").show();
 		$("#summaryViewText").show();
@@ -62,5 +73,6 @@ function init() {
 		$("#detailedViewText").show();
 		$("#detailedViewLink").hide();
 	});
+*/
 
 }

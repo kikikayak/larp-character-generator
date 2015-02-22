@@ -652,8 +652,7 @@
                                 		class="headerFld" 
                                         name="headerID[]" 
                                         id="<?php echo 'headerID_' . $row['headerID']; ?>" 
-                                        value="<?php echo $row['headerID']; ?>" 
-                                        onclick="showHideSkillsSection(this, <?php echo '\'header' . $row['headerID'] . 'Skills\''; ?>); selectHeader(this, <?php echo $row['headerID']; ?>)" 
+                                        value="<?php echo $row['headerID']; ?>"  
 										<?php if (isset($_SESSION['character']) && in_array($row['headerID'], $_SESSION['character']['charHeaders'])) echo 'checked="checked"'; ?> />
                                         
 								<?php

@@ -467,7 +467,7 @@ function init() {
 
 		$('#msg').html(''); // Clear previous messages from msg area
 
-		$('#msg').load('../ajax/admin.handler.php?ajaxAction=deleteCountry', data, function() {
+		$('#msg').load('../ajax/gameWorld.handler.php?ajaxAction=deleteCountry', data, function() {
 			$('#countryDeleteDialog').dialog('close');
 			fadeAndRemoveRow('#countryID_' + countryID, 'countryList');
 		});
@@ -479,13 +479,13 @@ function init() {
 	//define click handler for the button
 	$('#countryList .deleteLink').click(function() {
 		// Find countryID of clicked row
-		var countryID = $(this).closest('tr').find('.col1 input[type=hidden]').val();
+		var countryID = $(this).closest('tr').find('.nameCol input[type=hidden]').val();
 
 		// Load country info into dialog div
 		var data = {countryID: countryID}; // Create object/map of data to pass in AJAX call
 
 		// Load confirmation
-		$('#countryDeleteDialog').load('../ajax/admin.handler.php?ajaxAction=loadCountryDeleteDialog', data, function() {
+		$('#countryDeleteDialog').load('../ajax/gameWorld.handler.php?ajaxAction=loadCountryDeleteDialog', data, function() {
 			// On success, open dialog
 			$('#countryDeleteDialog').dialog('open');
 
@@ -1345,24 +1345,24 @@ function init() {
 		return false;
 	});
 
-	$("#summaryViewLink").click(function() {
-		$("#summaryView").show();
-		$("#summaryViewText").show();
-		$("#summaryViewLink").hide();
-
-		$("#detailedView").hide();
-		$("#detailedViewText").hide();
-		$("#detailedViewLink").show();
+	$('#summaryTab').click(function() {
+		changeTab($(this), 'summaryView');
+		return false;
 	});
 
-	$("#detailedViewLink").click(function() {
-		$("#summaryView").hide();
-		$("#summaryViewText").hide();
-		$("#summaryViewLink").show();
+	$('#detailsTab').click(function() {
+		changeTab($(this), 'detailedView');
+		return false;
+	});
 
-		$("#detailedView").show();
-		$("#detailedViewText").show();
-		$("#detailedViewLink").hide();
+	$('#traitsTab').click(function() {
+		changeTab($(this), 'traitsView');
+		return false;
+	});
+
+	$('#cpListTab').click(function() {
+		changeTab($(this), 'charCPList');
+		return false;
 	});
 
 	$('#selectAll').click(function() {

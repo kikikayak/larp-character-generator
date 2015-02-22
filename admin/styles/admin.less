@@ -775,43 +775,40 @@ INPUT FIELDS
 TAB STYLES
 ***************************************************************/
 
-.tabPanel {
+.tabPanel a {
+	display: block;
+    float: left;
+	background-color: #999;
+	color: #FFFFFF;
+    font-size: 1.2em;
+    font-weight: 300;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 3px;
+    text-align: center;
+    text-decoration: none;
+    width: 100px;
+	outline: none;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
 
-	a {
-		display: block;
-	    float: left;
-		background-color: #999;
-		color: #FFFFFF;
-	    font-size: 1.2em;
-	    font-weight: 300;
-	    height: 20px;
-	    line-height: 20px;
-	    margin-right: 3px;
-	    text-align: center;
-	    text-decoration: none;
-	    width: 100px;
-		outline: none;
-		-moz-border-radius: 5px 5px 0 0;
-		border-radius: 5px 5px 0 0;
-	}
-
-	.tabPanel a.first {
+	&:first-child {
 		margin-left: 0;
 	}
 
-	a.selected {
+	&.selected {
 		background-color: @bg-content;
 	}
 
-	a:hover {
+	&:hover {
 		text-decoration: underline;
 	}
 
-	a.selected:hover {
+	&.selected:hover {
 		text-decoration: none;
 	}
 
-	a#skillsTab {
+	&#skillsTab {
 		width: 115px;	
 	}
 }
@@ -2257,6 +2254,11 @@ SETTINGS SECTION
 	
 	label {
 		width: 215px;
+		line-height: 35px;
+	}
+
+	#useRacesRow label {
+		line-height: 20px;
 	}
 
 	fieldset {
