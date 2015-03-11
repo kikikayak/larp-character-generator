@@ -46,6 +46,14 @@
 	$communities = $wizard->getCommunities();
 	$countries = $wizard->getCountries();
 	$races = $wizard->getRaces();
+
+	$featObj = new Feat();
+	$totalFeats = $featObj->getTotalFeats();
+	if ($totalFeats > 0) {
+		$useFeats = 'Yes';
+	} else {
+		$useFeats = 'No';
+	}
 	
 	/************************************************************************************
 	PROCESS SUBMISSION
@@ -335,12 +343,18 @@
 	                        </div>
 	                    </div>
 
-	                    <div class="summarySection">
-							<span class="label">Feat</span><br />
-							<div id="summaryFeatList">
-								<em>None</em>
-	                        </div>
-	                    </div>
+						<?php 
+							if ($useFeats == 'Yes') {
+						?>
+		                    <div class="summarySection">
+								<span class="label">Feat</span><br />
+								<div id="summaryFeatList">
+									<em>None</em>
+		                        </div>
+		                    </div>
+	                    <?php
+			                }
+		                ?>
 
 					</div><!--/charDetails-->
 				</div><!--/charSummary-->
@@ -368,9 +382,7 @@
                     <?php
 						}
 						// Show feats tab if there are any feats in the system
-						$featObj = new Feat();
-						$totalFeats = $featObj->getTotalFeats();
-						if ($totalFeats > 0) {
+						if ($useFeats == 'Yes') {
 					?>
                     	<a href="#" id="feats_tab">Feats</a>
                     <?php

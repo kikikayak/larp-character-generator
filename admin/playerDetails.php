@@ -20,6 +20,8 @@
 	
 	$player = new Player();
 	$playerDetails = $player->getPlayerProfile($_GET['playerID']);
+
+	$cp = new CP();
 			
 	$title = 'Player Details: Allison Corbett | ' . $_SESSION['campaignName'] . ' Character Generator';
 
@@ -102,7 +104,6 @@
 				while ($charRow = $playerCharacters->fetch_assoc()) {
 				
 				// Get CP info for CP table
-				$cp = new CP();
 				$cpDetails = $cp->getCPByCharacter($charRow['characterID']);
 			?>
 
@@ -156,69 +157,72 @@
 				</tbody>
 			</table>
 			
-            <?php
-			  } // end of characters loop
+		<?php
+			} // end of characters loop
+			$playerCPDetails = $cp->getCPByPlayer($row['playerID']);
+		?>
 
-			  $playerCPDetails = $cp->getCPByPlayer($row['playerID']);
+		<h3>Unassigned (Player) CP</h3>
+			
+		<?php
+			if ($playerCPDetails->num_rows > 0) {
+		?>
+		<p>This CP will be automatically assigned to the next character the player adds or edits. </p>
+		<table cellspacing="0" class="charCPList">
+			<thead>
+				<tr> 
+					<th class="col1">Date</th>
+					<th class="col2">CP</th>
+					<th class="col3">Category</th>
+					<th class="col4">Note</th>
+					<th class="col5">Staff member</th>
+				</tr>
+			</thead>
+		  	<tbody>
+				<?php
+					$rowIndex = 1;
+					$playerCPTotal = 0;
 
-		  ?>
+					while ($playerCPRow = $playerCPDetails->fetch_assoc()) {
+						
+					  $dateString = strtotime($playerCPRow['CPDateStamp']);
+					  $displayDate = date('n/j/Y', $dateString);
+					  
+					  if ($rowIndex % 2 == 0) {
+						  $rowClass = 'even';
+					  } else {
+						  $rowClass = 'odd';
+					  }
 
-		  <h3>Unassigned (Player) CP</h3>
-		  <p>This CP will be automatically assigned to the next character the player adds or edits. </p>
-			<table cellspacing="0" class="charCPList">
-				<thead>
-					<tr> 
-						<th class="col1">Date</th>
-						<th class="col2">CP</th>
-						<th class="col3">Category</th>
-						<th class="col4">Note</th>
-						<th class="col5">Staff member</th>
-					</tr>
-				</thead>
-              	<tbody>
-					<?php
-						$rowIndex = 1;
-						$playerCPTotal = 0;
+					  $playerCPTotal = $playerCPTotal + $playerCPRow['numberCP'];
+				?>
+		        <tr class="<?php echo $rowClass; ?>"> 
+					<td class="col1"><?php echo $displayDate; ?></td>
+					<td class="col2"><?php echo $playerCPRow['numberCP']; ?></td>
+					<td class="col3"><?php echo $playerCPRow['CPCatName']; ?></td>
+					<td class="col4"><?php echo $playerCPRow['CPNote']; ?></td>
+					<td class="col5"><?php echo $playerCPRow['staffMember']; ?></td>
+				</tr>
+		        <?php
+					$rowIndex++;
+					} // end of Player CP loop
+				?>
+				<tr class="total">
+					<td class="col1">Total:</td>
+					<td class="col2"><?php echo $playerCPTotal; ?></td>
+					<td class="col3"></td>
+					<td class="col4"></td>
+					<td class="col5"></td>
+				</tr>
+			</tbody>
+		</table>
+		<?php
+				} else {
+					echo '<p class="noResults">This player does not have any unassigned CP.</p>';
+				}
 
-						while ($playerCPRow = $playerCPDetails->fetch_assoc()) {
-							
-						  $dateString = strtotime($playerCPRow['CPDateStamp']);
-						  $displayDate = date('n/j/Y', $dateString);
-						  
-						  if ($rowIndex % 2 == 0) {
-							  $rowClass = 'even';
-						  } else {
-							  $rowClass = 'odd';
-						  }
-
-						  $playerCPTotal = $playerCPTotal + $playerCPRow['numberCP'];
-					?>
-                    <tr class="<?php echo $rowClass; ?>"> 
-						<td class="col1"><?php echo $displayDate; ?></td>
-						<td class="col2"><?php echo $playerCPRow['numberCP']; ?></td>
-						<td class="col3"><?php echo $playerCPRow['CPCatName']; ?></td>
-						<td class="col4"><?php echo $playerCPRow['CPNote']; ?></td>
-						<td class="col5"><?php echo $playerCPRow['staffMember']; ?></td>
-					</tr>
-                    <?php
-						$rowIndex++;
-						} // end of Player CP loop
-					?>
-					<tr class="total">
-						<td class="col1">Total:</td>
-						<td class="col2"><?php echo $playerCPTotal; ?></td>
-						<td class="col3"></td>
-						<td class="col4"></td>
-						<td class="col5"></td>
-					</tr>
-				</tbody>
-			</table>
-
-
-		  <?php
-
-				} // end of player details loop
-			?>
+			} // end of player details loop
+		?>
         
           
         </div> <!--end of main div-->
