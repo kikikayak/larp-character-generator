@@ -15,8 +15,12 @@ function init() {
 	stripeTableRows('playerList');
 	stripeTableRows('deletedCharList');
 
-	// Make all select boxes pretty
-	$('select:visible').chosen({disable_search_threshold: 2});
+	// Make all dropdowns pretty
+	// Only do visible dropdowns; otherwise the autosuggest fields in the filters get messed up 
+	$('select:visible').chosen({disable_search_threshold: 6});
+
+	// Some attribute dropdowns are hidden by default, so do those too 
+	$('.attributeField').chosen({disable_search_threshold: 6});
 
 	/********************************
 	ABOUT DIALOG

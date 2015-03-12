@@ -404,7 +404,7 @@
 				<div class="cell">
 					<label for="attributeCost1">Attribute Cost(s)<br /><span class="optional">(optional)</span></label>
 					<input type="text" id="attributeCost1" name="attributeCost1" class="attributeCost s2" maxlength="3" value="<?php echo $html['attributeCost1']; ?>" />
-					<select id="attribute1" name="attribute1" data-placeholder="Choose attribute">
+					<select id="attribute1" name="attribute1" class="attributeField" data-placeholder="Choose attribute">
 						<option value="0"></option>
 						<option value="1" <?php if ($html['attribute1'] == 1) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute1Label']; ?></option>
 						<option value="2" <?php if ($html['attribute1'] == 2) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute2Label']; ?></option>
@@ -412,7 +412,7 @@
 						<option value="4" <?php if ($html['attribute1'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute1'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" id="attribute1PlusLink" onClick="doOnClickAddAttrRow(1); return false"><img src="styles/images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
+					<a href="#" id="attribute1PlusLink" onClick="doOnClickAddAttrRow(1); return false"><img src="styles/images/circle_plus.png" class="plusMinus" alt="Add an attribute" /></a>
 					<?php cg_showError('attributeCost1'); ?>
 					<span class="hint">e.g. "2 fire"</span>
 				</div>
@@ -427,7 +427,7 @@
 			?>
 				<div class="cell">
 					<input type="text" id="attributeCost2" name="attributeCost2" class="attributeCost s2" maxlength="3" value="<?php echo $html['attributeCost2']; ?>" />
-					<select id="attribute2" name="attribute2" data-placeholder="Choose attribute">
+					<select id="attribute2" name="attribute2" class="attributeField" data-placeholder="Choose attribute">
 						<option value="0"></option>
 						<option value="1" <?php if ($html['attribute2'] == 1) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute1Label']; ?></option>
 						<option value="2" <?php if ($html['attribute2'] == 2) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute2Label']; ?></option>
@@ -435,8 +435,8 @@
 						<option value="4" <?php if ($html['attribute2'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute2'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" id="attribute2PlusLink" onClick="doOnClickAddAttrRow(2); return false"><img src="styles/images/adminPlus.png" class="plusMinus" alt="Add an attribute" /></a>
-					<a href="#" onClick="doOnClickRemoveAttrRow(2); return false"><img src="styles/images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
+					<a href="#" id="attribute2PlusLink" onClick="doOnClickAddAttrRow(2); return false"><img src="styles/images/circle_plus.png" class="plusMinus" alt="Add an attribute" /></a>
+					<a href="#" onClick="doOnClickRemoveAttrRow(2); return false"><img src="styles/images/circle_minus.png" class="plusMinus" alt="Remove this attribute" /></a>
 					<?php cg_showError('attributeCost2'); ?>
 					<br class="clear" />
 				</div>
@@ -451,7 +451,7 @@
 			?>
 				<div class="cell">
 					<input type="text" id="attributeCost3" name="attributeCost3" class="attributeCost s2" maxlength="3" value="<?php echo $html['attributeCost3']; ?>" />
-					<select id="attribute3" name="attribute3" data-placeholder="Choose attribute">
+					<select id="attribute3" name="attribute3" class="attributeField" data-placeholder="Choose attribute">
 						<option value="0"></option>
 						<option value="1" <?php if ($html['attribute3'] == 1) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute1Label']; ?></option>
 						<option value="2" <?php if ($html['attribute3'] == 2) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute2Label']; ?></option>
@@ -459,7 +459,7 @@
 						<option value="4" <?php if ($html['attribute3'] == 4) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute4Label']; ?></option>
 						<option value="5" <?php if ($html['attribute3'] == 5) echo 'selected="selected"'; ?>><?php echo $_SESSION['attribute5Label']; ?></option>
 					</select>
-					<a href="#" onClick="doOnClickRemoveAttrRow(3); return false"><img src="styles/images/adminMinus.png" class="plusMinus" alt="Remove this attribute" /></a>
+					<a href="#" onClick="doOnClickRemoveAttrRow(3); return false"><img src="styles/images/circle_minus.png" class="plusMinus" alt="Remove this attribute" /></a>
 					<?php cg_showError('attributeCost3'); ?>
 					<br class="clear" />
 				</div>
