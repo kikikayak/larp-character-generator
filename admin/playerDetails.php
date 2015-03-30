@@ -67,10 +67,18 @@
 				</div>
 			</div>
 			
-			<div class="row" id="loginsCell">
+			<div class="row" id="userRoleCell">
 				<div class="cell">
 					<p class="lbl">Access Level</p>
 					<p class="data"><?php echo $row['userRole']; ?></p>
+					<br class="clear" />
+				</div>
+			</div>
+
+			<div class="row" id="requestAccessReasonCell">
+				<div class="cell">
+					<p class="lbl">Access Request Note</p>
+					<p class="data"><?php echo $row['requestAccessReason']; ?></p>
 					<br class="clear" />
 				</div>
 			</div>

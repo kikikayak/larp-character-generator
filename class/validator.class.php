@@ -414,6 +414,14 @@ class Validator {
 			$errorList['email']['fldLbl'] = 'Email';
 			$errorList['email']['error'] = 'Should be a valid email address in the format email@example.com';
 		}
+
+		if (is_empty($player['requestAccessReason'])) {
+			$errorList['requestAccessReason']['fldLbl'] = 'Reason for Requesting Access';
+			$errorList['requestAccessReason']['error'] = 'Please enter a brief explanation of why you would like access to the Character Generator';
+		} else if (!isValidTextArea($player['requestAccessReason'])) {
+			$errorList['requestAccessReason']['fldLbl'] = 'Reason for Requesting Access';
+			$errorList['requestAccessReason']['error'] = 'Contains invalid characters';
+		}
 		
 		if (is_empty($player['password'])) {
 			$errorList['password']['fldLbl'] = 'Password';

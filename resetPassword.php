@@ -105,7 +105,7 @@
 		</form>
 	</div><!--end of content div-->
 	
-	<?php require('includes/uaFooter.php'); ?>
+	<?php require('includes/footer.php'); ?>
 
 </body>
 </html>

@@ -15,7 +15,6 @@
 	$user->initSession();
 	
 	$title = "Request Access to the " . $_SESSION['campaignName'] . "Character Generator";
-	$stylesheet = "ua.css";
 	
 	/************************************************************************************
 	INITIALIZE VALUES FOR POPULATING UI
@@ -28,6 +27,7 @@
 	$html['firstName'] = isset($_POST['firstName']) ? htmlentities($_POST['firstName']) : '';
 	$html['lastName'] = isset($_POST['lastName']) ? htmlentities($_POST['lastName']) : '';
 	$html['email'] = isset($_POST['email']) ? htmlentities($_POST['email']) : '';
+	$html['requestAccessReason'] = isset($_POST['requestAccessReason']) ? htmlentities($_POST['requestAccessReason']) : '';
 	
 	/************************************************************************************
 	PROCESS SUBMISSION
@@ -74,6 +74,15 @@
 				</div>
 				<div class="helpBottom"></div>
 			</div>
+
+			<div id="requestAccessReasonHelp" class="help" style="display: none">
+				<div class="helpTop"><a href="#" class="closeLink"></a></div>
+				<div class="helpContent">
+					<p>Please give a brief (1-2 sentence) explanation of why you're requesting access and/or how you heard about the Character Generator.</p>
+					<p>We are much more likely to approve access for people who enter a meaningful reason. </p>
+				</div>
+				<div class="helpBottom"></div>
+			</div>
             
         </div><!--#help-->
         
@@ -82,8 +91,10 @@
         </div>
         
         <h2>Request Access</h2>
-		<p>You can use this form to request access to the <?php echo $_SESSION['campaignName']; ?> Character Generator. We'll email you when your login is approved.</p>
+		<p>You can use this form to request access to the <?php echo $_SESSION['campaignName']; ?> Character Generator. It usually takes around 24 hours for access to be approved. We'll email you when your login is approved.</p>
 		
+		<p>Privacy promise: We will never give or sell your information to third parties. </p>
+
 		<p>If you already have access, you can <a href="index.php">log in</a> or <a href="lostPassword.php">reset your password</a>.</p>
 		
 		<form name="requestLogin" id="requestLogin" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
@@ -116,6 +127,15 @@
                         <br class="clear" />
                     </div>
 				</div>
+
+				<?php cg_createRow('requestAccessReason'); ?>
+					<div class="cell">
+                        <label for="requestAccessReason"><span class="reqFld">* </span>Reason for Requesting Access</label>
+                        <textarea id="requestAccessReason" name="requestAccessReason" class="xl2" rows="5"><?php echo $html['requestAccessReason']; ?></textarea>
+                        <?php cg_showError('requestAccessReason'); ?>
+                        <br class="clear" />	
+                    </div>
+   				</div>
                 
                 <?php cg_createRow('password'); ?>
 					<div class="cell">
@@ -145,7 +165,7 @@
 		</form>
 	</div>
 	
-	<?php require('includes/uaFooter.php'); ?>
+	<?php require('includes/footer.php'); ?>
 		
 </body>
 

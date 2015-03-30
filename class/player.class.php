@@ -47,7 +47,7 @@ class Player {
 		$mysql = array(); // Set up array for escaping values for DB
 		$mysql['playerID'] = db_escape($playerID, $this->dbh);
 		
-		$query = 	"SELECT p.playerID, p.firstName, p.lastName, p.email, p.password, p.userRole 
+		$query = 	"SELECT p.playerID, p.firstName, p.lastName, p.email, p.password, p.userRole, p.requestAccessReason  
 					FROM players p
 					WHERE p.playerID = " . $mysql['playerID'];
 				
@@ -154,7 +154,7 @@ class Player {
 	occurs when a user fills out the Request Access form. 
 	********************************************************/
 	public function getPendingUsers() {
-		$query = 	"SELECT p.playerID, p.firstName, p.lastName, p.email
+		$query = 	"SELECT p.playerID, p.firstName, p.lastName, p.email, p.requestAccessReason 
 					FROM players p
 					WHERE p.userStatus = 'pending' 
 					AND p.playerDeleted IS NULL 
@@ -479,6 +479,7 @@ class Player {
 		$mysql['lastName'] = db_escape($player['lastName'], $this->dbh);
 		$mysql['email'] = db_escape($player['email'], $this->dbh);
 		$mysql['password'] = db_escape($player['password'], $this->dbh);
+		$mysql['requestAccessReason'] = db_escape($player['requestAccessReason'], $this->dbh);
 		$mysql['userRole'] = 'User';
 		$mysql['userStatus'] = 'pending';
 		
@@ -498,7 +499,8 @@ class Player {
 				$errorList['email']['error'] = 'Please enter a unique email address';
 				$_SESSION['UIMessage'] = new UIMessage(	'error', 
 														'Email Address Already Registered',
-														'<p>The email address you specified already exists in the system.</p> <p>If you have forgotten your password, you can <a href="lostPassword.php">reset your password</a>.</p>', $errorList);
+														'<p>The email address you specified already exists in the system.</p> 
+														 <p>If you have forgotten your password, you can <a href="lostPassword.php">reset your password</a>.</p>', $errorList);
 				return false;
 			}
 		}
@@ -508,14 +510,15 @@ class Player {
 		$mysql['hashPassword'] = generateHash($player['password']);
 		
 		// Insert player
-		$query = 	"INSERT INTO players (firstName, lastName, email, password, userRole, userStatus)
+		$query = 	"INSERT INTO players (firstName, lastName, email, password, userRole, userStatus, requestAccessReason)
 					VALUES ('" . 
 					$mysql['firstName'] . "','" . 
 					$mysql['lastName'] . "','" . 
 					$mysql['email'] . "','" . 
 					$mysql['hashPassword'] . "','" .
 					$mysql['userRole'] . "','" .
-					$mysql['userStatus'] . "')";
+					$mysql['userStatus'] . "','" .
+					$mysql['requestAccessReason'] . "')";
 		
 		// TODO: Wrap this in a transaction so that we can roll back if part of the insert fails. 
 		if ($playerInsertResult = $this->dbh->query($query)) {
@@ -965,13 +968,12 @@ class Player {
 					WHERE p.email = '" . $mysql['email'] . "'";
 					
 		if ($result = $this->dbh->query($query)) {
-			if ($this->dbh->affected_rows == 1) {
-
+			if ($this->dbh->affected_rows == 1) { // Found the user record
+				
 				while ($row = $result->fetch_assoc()) {
 					$html['firstName'] = $row['firstName'];
 				}
-				
-				// Found the user record; keep going
+
 				// Generate random alphanumeric temp password
 				$tmpPwd = generateTmpPassword();
 				

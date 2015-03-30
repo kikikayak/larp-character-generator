@@ -373,6 +373,7 @@ if ($ajaxAction == 'getPendingUsers') {
         <td class="chkboxCol"><input type="checkbox" id="<?php echo 'playerID_' . $player['playerID']; ?>" name="playerID[]" value="<?php echo $player['playerID']; ?>" /></td>
         <td class="nameCol"><a href="playerDetails.php?playerID=<?php echo $player['playerID']; ?>"><?php echo $player['firstName'] . ' ' . $player['lastName']; ?></a></td>
         <td class="emailCol"><a href="mailto:<?php echo $player['email']; ?>"><?php echo $player['email']; ?></a></td>
+        <td class="reasonCol"><?php echo $player['requestAccessReason']; ?></td>
         <td class="actionCol">
             <div class="actionsContainer">
               <a href="#" title="Pending user actions" class="actionsLink">Actions</a>

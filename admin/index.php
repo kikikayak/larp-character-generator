@@ -89,7 +89,8 @@
                     <th class="chkboxCol"><input type="checkbox" id="selectAll" name="selectAll" /></th>
                     <th class="nameCol">Name</th>
                     <th class="emailCol">Email</th>
-                    <th class="actionCol">&nbsp;</th>
+                    <th class="reasonCol">Note</th>
+                    <th class="actionCol"></th>
                   </tr>
               </thead>
               <tbody> 

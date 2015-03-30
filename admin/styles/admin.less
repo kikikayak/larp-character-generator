@@ -371,7 +371,7 @@ a {
 
 #footer {
 	width: 800px;
-	height: 60px;
+	// height: 60px;
 	background-color: @bg-content;
 	border-right: 10px solid @bg-content;
 	border-left: 10px solid @bg-content;
@@ -1517,6 +1517,7 @@ GAME WORLD SECTION
 .plusMinus {
 	float: left;
 	margin-left: 5px;
+	margin-top: 5px;
 }
 
 #charSelectionBox {
@@ -1653,17 +1654,26 @@ HOME SECTION
 
 #pendingUserList {
 	width: 98.5%;
-	border-top: 0px none;	
+	border-top: 0px none;
+
+	th, td {
+		vertical-align: top;
+	}	
 
 	.chkboxCol {
 		width: 25px;	
 	}
+	
 	.nameCol {
-		width: 290px;	
+		width: 175px;	
 	}
 
 	.emailCol {
-		width: 325px;	
+		width: 175px;	
+	}
+
+	.reasonCol {
+		width: 250px;	
 	}
 
 }
@@ -1704,6 +1714,10 @@ PLAYERS SECTION STYLES
 
 	.row {
 		margin-bottom: 10px;
+	}
+
+	.lbl {
+		width: 150px;
 	}
 
 	.lbl, .data {
