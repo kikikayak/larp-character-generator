@@ -54,9 +54,6 @@
 <script type="text/javascript" src="../js/library.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
 <?php 
-	if (isset($styleLink)) {
-		echo '<link rel="stylesheet/less" type="text/css" href="' . $styleLink . '" />'; // Include custom stylesheet for this page, if there is one. 
-	}
 	if (isset($scriptLink)) {
 		echo '<script type="text/javascript" src="../js/' . $scriptLink . '"></script>'; // Include custom JS for this page, if there is one. 
 	}

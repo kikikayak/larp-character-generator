@@ -50,6 +50,7 @@ class Settings {
 		$mysql['webmasterEmail'] = db_escape($settings['webmasterEmail'], $this->dbh);
 		$mysql['paypalEmail'] = db_escape($settings['paypalEmail'], $this->dbh);
 		$mysql['generatorLocation'] = db_escape($settings['generatorLocation'], $this->dbh);
+		$mysql['autoGrantAccess'] = db_escape($settings['autoGrantAccess'], $this->dbh);
 		
 		$query = 	"UPDATE settings s 
 					SET s.baseCP = " . $mysql['baseCP'] . ", 
@@ -69,8 +70,11 @@ class Settings {
 					s.webmasterName = '" . $mysql['webmasterName'] . "', 
 					s.webmasterEmail = '" . $mysql['webmasterEmail'] . "', 
 					s.paypalEmail = '" . $mysql['paypalEmail'] . "',
-					s.generatorLocation = '" . $mysql['generatorLocation'] . "' 
+					s.generatorLocation = '" . $mysql['generatorLocation'] . "',  
+					s.autoGrantAccess = " . $mysql['autoGrantAccess'] . " 
 					WHERE s.settingsID = 1";
+
+		// echo $query;
 		
 		if ($updateResult = $this->dbh->query($query)) {
 			// Create success message to display at top of page. 

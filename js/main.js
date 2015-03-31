@@ -53,6 +53,22 @@ function init() {
 		return false;
 	});
 
+	$("#email").focus(function () {
+		showHelp(this, 'emailHelp');
+	});
+
+	$("#requestAccessReason").focus(function () {
+		showHelp(this, 'requestAccessReasonHelp');
+	});
+
+	$("#password").focus(function () {
+		showHelp(this, 'passwordHelp');
+	});
+
+	$("#confirmPassword").focus(function () {
+		showHelp(this, 'passwordHelp');
+	});
+
 /*
 	$("#summaryViewLink").click(function() {
 		$("#summaryView").show();

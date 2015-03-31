@@ -32,6 +32,7 @@
 		$html['baseCP'] = isset($_POST['baseCP']) ? htmlentities($_POST['baseCP']) : htmlentities($savedSettings['baseCP']);
 		$html['baseAttribute'] = isset($_POST['baseAttribute']) ? htmlentities($_POST['baseAttribute']) : htmlentities($savedSettings['baseAttribute']);
 		$html['useRaces'] = isset($_POST['useRaces']) ? htmlentities($_POST['useRaces']) : htmlentities($savedSettings['useRaces']);
+        $html['autoGrantAccess'] = isset($_POST['autoGrantAccess']) ? htmlentities($_POST['autoGrantAccess']) : htmlentities($savedSettings['autoGrantAccess']);
 		$html['communityLabel'] = isset($_POST['communityLabel']) ? htmlentities($_POST['communityLabel']) : htmlentities($savedSettings['communityLabel']);
 		$html['communityLabelPlural'] = isset($_POST['communityLabelPlural']) ? htmlentities($_POST['communityLabelPlural']) : htmlentities($savedSettings['communityLabelPlural']);
 		$html['attribute1Label'] = isset($_POST['attribute1Label']) ? htmlentities($_POST['attribute1Label']) : htmlentities($savedSettings['attribute1Label']);
@@ -248,6 +249,18 @@
                         <select name="useRaces" id="useRaces">
                           <option value="Yes" <?php if ($html['useRaces'] == 'Yes') echo 'selected="selected"'; ?>>Yes</option>
                           <option value="No" <?php if ($html['useRaces'] == 'No') echo 'selected="selected"'; ?>>No</option>
+                        </select>
+                        <?php cg_showError('useRaces'); ?>
+                        <br class="clear" />
+                    </div>
+                </div>
+
+                <?php cg_createRow('autoGrantAccess'); ?>
+                    <div class="cell">
+                        <label for="autoGrantAccess">* Automatically grant access?</label>
+                        <select name="autoGrantAccess" id="autoGrantAccess">
+                          <option value="1" <?php if ($html['autoGrantAccess'] == '1') echo 'selected="selected"'; ?>>Yes</option>
+                          <option value="0" <?php if ($html['autoGrantAccess'] == '0') echo 'selected="selected"'; ?>>No</option>
                         </select>
                         <?php cg_showError('useRaces'); ?>
                         <br class="clear" />

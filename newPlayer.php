@@ -53,7 +53,7 @@
     
     <div id="content">
 		<div id="help">
-			<img id="helpArrow" src="images/helpArrow.png" alt="" style="display:none" />
+			<img id="helpArrow" src="theme/<?php echo THEME; ?>/images/helpArrow.png" alt="" style="display:none" />
             
             <div id="emailHelp" class="help" style="display: none">
 				<div class="helpTop"><a href="#" class="closeLink"></a></div>
@@ -90,12 +90,27 @@
 			<?php cg_showUIMessage(); ?>
         </div>
         
+        <?php
+        	if ($_SESSION['autoGrantAccess'] == 0) {
+		?>
         <h2>Request Access</h2>
-		<p>You can use this form to request access to the <?php echo $_SESSION['campaignName']; ?> Character Generator. It usually takes around 24 hours for access to be approved. We'll email you when your login is approved.</p>
+		<p>It usually takes around 24 hours for access to be approved. We'll email you when your login is approved.</p>
+		
+		<?php
+			} else {
+		?>
+
+		<h2>Sign Up</h2>
+
+		<?php
+			}
+		?>
 		
 		<p>Privacy promise: We will never give or sell your information to third parties. </p>
 
-		<p>If you already have access, you can <a href="index.php">log in</a> or <a href="lostPassword.php">reset your password</a>.</p>
+		<p>If you already have an account, you can <a href="index.php">log in</a> or <a href="lostPassword.php">reset your password</a>.</p>
+
+		<p>NOTE: If you play multiple games that use the Character Generator, you have separate logins for each game. </p>
 		
 		<form name="requestLogin" id="requestLogin" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
 			<fieldset id="playerInformation">
@@ -130,7 +145,17 @@
 
 				<?php cg_createRow('requestAccessReason'); ?>
 					<div class="cell">
+                        <?php
+				        	if ($_SESSION['autoGrantAccess'] == 0) {
+						?>
                         <label for="requestAccessReason"><span class="reqFld">* </span>Reason for Requesting Access</label>
+                        <?php
+				        	} else {
+						?>
+						<label for="requestAccessReason"><span class="reqFld">* </span>Reason for Using the Generator</label>
+                        <?php
+				        	}
+						?>
                         <textarea id="requestAccessReason" name="requestAccessReason" class="xl2" rows="5"><?php echo $html['requestAccessReason']; ?></textarea>
                         <?php cg_showError('requestAccessReason'); ?>
                         <br class="clear" />	

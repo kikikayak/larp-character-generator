@@ -523,13 +523,34 @@ class Player {
 		// TODO: Wrap this in a transaction so that we can roll back if part of the insert fails. 
 		if ($playerInsertResult = $this->dbh->query($query)) {
 			
-			// If all went well, create success message to display at top of page. 
-			$_SESSION['UIMessage'] = new UIMessage(	'success', 
-													'Request Submitted',
-													'<p>Your request for access has been sent to the game staff. You will receive an email once your access is approved. </p>');
-						
-		$this->sendLoginRequestEmail($player);	
-			return true;
+			if ($_SESSION['autoGrantAccess'] == 0) { // Staff needs to approve the login request
+				
+				$this->sendLoginRequestEmail($player);
+				
+				// Display success message at top of page. 
+				$_SESSION['UIMessage'] = new UIMessage(	'success', 
+														'Request Submitted',
+														'<p>Your request for access has been sent to the game staff. You will receive an email once your access is approved. </p>');
+				return true;
+			} else { // Automatically approve player
+				
+				// Find player ID of last-inserted player so we can use it to approve access
+				$lastPlayerQuery = 'SELECT MAX(playerID) AS lastPlayerID FROM players';
+				if ($lastPlayerResult = $this->dbh->query($lastPlayerQuery)) {
+					while ($lastPlayer = $lastPlayerResult->fetch_assoc()) {
+						$lastPlayerID = $lastPlayer['lastPlayerID'];
+					}
+				}
+
+				// Approve player
+				$this->approvePlayer($lastPlayerID);
+
+				// Display a different success message
+				$_SESSION['UIMessage'] = new UIMessage(	'success', 
+														'Login Created',
+														'<p>Your request for access has been granted. You can now log in using your email address and the password you selected. </p>');
+				return true;
+			}
 		} else {
 			return false;
 		}

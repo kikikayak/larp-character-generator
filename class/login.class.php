@@ -116,6 +116,7 @@ class Login {
 				$_SESSION['paypalEmail'] = $row['paypalEmail'];
 				$_SESSION['copyrightYear'] = $row['copyrightYear'];
 				$_SESSION['generatorLocation'] = $row['generatorLocation'];
+				$_SESSION['autoGrantAccess'] = $row['autoGrantAccess'];
 				$_SESSION['UIMessage'] = '';
 			}
 			
