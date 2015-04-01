@@ -161,7 +161,7 @@
 		$pageOutro = '';
 		$btnLabel = 'Create Character';
 		$finalNote = '';
-	
+
 	} else if ($action == 'update' && isset($_GET['characterID'])) {
 		$character = array(); // Initialize as blank array
 		$savedCharacter = array();
@@ -660,7 +660,6 @@
                                         name="headerID[]" 
                                         id="<?php echo 'headerID_' . $row['headerID']; ?>" 
                                         value="<?php echo $row['headerID']; ?>" 
-                                        checked="checked"
 										<?php if ((isset($_SESSION['character']) && in_array($row['headerID'], $_SESSION['character']['charHeaders'])) || ($action == 'update' && isset($_SESSION['savedCharacter']) && in_array($row['headerID'], $_SESSION['savedCharacter']['charHeaders']))) echo 'checked="checked"'; ?> 
 								/>
                                         

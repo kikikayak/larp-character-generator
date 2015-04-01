@@ -104,7 +104,11 @@ function init() {
 	});
 
 	$('#cancelBtn').click(function() {
-		goToPage('index.php');
+		if ($('#adminWizardPage').length) {
+			goToPage('characters.php');
+		} else {
+			goToPage('index.php');
+		}
 		return false;
 	});
 
