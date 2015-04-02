@@ -363,16 +363,32 @@ class Wizard {
 
 				$cpRecord = $cp->createCPRecord('character', $lastCharacterID, $mysql['playerID'], $_SESSION['baseCP'], 14, 'Starting CP for ' . $mysql['charType'] . ' character "' . $mysql['charName'] . '."');
 
-				// Transfer player CP to this character
-				$cpTransferQuery = 	"UPDATE cp
-									SET 
-										cp.CPType = 'character',
-										cp.characterID = " . $lastCharacterID . 
-									" WHERE cp.CPType = 'player'
+				// Are there any player CP to transfer to this character? 
+				$totalForTransfer = 0;
+
+				$cpTransferNum = 	"SELECT SUM(numberCP) AS totalForTransfer
+									FROM cp
+									WHERE cp.CPType = 'player'
 									AND cp.playerID = " . $mysql['playerID'];
-				
-				if ($cpTransferResult = $this->dbh->query($cpTransferQuery)) {
-					$log->addLogEntry('Transferred player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+
+				if ($cpTransferNumResult = $this->dbh->query($cpTransferNum)) {
+					while ($transferRow = $cpTransferNumResult->fetch_assoc()) {
+						$totalForTransfer = $transferRow['totalForTransfer'];
+					}
+				}
+
+				if ($totalForTransfer > 0) {
+					// Transfer player CP to this character
+					$cpTransferQuery = 	"UPDATE cp
+										SET 
+											cp.CPType = 'character',
+											cp.characterID = " . $lastCharacterID . 
+										" WHERE cp.CPType = 'player'
+										AND cp.playerID = " . $mysql['playerID'];
+					
+					if (!$cpTransferResult = $this->dbh->query($cpTransferQuery)) {
+						$log->addLogEntry('Error transferring player CP: ' . $mysqli->error . '. Query: ' . $cpTransferQuery, $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+					}
 				}
 
 				// Find information for player this character belongs to
@@ -395,6 +411,10 @@ class Wizard {
 				// Add CP info to log for this player/character
 				$log->addLogEntry('Automatically granted starting CP of ' . $_SESSION['baseCP'] . ' to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
 				
+				if ($totalForTransfer > 0) {
+					$log->addLogEntry('Transferred ' . $totalForTransfer . ' player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $lastCharacterID, 'Wizard', 'createCharacter');
+				}
+
 				// Create success message to display at top of page. 
 				$_SESSION['UIMessage'] = new UIMessage(	'success', 
 														'Character created successfully',
@@ -554,21 +574,41 @@ class Wizard {
 
 			$log = new Log();
 
-			// Transfer player CP to this character
-			$cpTransferQuery = 	"UPDATE cp
-								SET 
-									cp.CPType = 'character',
-									cp.characterID = " . $mysql['characterID'] . 
-								" WHERE cp.CPType = 'player'
+			// Are there any player CP to transfer to this character? 
+			$totalForTransfer = 0;
+
+			$cpTransferNum = 	"SELECT SUM(numberCP) AS totalForTransfer
+								FROM cp
+								WHERE cp.CPType = 'player'
 								AND cp.playerID = " . $mysql['playerID'];
-			
-			if ($cpTransferResult = $this->dbh->query($cpTransferQuery)) {
-				$log->addLogEntry('Transferred player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID']);
+
+			if ($cpTransferNumResult = $this->dbh->query($cpTransferNum)) {
+				while ($transferRow = $cpTransferNumResult->fetch_assoc()) {
+					$totalForTransfer = $transferRow['totalForTransfer'];
+				}
+			}
+
+			if ($totalForTransfer > 0) {
+				// Transfer player CP to this character
+				$cpTransferQuery = 	"UPDATE cp
+									SET 
+										cp.CPType = 'character',
+										cp.characterID = " . $mysql['characterID'] . 
+									" WHERE cp.CPType = 'player'
+									AND cp.playerID = " . $mysql['playerID'];
+				
+				if (!$cpTransferResult = $this->dbh->query($cpTransferQuery)) {
+					$log->addLogEntry('Error transferring player CP: ' . $mysqli->error . '. Query: ' . $cpTransferQuery, $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'Wizard', 'updateCharacter');
+				}
 			}
 			
 			// If everything succeeded, add tracking entry to log for this player/character
-			$log->addLogEntry('Updated character "' . $character['charName'] .'."', $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID']);
-						
+			$log->addLogEntry('Updated character "' . $character['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID']);
+
+			if ($totalForTransfer > 0) {
+				$log->addLogEntry('Transferred ' . $totalForTransfer . ' player CP to character "' . $mysql['charName'] . '."', $_SESSION['playerID'], $mysql['playerID'], $mysql['characterID'], 'Wizard', 'updateCharacter');
+			}
+			
 			// Create success message to display at top of page. 
 			$_SESSION['UIMessage'] = new UIMessage(	'success', 
 													'Character updated successfully',

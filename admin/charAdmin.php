@@ -180,14 +180,14 @@
 			$html['attribute4'] = isset($_SESSION['character']['attribute4']) ? htmlentities($_SESSION['character']['attribute4']) : htmlentities($savedCharDetails['attribute4']);
 			$html['attribute5'] = isset($_SESSION['character']['attribute5']) ? htmlentities($_SESSION['character']['attribute5']) : htmlentities($savedCharDetails['attribute5']);
 			$html['vitality'] = isset($_SESSION['character']['vitality']) ? htmlentities($_SESSION['character']['vitality']) : htmlentities($savedCharDetails['vitality']);
-			// Initialize all saved attribute values to value pulled from database
+			// Initialize all saved attribute values to base attribute values
 			// Value will be used to calculate whether a user has set the attribute value too low
-			// User is not allowed to reduce attribute value below saved value. 
-			$html['saved_attribute1'] = htmlentities($savedCharDetails['attribute1']);
-			$html['saved_attribute2'] = htmlentities($savedCharDetails['attribute2']);
-			$html['saved_attribute3'] = htmlentities($savedCharDetails['attribute3']);
-			$html['saved_attribute4'] = htmlentities($savedCharDetails['attribute4']);
-			$html['saved_attribute5'] = htmlentities($savedCharDetails['attribute5']);
+			// User can reduce attribute value below saved value, but not below the base level. 
+			$html['saved_attribute1'] = htmlentities($_SESSION['baseAttribute']);
+			$html['saved_attribute2'] = htmlentities($_SESSION['baseAttribute']);
+			$html['saved_attribute3'] = htmlentities($_SESSION['baseAttribute']);
+			$html['saved_attribute4'] = htmlentities($_SESSION['baseAttribute']);
+			$html['saved_attribute5'] = htmlentities($_SESSION['baseAttribute']);
 		} // end of savedCharDetails loop
 		
 			$html['freeCP'] = $savedChar->getWizardSavedCharFreeCP($_GET['characterID'], $html['playerID']);
