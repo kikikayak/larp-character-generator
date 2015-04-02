@@ -111,16 +111,118 @@
             	
                 <h3><a href="#" id="charFiltersExpand" class="filtersExpandContract">Filter Characters</a></h3>
                 <div id="filterContainer" style="<?php echo $charFiltersDisplay; ?>">
-                  <div id="charFilterRow1" class="row">
-                      <div class="cell1">
-                        <p class="lbl">Name</p>
-                        <p class="data"><input type="text" name="charName" id="charName" value="<?php echo $html['charName']; ?>" class="l autocomplete"/></p>
-                        <br class="clear" />
-                    </div><!--.cell1-->
-                      <br class="clear" />
-                  </div><!--#charFilterRow1-->
                   
-                  <div id="charFilterRow2" class="row">
+                  <!--FILTER ROW 1: Character, Player-->
+                  <div id="charPlayerFilterRow" class="row">
+                      <div class="cell1">
+                        <p class="lbl">Character</p>
+                        <p class="data"><input type="text" name="charName" id="charName" value="<?php echo $html['charName']; ?>" class="m3 autocomplete"/></p>
+                        <br class="clear" />
+                      </div><!--.cell1-->
+                      <div class="cell2">
+                        <p class="lbl">Player</p>
+                        <p class="data">
+                            <input type="text" id="playerName" name="playerName" class="m3 autocomplete" value="<?php echo $html['playerName']; ?>" />
+                        </p>
+                        <br class="clear" />
+                      </div>
+                      <br class="clear" />
+                  </div><!--#charPlayerFilterRow-->
+
+                  <!--FILTER ROW 2: Header, Skill-->
+                  <div id="headerSkillFilterRow" class="row">
+                    <div class="cell1">
+                      <p class="lbl">Header</p>
+                      <p class="data">
+                          <input type="text" name="headerName" id="headerName" value="<?php echo $html['headerName']; ?>" class="m3 autocomplete" />
+                          
+                          <select id="headerID2" name="headerID2" style="display:none">
+                              <option value="">All</option>
+                <?php
+                  while ($headerRow = $headers->fetch_assoc()) { // Loop through retrieved headers
+                ?>
+                              <option value="<?php echo $headerRow['headerID']; ?>" <?php if ($html['headerID'] == $headerRow['headerID']) echo 'selected="selected"'; ?>><?php echo $headerRow['headerName']; ?></option>
+                              <?php
+                } // end headers loop
+                ?>
+                          </select>
+                      </p>
+                      <br class="clear" />
+                    </div>
+                    <div class="cell2">
+                      <p class="lbl">Skill</p>
+                      <p class="data">
+                          <input type="text" name="skillName" id="skillName" value="<?php echo $html['skillName']; ?>" class="m3 autocomplete" />
+                          
+                          <select id="skillID2" name="skillID2" style="display: none">
+                              <option value="">All</option>
+                <?php
+                  while ($skillRow = $skills->fetch_assoc()) { // Loop through retrieved skills
+                ?>
+                              <option value="<?php echo $skillRow['skillID']; ?>" <?php if ($html['skillID'] == $skillRow['skillID']) echo 'selected="selected"'; ?>><?php echo $skillRow['skillName']; ?></option>
+                              <?php
+                } // end skills loop
+                ?>
+                          </select>
+                      </p>
+                      <br class="clear" />
+                    </div>
+                    <br class="clear" />
+                  </div><!--#headerSkillFilterRow-->
+
+                  <!--FILTER ROW 3: Spell, Trait-->
+                  <div id="spellTraitFilterRow" class="row">
+                    <div class="cell1">
+                      <p class="lbl">Spell</p>
+                      <p class="data">
+                          <input type="text" name="spellName" id="spellName" value="<?php echo $html['spellName']; ?>" class="m3 autocomplete" />
+                          
+                          <select id="spellID2" name="spellID2" style="display:none">
+                              <option value="">All</option>
+                <?php
+                  while ($spellRow = $spells->fetch_assoc()) { // Loop through retrieved spells
+                ?>
+                              <option value="<?php echo $spellRow['spellID']; ?>" <?php if ($html['spellID'] == $spellRow['spellID']) echo 'selected="selected"'; ?>><?php echo $spellRow['spellName']; ?></option>
+                              <?php
+                } // end spells loop
+                ?>
+                          </select>
+                      </p>
+                      <br class="clear" />
+                    </div><!--.cell1-->
+                    <div class="cell2">
+                      <p class="lbl">Trait</p>
+                      <p class="data">
+                          <select id="traitID" name="traitID">
+                              <option value="">All</option>
+                <?php
+                  while ($traitRow = $traits->fetch_assoc()) { // Loop through retrieved traits
+                ?>
+                              <option value="<?php echo $traitRow['traitID']; ?>" <?php if ($html['traitID'] == $traitRow['traitID']) echo 'selected="selected"'; ?>><?php echo $traitRow['traitName']; ?></option>
+                              <?php
+                } // end traits loop
+                ?>
+                          </select>
+                      </p>
+                      <br class="clear" />
+                    </div><!--.cell2-->
+                    <br class="clear" />
+                  </div><!--#spellTraitFilterRow-->
+
+                  <!--FILTER ROW 4: Feat-->
+                  <div id="featFilterRow" class="row">
+                      <div class="cell1">
+                        <p class="lbl">Feat</p>
+                        <p class="data">
+                            <input type="text" id="featName" name="featName" class="m3 autocomplete" value="<?php echo $html['featName']; ?>" />
+                        </p>
+                        <br class="clear" />
+                      </div>
+                      <br class="clear" />
+                  </div><!--#featFilterRow-->
+                  
+                  <!--FILTER ROW 5: Country, Community-->
+                  <div id="countryCommunityFilterRow" class="row">
                     <div class="cell1">
                       <p class="lbl">Country</p>
                       <p class="data">
@@ -143,21 +245,21 @@
                           <select id="communityID" name="communityID">
                               <option value="">All</option>
                               <?php
-							  	while ($communityRow = $communities->fetch_assoc()) { // Loop through retrieved communities
-							  ?>
+                  while ($communityRow = $communities->fetch_assoc()) { // Loop through retrieved communities
+                ?>
                               <option value="<?php echo $communityRow['communityID']; ?>" <?php if ($html['communityID'] == $communityRow['communityID']) echo 'selected="selected"'; ?>><?php echo $communityRow['communityName']; ?></option>
                               <?php
-								} // end communities loop
-							  ?>
+                } // end communities loop
+                ?>
                           </select>
                       </p>
                       <br class="clear" />
-                    </div><!--.cell2-->
+                    </div><!--.cell1-->
                     <br class="clear" />
-                  </div><!--#charFilterRow2-->
+                  </div><!--#countryCommunityFilterRow-->
                   
-                  
-                  <div id="charFilterRow3" class="row" 
+                  <!--FILTER ROW 6: Race-->
+                  <div id="raceFilterRow" class="row" 
 				  <?php
 				  	if ($_SESSION['useRaces'] == 'No') {
 				  ?>
@@ -181,107 +283,7 @@
                       <br class="clear" />
                     </div><!--.cell1-->
                     <br class="clear" />
-                  </div><!--#charFilterRow3-->
-                  
-                  <div id="charFilterRow4" class="row">
-                    <div class="cell1">
-                      <p class="lbl">Header</p>
-                      <p class="data">
-                          <input type="text" name="headerName" id="headerName" value="<?php echo $html['headerName']; ?>" class="m2 autocomplete" />
-                          
-                          <select id="headerID2" name="headerID2" style="display:none">
-                              <option value="">All</option>
-							  <?php
-							  	while ($headerRow = $headers->fetch_assoc()) { // Loop through retrieved headers
-							  ?>
-                              <option value="<?php echo $headerRow['headerID']; ?>" <?php if ($html['headerID'] == $headerRow['headerID']) echo 'selected="selected"'; ?>><?php echo $headerRow['headerName']; ?></option>
-                              <?php
-								} // end headers loop
-							  ?>
-                          </select>
-                      </p>
-                      <br class="clear" />
-                    </div>
-                    <div class="cell2">
-                      <p class="lbl">Skill</p>
-                      <p class="data">
-                          <input type="text" name="skillName" id="skillName" value="<?php echo $html['skillName']; ?>" class="m3 autocomplete" />
-                          
-                          <select id="skillID2" name="skillID2" style="display: none">
-                              <option value="">All</option>
-							  <?php
-							  	while ($skillRow = $skills->fetch_assoc()) { // Loop through retrieved skills
-							  ?>
-                              <option value="<?php echo $skillRow['skillID']; ?>" <?php if ($html['skillID'] == $skillRow['skillID']) echo 'selected="selected"'; ?>><?php echo $skillRow['skillName']; ?></option>
-                              <?php
-								} // end skills loop
-							  ?>
-                          </select>
-                      </p>
-                      <br class="clear" />
-                    </div>
-                    <br class="clear" />
-                  </div><!--/charFilterRow4-->
-
-                  <div id="charFilterRow5" class="row">
-                    <div class="cell1">
-                      <p class="lbl">Spell</p>
-                      <p class="data">
-                          <input type="text" name="spellName" id="spellName" value="<?php echo $html['spellName']; ?>" class="m2 autocomplete" />
-                          
-                          <select id="spellID2" name="spellID2" style="display:none">
-                              <option value="">All</option>
-							  <?php
-							  	while ($spellRow = $spells->fetch_assoc()) { // Loop through retrieved spells
-							  ?>
-                              <option value="<?php echo $spellRow['spellID']; ?>" <?php if ($html['spellID'] == $spellRow['spellID']) echo 'selected="selected"'; ?>><?php echo $spellRow['spellName']; ?></option>
-                              <?php
-								} // end spells loop
-							  ?>
-                          </select>
-                      </p>
-                      <br class="clear" />
-                    </div><!--.cell1-->
-                    <div class="cell2">
-                      <p class="lbl">Trait</p>
-                      <p class="data">
-                          <select id="traitID" name="traitID">
-                              <option value="">All</option>
-							  <?php
-							  	while ($traitRow = $traits->fetch_assoc()) { // Loop through retrieved traits
-							  ?>
-                              <option value="<?php echo $traitRow['traitID']; ?>" <?php if ($html['traitID'] == $traitRow['traitID']) echo 'selected="selected"'; ?>><?php echo $traitRow['traitName']; ?></option>
-                              <?php
-								} // end traits loop
-							  ?>
-                          </select>
-                      </p>
-                      <br class="clear" />
-                    </div><!--.cell2-->
-                    <br class="clear" />
-                  </div><!--#charFilterRow5-->
-
-				<div id="charFilterRow6" class="row">
-                      <div class="cell1">
-                        <p class="lbl">Feat</p>
-                        <p class="data">
-                            <input type="text" id="featName" name="featName" class="l autocomplete" value="<?php echo $html['featName']; ?>" />
-                        </p>
-                        <br class="clear" />
-                      </div>
-                      <br class="clear" />
-                  </div><!--/charFilterRow6-->
-                  
-                  <div id="charFilterRow7" class="row">
-                      <div class="cell1">
-                        <p class="lbl">Player</p>
-                        <p class="data">
-                            <input type="text" id="playerName" name="playerName" class="l autocomplete" value="<?php echo $html['playerName']; ?>" />
-                        </p>
-                        <br class="clear" />
-                      </div>
-                      <br class="clear" />
-                  </div><!--/charFilterRow7-->
+                  </div><!--#raceFilterRow-->
                   
                   <div class="btnArea">
                     <input type="submit" name="charFiltersBtn" id="charFiltersBtn" value="Filter" class="btn-primary short" />
