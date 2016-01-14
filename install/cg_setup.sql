@@ -1,15 +1,12 @@
 /*
- Character Generator 2.0 Setup Script
-
- See the accompanying README file or the latest installation instructions at
- https://code.google.com/p/larp-character-generator/wiki/Installation
- for setup guidelines. 
+ Source Server Type    : MySQL
+ Source Server Version : 50616
 
  Target Server Type    : MySQL
  Target Server Version : 50616
  File Encoding         : utf-8
 
- Created: 01/28/2015 20:30:46 PM
+ Date: 01/13/2016 06:31:44 AM
 */
 
 SET NAMES utf8;
@@ -48,7 +45,7 @@ CREATE TABLE `characters` (
   CONSTRAINT `countryID` FOREIGN KEY (`countryID`) REFERENCES `countries` (`countryID`),
   CONSTRAINT `playerID` FOREIGN KEY (`playerID`) REFERENCES `players` (`playerID`),
   CONSTRAINT `raceID` FOREIGN KEY (`raceID`) REFERENCES `races` (`raceID`)
-) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `charfeats`
@@ -128,7 +125,7 @@ CREATE TABLE `communities` (
   `communityDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`communityID`),
   KEY `ReligionID` (`communityID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `countries`
@@ -142,7 +139,7 @@ CREATE TABLE `countries` (
   `countryDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`countryID`),
   KEY `CountryID` (`countryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `cp`
@@ -165,7 +162,7 @@ CREATE TABLE `cp` (
   KEY `NumberCP` (`numberCP`),
   KEY `PlayerID` (`playerID`),
   KEY `UserID` (`staffMember`)
-) ENGINE=InnoDB AUTO_INCREMENT=3219 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `cpcategories`
@@ -177,7 +174,7 @@ CREATE TABLE `cpcategories` (
   `CPCatDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`CPCatID`),
   KEY `CPCatID` (`CPCatID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `feats`
@@ -209,7 +206,7 @@ CREATE TABLE `headers` (
   `headerDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`headerID`),
   KEY `HeaderID` (`headerID`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `hiddenfeatsaccess`
@@ -270,7 +267,7 @@ CREATE TABLE `log` (
   `methodName` varchar(50) DEFAULT NULL,
   `logDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`logID`)
-) ENGINE=InnoDB AUTO_INCREMENT=218 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `players`
@@ -281,18 +278,15 @@ CREATE TABLE `players` (
   `firstName` varchar(50) DEFAULT NULL,
   `lastName` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `memberStatus` varchar(10) DEFAULT NULL,
-  `membershipPaid` varchar(50) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
   `tmpPassword` varchar(15) DEFAULT NULL,
   `userRole` varchar(50) DEFAULT NULL,
   `userStatus` varchar(50) DEFAULT NULL,
-  `resetRequest` int(11) DEFAULT NULL,
+  `requestAccessReason` tinytext,
   `playerDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`playerID`),
-  KEY `MembershipPaid` (`membershipPaid`),
   KEY `PlayerID` (`playerID`)
-) ENGINE=InnoDB AUTO_INCREMENT=208 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `races`
@@ -306,7 +300,7 @@ CREATE TABLE `races` (
   `raceDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`raceID`),
   KEY `RaceID` (`raceID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `settings`
@@ -327,7 +321,6 @@ CREATE TABLE `settings` (
   `vitalityLabel` varchar(50) DEFAULT NULL,
   `gameYear` int(11) DEFAULT NULL,
   `campaignName` varchar(50) DEFAULT NULL,
-  `themeID` int(50) DEFAULT NULL,
   `contactName` varchar(50) DEFAULT NULL,
   `contactEmail` varchar(50) DEFAULT NULL,
   `webmasterName` varchar(50) DEFAULT NULL,
@@ -336,8 +329,9 @@ CREATE TABLE `settings` (
   `announcements` longtext,
   `copyrightYear` int(11) DEFAULT NULL,
   `generatorLocation` varchar(100) DEFAULT NULL,
+  `autoGrantAccess` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`settingsID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `skillattributecosts`
@@ -367,7 +361,7 @@ CREATE TABLE `skills` (
   `skillDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`skillID`),
   KEY `SkillID` (`skillID`)
-) ENGINE=InnoDB AUTO_INCREMENT=290 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `skillsheaders`
@@ -408,7 +402,7 @@ CREATE TABLE `spells` (
   `spellDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`spellID`),
   KEY `SpellID` (`spellID`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `spellskills`
@@ -425,21 +419,6 @@ CREATE TABLE `spellskills` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table to associate spells with their skill prerequisites. ';
 
 -- ----------------------------
---  Table structure for `themes`
--- ----------------------------
-DROP TABLE IF EXISTS `themes`;
-CREATE TABLE `themes` (
-  `themeID` int(11) NOT NULL AUTO_INCREMENT,
-  `themeName` varchar(20) DEFAULT NULL,
-  `pageBG` varchar(7) DEFAULT NULL,
-  `highlightColor` varchar(7) DEFAULT NULL,
-  `adminPageBG` varchar(50) DEFAULT NULL,
-  `adminHighlightColor` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`themeID`),
-  KEY `ThemeID` (`themeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
--- ----------------------------
 --  Table structure for `traits`
 -- ----------------------------
 DROP TABLE IF EXISTS `traits`;
@@ -453,104 +432,6 @@ CREATE TABLE `traits` (
   `traitDeleted` datetime DEFAULT NULL,
   PRIMARY KEY (`traitID`),
   KEY `TraitID` (`traitID`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
-
--- ----------------------------
---  Table structure for `users`
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `userID` varchar(50) NOT NULL,
-  `playerID` int(11) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `permissions` varchar(50) DEFAULT NULL,
-  `resetRequest` int(11) DEFAULT NULL,
-  `userDeleted` datetime DEFAULT NULL,
-  PRIMARY KEY (`userID`),
-  KEY `PlayerID` (`playerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- **************************************
--- Set up base data
--- **************************************
-
--- ----------------------------
---  Records of `communities`
--- ----------------------------
-BEGIN;
-INSERT INTO `communities` VALUES ('1', 'None', null, '1', null);
-COMMIT;
-
--- ----------------------------
---  Records of `countries`
--- ----------------------------
-BEGIN;
-INSERT INTO `countries` VALUES ('1', 'None', '', '0', null);
-COMMIT;
-
-BEGIN;
-INSERT INTO `cpcategories` 
-VALUES 
-      ('1', 'Event', null), 
-      ('2', 'Event Pre-Reg', null), 
-      ('3', 'Setup', null), 
-      ('4', 'Cleanup', null), 
-      ('5', 'Character History', null), 
-      ('6', 'PEL', null), 
-      ('7', 'Prop donation', null), 
-      ('8', 'Transportation', null), 
-      ('9', 'Promotion', null), 
-      ('10', 'Other', null), 
-      ('11', 'Unspecified', null), 
-      ('13', 'Staffing', null), 
-      ('14', 'Base CP', null), 
-      ('15', 'Floating CP transfer', null), 
-      ('16', 'PC Questionnaire', null), 
-      ('17', 'NPC Referral', null), 
-      ('18', 'Kitchen Help', null);
-COMMIT;
-
--- ----------------------------
---  Records of `headers`
--- ----------------------------
-BEGIN;
-INSERT INTO `headers` VALUES ('19', 'Open Skills', '0', 'Public', null, null);
-COMMIT;
-
--- ----------------------------
---  Records of `players`
--- ----------------------------
-BEGIN;
-INSERT INTO `players` VALUES ('1', 'System', 'Administrator', 'admin@larpcharactergenerator.com', null, null, '308a039677e0ac0564426fd56b8362fc0a6076ffbdbc14c96', null, 'Admin', 'active', null, null);
-COMMIT;
-
--- ----------------------------
---  Records of `races`
--- ----------------------------
-BEGIN;
-INSERT INTO `races` VALUES ('1', 'Human', null, null, null);
-COMMIT;
-
--- ----------------------------
---  Records of `settings`
--- ----------------------------
-BEGIN;
-INSERT INTO `settings` VALUES ('1', '30', '2', 'No', 'Community', 'Communities', 'Air', 'Earth', 'Fire', 'Water', 'Void', 'Vitality', '2008', 'Zombies', '3', 'Director', 'test@test.com', 'Webmaster', 'test@test.com', 'test@test.com', '', '2014', 'http://www.larpcharactergenerator.com/gameName');
-COMMIT;
-
--- ----------------------------
---  Records of `themes`
--- ----------------------------
-BEGIN;
-INSERT INTO `themes` VALUES ('1', 'Classic', '#006633', '#669966', '#333366', '#666699');
-COMMIT;
-
--- ----------------------------
---  Records of `traits`
--- ----------------------------
-BEGIN;
-INSERT INTO `traits` VALUES ('1', 'Human', 'System', 'Public', '', '', null);
-COMMIT;
-
 
 SET FOREIGN_KEY_CHECKS = 1;

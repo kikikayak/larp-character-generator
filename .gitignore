@@ -7,3 +7,4 @@ includes/config.local.php
 includes/config.php
 includes/config.remote.php
 install/skills.sql
+install/cg_setup_orig.sql
